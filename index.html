@@ -71,6 +71,713 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Git-学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2020-12-13T12:58:37.000Z" itemprop="datePublished">2020-12-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Git 学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Git-学习"><a href="#Git-学习" class="headerlink" title="Git 学习"></a>Git 学习</h1><p>以往的 version control 是记录补丁（RCS），记录新文件和上一个文件的变化（比如新增了一行aaa、删除了一行bbbb），从而保证版本控制，可以回退，但是这样的 version control 只能管理文本，不能管理多媒体等其他文件</p>
+<p>Git 不一样，每一次提交的文件，都是保存完整的文件，Git 版本库拥有每个版本文件的快照（SNAP），切换速度非常快，除了管理代码外，还可以管理多媒体等文件</p>
+<p><strong>集中化的版本控制</strong></p>
+<ul>
+<li><p>让不同系统上的开发者协同工作</p>
+</li>
+<li><p>有一个单一的集中管理的服务器，保存所有文件的修订版本，大家从这台服务器拉取文件，或者提交更新</p>
+</li>
+<li><p>好处：</p>
+</li>
+</ul>
+<ul>
+<li><p>大家都能在一定程度上看到别人在做什么</p>
+</li>
+<li><p>管理一个CVCS比每个客户端都维护一个本地数据库来得容易</p>
+</li>
+<li><p>坏处：</p>
+</li>
+</ul>
+<ul>
+<li>单点故障</li>
+</ul>
+<p><strong>分布式版本控制</strong></p>
+<ul>
+<li>客户端不止提取最新版本的文件快照，而是把代码仓库完整地镜像下来，包括完整的历史记录</li>
+<li>每一次的克隆，其实都是对代码仓库的完整备份</li>
+<li>避免了单点故障，也不需要维护一个中央服务器</li>
+<li>可以在同一项目中和不同的工作小组的人协作</li>
+</ul>
+<p>Git 是一个分布式的版本管理系统</p>
+<h3 id="Git-特点"><a href="#Git-特点" class="headerlink" title="Git 特点"></a>Git 特点</h3><ul>
+<li><strong>直接记录快照</strong>，而非差异比较（每当提交更新或者保存项目状态时，就会对当时的全部文件创建一个快照，并保存这个快照的索引。为了效率，没有修改的文件不会重新存储，而是保留一个链接指向之前存储的文件）</li>
+<li>近乎所有操作都是<strong>本地执行</strong>（快！）没有网络延迟</li>
+<li><strong>保证完整性</strong>，类似区块链，所有数据保存时都计算哈希，并且以哈希来引用！（SHA-1）</li>
+<li><strong>几乎只有添加数据</strong>，（删除其实也是提交一个快照，所以我之前的阿里云密钥现在还在给我发段信！！！）</li>
+<li>三种状态：committed、modified、staged<ul>
+<li>committed：表示数据已经保存在本地数据库中</li>
+<li>modified：表示数据已经修改、但还没有保存到数据库中</li>
+<li>staged：表示对一个已修改的文件的当前版本作了标记，使之包含在下次提交的快照中（类似暂存吧）</li>
+</ul>
+</li>
+<li>三个阶段：工作区、暂存区、Git 目录<ul>
+<li>工作区是项目的某个版本的内容，提取出来放在磁盘上供你修改</li>
+<li>暂存区是一个文件，保存下次将要提交的文件列表信息，一般在.git里面</li>
+<li>Git 仓库目录：.git 文件夹，保存Git 的元数据和对象数据库，克隆就是克隆这个</li>
+<li><img src="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205846326.png" alt="在这里插入图片描述"></li>
+</ul>
+</li>
+</ul>
+<h3 id="Git-基本工作流程"><a href="#Git-基本工作流程" class="headerlink" title="Git 基本工作流程"></a>Git 基本工作流程</h3><p>1、在工作区中修改文件</p>
+<p>2、将想下次提交的更改选择性地暂存（别把配置文件提交！！！）</p>
+<p>3、提交更新，将快照永久性地存储到 Git 目录</p>
+<h3 id="建立Git-仓库"><a href="#建立Git-仓库" class="headerlink" title="建立Git 仓库"></a>建立Git 仓库</h3><ul>
+<li>git init</li>
+<li>git clone ( git clone 会复制所有的版本，然后将最新版本的文件放在工作区)</li>
+</ul>
+<h3 id="Git-add"><a href="#Git-add" class="headerlink" title="Git add"></a>Git add</h3><p>没有被 add 的文件，Git 会忽略它</p>
+<p>所有被 Git add 的文件都会有副本</p>
+<p>git add 是一个多功能命令</p>
+<ul>
+<li>没有被追踪的文件，使用 git add 会让 git 将这个文件加入管理范畴</li>
+<li>已经追踪的文件，使用 git add 会将该文件放到暂存区</li>
+<li>合并时，使用 git add 可以把有冲突的文件标记为已解决</li>
+</ul>
+<p><strong>可以理解为将内容添加到下一次提交中</strong></p>
+<p>当你修改了文件并且 git add 后，保存在暂存区，之后又修改了这个文件</p>
+<p>再次查看 git status</p>
+<p><img src="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205846214.png" alt="在这里插入图片描述"></p>
+<p>可以看到这个文件同时出现在 to be committed 和 not staged</p>
+<p>所以，git add 并不是添加这个文件，而是添加的 SNAP （当时的文件）</p>
+<p>git add 之后的修改并没有添加到暂存区</p>
+<h3 id="Git-ignore"><a href="#Git-ignore" class="headerlink" title="Git ignore"></a>Git ignore</h3><p>我们想要忽略一些编译文件、日志文件等，又不想让他总提示我没追踪，就要git忽略它</p>
+<p>编写一个文件 .gitignore</p>
+<p>文件 .gitignore 的格式规范如下：<br>所有空行或者以 # 开头的行都会被 Git 忽略。<br>可以使用标准的 glob 模式匹配，它会递归地应用在整个工作区中。<br>匹配模式可以以（/）开头防止递归。<br>匹配模式可以以（/）结尾指定目录。<br>要忽略指定模式以外的文件或目录，可以在模式前加上叹号（!）取反。</p>
+<p>所谓的 glob 模式是指 shell 所使用的简化了的正则表达式。</p>
+<p>星号（*）匹配零个或多个任意字符；[abc] 匹配任何一个列在方括号中的字符 （这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）；</p>
+<p>问号（?）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 [0-9] 表示匹配所有 0 到 9 的数字）。</p>
+<p>使用两个星号（<strong>）表示匹配任意中间目录，比如 a/</strong>/z 可以匹配 a/z 、 a/b/z 或 a/b/c/z 等。</p>
+<p>一个仓库可能只根目录下有一个 .gitignore 文件。 然而，子目录下也可以有额外的 .gitignore 文件。子目录中的 .gitignore 文件中的规则只作用于它所在的目录中。</p>
+<h3 id="Git-diff"><a href="#Git-diff" class="headerlink" title="Git diff"></a>Git diff</h3><p>git status 只能看到文件当前的状态</p>
+<p>使用 git diff 查看：</p>
+<ul>
+<li>当前做的哪些更新尚未暂存？</li>
+<li>有哪些更新已暂存并准备好下次提交？</li>
+</ul>
+<p><strong>只是使用文件补丁的格式给你展示，并不是底层使用文件补丁实现</strong></p>
+<p>git diff 不加参数，比较的是工作目录中<strong>当前文件</strong>和<strong>暂存区快照</strong>的差异</p>
+<p>git diff –staged ，比较的是<strong>暂存区快照</strong>和<strong>最后一次提交的文件</strong>的差异</p>
+<p>经常 git add 之后 git diff 没有信息就是这个原因</p>
+<h3 id="Git-commit"><a href="#Git-commit" class="headerlink" title="Git commit"></a>Git commit</h3><p>只会提交已经 add 的文件作为快照</p>
+<p><strong>git commit -a</strong> ：将所有已经跟踪的文件一并提交（跳过 add 过程）</p>
+<p> 这很方便，但是很有可能会提交一些你不想提交的文件（比如说配置文件）</p>
+<p>git commit –amend : 上次提交漏掉了几个文件（马上git add）、或者提交信息写错了，用这个命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;asd&quot;</span><br><span class="line">git add forgotten_file</span><br><span class="line">git commit --amend</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+
+<p> 最终只会有一个提交</p>
+<h3 id="移除文件"><a href="#移除文件" class="headerlink" title="移除文件"></a>移除文件</h3><p>从 Git 中移除某个文件，就需要将它移出跟踪文件清单（也是从暂存区移出）</p>
+<p>git rm ： 连带着在工作区也删除了（因为工作区只是 .git 的一个版本快照）</p>
+<p>如果只是在工作目录删除文件，那只会作为一次操作记录，会出现 Changes not staged for commit</p>
+<p>如果要删除之前修改过、已经放到暂存区的文件，需要使用 git rm -f ， 这样的数据不能被 Git 恢复</p>
+<p>删除 git 暂存区的文件 而保留在磁盘： git rm –cached README</p>
+<h3 id="移动文件-（不重要）"><a href="#移动文件-（不重要）" class="headerlink" title="移动文件 （不重要）"></a>移动文件 （不重要）</h3><p>git mv file_from file_to</p>
+<p>git mv 相当于下面三个命令：</p>
+<ul>
+<li>mv file1 file2</li>
+<li>git rm file1</li>
+<li>git add file2</li>
+</ul>
+<h3 id="查看提交历史（重要）"><a href="#查看提交历史（重要）" class="headerlink" title="查看提交历史（重要）"></a>查看提交历史（重要）</h3><p>git log ：</p>
+<ul>
+<li>-n 显示最近 n 次提交</li>
+<li>-p 按照补丁格式显示统计信息</li>
+<li>–stat 显示简略统计信息</li>
+<li>–pretty(很有用)，比如 git log –pretty=oneline ， 将信息展示为一行</li>
+<li><img src="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205847355.png" alt="在这里插入图片描述"></li>
+<li>–pretty=format 还有很多种参数</li>
+</ul>
+<h3 id="撤销操作（重要）"><a href="#撤销操作（重要）" class="headerlink" title="撤销操作（重要）"></a>撤销操作（重要）</h3><p>一、取消暂存的文件：</p>
+<p> 不同的版本不一样，git status 会提示你，怎么取消暂存，我这边是 git restore –staged</p>
+<p> <img src="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20201210225545985.png" alt="在这里插入图片描述"></p>
+<p>二、撤销对文件对修改：</p>
+<p> 不同的版本不一样，git status 会提示你，怎么取消修改，我这边是 git restore file</p>
+<p> <img src="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20201210225553980.png" alt="在这里插入图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">“这是一个危险的命令。 你对那个文件在本地的任何修改都会消失</span><br><span class="line">Git 会用最近提交的版本覆盖掉它。 除非你确实清楚不想要对那个文件的本地修改了，否则请不要使用这个命令。”</span><br><span class="line">12</span><br></pre></td></tr></table></figure>
+
+<p>Git 中任何 已提交 的东西几乎总是可以恢复</p>
+<h3 id="远程仓库使用（重要）"><a href="#远程仓库使用（重要）" class="headerlink" title="远程仓库使用（重要）"></a>远程仓库使用（重要）</h3><p>并不一定是 github 或者 gittee 才是远程仓库，任何不在本地的 git 仓库都是远程仓库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote    &#x2F;&#x2F; 查看已经配置的远程仓库</span><br><span class="line">git remote -v  &#x2F;&#x2F; 查看简写以及URL，会全部列出</span><br><span class="line">12</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看远程仓库</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote show &lt;remote&gt; (常用)</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20201210225605488.png" alt="在这里插入图片描述"></p>
+<p>可以看到远程有两个分支、一个main一个master</p>
+<p><strong>添加远程仓库</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add  &quot;shortname&quot;  &quot;url&quot;</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<h3 id="fetch-和-pull（重要）"><a href="#fetch-和-pull（重要）" class="headerlink" title="fetch 和 pull（重要）"></a>fetch 和 pull（重要）</h3><p>git fetch remote</p>
+<p>会访问远程仓库，拉取所有你还没有的数据。拉取完后，会拥有所有分支的引用</p>
+<p>如果 clone 了一个仓库，会自动添加远程仓库，默认为 origin</p>
+<p>git fetch origin 会抓上一次抓取后新的推送的所有工作</p>
+<p><strong>fetch 只会将数据下载到本地仓库，而不会自动合并</strong></p>
+<p><strong>pull 在抓取数据后会尝试直接合并分支</strong> ，git pull 会从最初克隆的服务器上抓取数据并自动尝试合并</p>
+<p>git pull 相当于三条命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git pull&#x2F;fetch &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;  (常用)</span><br><span class="line">1</span><br><span class="line">git fetch origin master:tmp   &#x2F;&#x2F; 从远程拉一个分支到tmp分支</span><br><span class="line">git merge tmp                 &#x2F;&#x2F; 尝试合并当前分支和tmp分支</span><br><span class="line">git branch -d tmp             &#x2F;&#x2F; 删除tmp分支</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+
+<p>pull 自带的merge 不是很好用（有时候会发生错误），建议还是 git fetch origin master:tmp</p>
+<h3 id="push"><a href="#push" class="headerlink" title="push"></a>push</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>如果省略远程分支名，则表示将本地分支推送与之存在”追踪关系”的远程分支（通常两者同名），如果该远程分支不存在，则会被新建。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p><strong>push 前一定要先抓取、消除冲突，再 push。开始工作前也 fetch 一下，在最新的版本上开发</strong></p>
+<h3 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h3><p>git tag 命令查看所有标签 也可以 git tag -l “v1.8*” 列出所有版本号为1.8开头的版本</p>
+<p>git 有两种标签：</p>
+<ul>
+<li>轻量标签：只是某个特定 commit 的引用<ul>
+<li>git tag v1.4</li>
+</ul>
+</li>
+<li>附注标签：是Git 数据库中的一个完整对象，是可以被校验的，包含打标签的人的名字、邮箱、日期、还可以签名验证 、 创建附注标签很简单<ul>
+<li>git tag -a v1.4 -m ”my version 1.4“</li>
+</ul>
+</li>
+</ul>
+<p><strong>标签要另外push才会到远程</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin v1.1</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>注意⚠️：tag 是和某个 commit 直接绑定的，而非 branch</p>
+<p>所以你切换分支了，还是可以看到这个 tag（ git show v1.2 )</p>
+<p>所以你推到远程去， 不需要指定分支 而是直接 push origin v1.2</p>
+<h3 id="版本回滚（重要）"><a href="#版本回滚（重要）" class="headerlink" title="版本回滚（重要）"></a>版本回滚（重要）</h3><p>首先通过 git log 或者 git tag 查看 xxx</p>
+<p>git reset –hard xxx ( xxx为某个 commit 的hash 或者某个 tag )</p>
+<p>回滚后看不到 git log 了怎么办？( tag还是能看见 ) git reflog</p>
+<h3 id="git-分支（重要）"><a href="#git-分支（重要）" class="headerlink" title="git 分支（重要）"></a>git 分支（重要）</h3><p>将每个commit 理解为链表的节点、就很容易理解分支了</p>
+<p>HEAD 指针，指向当前所在的本地分支，HEAD指向master，你就在master分支上</p>
+<p>其实所有的 HEAD、master、dev、都是一个指向commit 的指针，只是不同的分支向不同的方向延续</p>
+<p>git switch 切换分支、会改变你的工作目录</p>
+<p><img src="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205847160.png" alt="在这里插入图片描述"></p>
+<p>这种情况如果修改了同一个文件，merge会冲突，这个时候需要手动解决冲突，再 add 、 commit</p>
+<p>git branch 查看（新建）分支（基本命令）</p>
+<p>git branch -d 删除分支</p>
+<p>稳定分支的指针总是在提交历史中落后一大截，而前沿分支的指针往往比较靠前。</p>
+<p><img src="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20201210225623821.png" alt="在这里插入图片描述"></p>
+<p><strong>删除远程分支</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git push origin --delete serverfix</span><br><span class="line">To https:&#x2F;&#x2F;github.com&#x2F;schacon&#x2F;simplegit</span><br><span class="line">12</span><br></pre></td></tr></table></figure>
+
+<h3 id="变基"><a href="#变基" class="headerlink" title="变基"></a>变基</h3><p>整合分支最容易的就是 merge 命令，会将两个分支的最新快照、以及二者的最近共同祖先，三者合并，生成新的 commit</p>
+<p>还有一种合并的方法：</p>
+<p>变基： git switch c4 \ git rebase c5 将 C4 的修改 按顺序应用到 C5</p>
+<p><img src="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205848106.png" alt="在这里插入图片描述"></p>
+<p>提取C4的补丁和修改、在C3的基础上再应用一次</p>
+<p>结果都是一样，但是变基使得提交历史更加整洁</p>
+<p><strong>变基是将一系列提交按照原有次序依次应用到另一分支上，而合并是把最终结果合在一起</strong></p>
+<p>变基的风险：</p>
+<p><strong>如果提交存在于你的仓库之外，而别人可能基于这些提交进行开发，那么不要执行变基</strong></p>
+<h3 id="大厂实际工作中-Git-流程"><a href="#大厂实际工作中-Git-流程" class="headerlink" title="大厂实际工作中 Git 流程"></a>大厂实际工作中 Git 流程</h3><h4 id="master-永远是正常稳定可用的主干分支"><a href="#master-永远是正常稳定可用的主干分支" class="headerlink" title="master 永远是正常稳定可用的主干分支"></a>master 永远是正常稳定可用的主干分支</h4><p>拉出一个 dev 分支，check out from master （master镜像）、类似防火墙</p>
+<p>dev 是所有开发小组的一个共用分支</p>
+<p>但是如果开发人员都向dev 提交，会频繁发生冲突</p>
+<p>所以开发人员各再拉分支</p>
+<p>开发人员要提交到dev之前，小组内先合一下</p>
+<p>测试人员一般从 dev 拉代码测试、没问题了之后，运维把 dev 合并到 master</p>
+<p>从 master 拉一些 Tag 、 Release 发布小更新 、 feature（加一些新的东西、不想影响原来的东西）</p>
+<p>git 5、6成的时间都在解决冲突</p>
+<p>大厂还有专门的 CMO ：配置管理员：解决各种冲突</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://panlianghnu.github.io/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="ckin4wyxu00012k2thofaanbm" data-title="Git 学习笔记" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-操作系统原理与程序逻辑训练" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/" class="article-date">
+  <time class="dt-published" datetime="2020-12-13T12:57:34.000Z" itemprop="datePublished">2020-12-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/">操作系统原理与程序逻辑训练</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="C语言和操作系统的交互"><a href="#C语言和操作系统的交互" class="headerlink" title="C语言和操作系统的交互"></a>C语言和操作系统的交互</h2><p>C语言的main函数其实就是和操作系统的交互之一，执行程序前，操作系统将程序的二进制可执行代码加载到内存的代码段，同时会把函数名为main的函数作为程序的入口</p>
+<p>Linux 的终端里：</p>
+<p>命令1 &amp;&amp; 命令2</p>
+<p>表示先执行命令1，成功了再执行命令2，如果命令1执行错误则不会执行命令2</p>
+<p><strong>小技巧：可以用 echo $? 查看上一个命令执行的返回值</strong></p>
+<p>而C语言的 int main() 需要有一个int 类型的返回值，这也涉及到和Linux 操作系统的交互</p>
+<p>return 0 不是乱写，而是代表执行成功，程序正常退出，操作系统可以获得main 函数的返回值，通过 echo $? 打印到终端，通过main 函数的返回值，操作系统可以执行不同的逻辑</p>
+<p>C语言的int main(int argv,char * argc[]) ，参数从终端读参数， argv代表参数个数，argc代表参数列表</p>
+<p>这些是操作系统和C语言的交互</p>
+<p>经典程序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv [])</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;argc;i++)</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;argc[%d] is %s\n&quot;</span>,i,argv[i]);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="number">1234567</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094206212.png" alt="C语言命令后参数"><br>这个程序可以很直观的看到Linux 在调用C语言程序时，传入的各个参数</p>
+<h2 id="Linux-标准输入输出流、错误流"><a href="#Linux-标准输入输出流、错误流" class="headerlink" title="Linux 标准输入输出流、错误流"></a>Linux 标准输入输出流、错误流</h2><p>stdin stdout stderr</p>
+<p>stdin : 默认是键盘输入，可以通过流的重定向改变输入流</p>
+<p>stdout：默认是显示器输出，也可以重定向到网卡、打印机等</p>
+<p>stderr：错误流</p>
+<p>echo $? 命令可以打印出当前程序的返回值</p>
+<p>流在Linux 系统里被抽象成一个个文件，比如我要往打印机写东西，我就会打开“打印机”这个文件，往里面写东西</p>
+<p>每启动一个包含&lt;stdio.h&gt;的程序，Linux会默认打开 stdin\ stdout\ stderr这三个文件</p>
+<p>比如 :</p>
+<p>printf(“hello”) = fprintf(stdout,“hello”)</p>
+<p>scanf(“%d”,&amp;a) = fscanf(stdin,”%d”,&amp;a)</p>
+<p>fprintf(stderr, “the value must &gt; 0”)</p>
+<p>输出到 stderr 默认也是显示器，我以前在DevC++里输出到stderr， 是输出红色字体，ubuntu的终端好像没有对这个stderr进行特殊标记，只能通过重定向或者 echo $? 来知道确实是发生了错误</p>
+<h2 id="Linux-流的重定向"><a href="#Linux-流的重定向" class="headerlink" title="Linux 流的重定向"></a>Linux 流的重定向</h2><p>0 是标准输入流</p>
+<p>1 是标准输出流</p>
+<p>2 是标准错误流</p>
+<p>./a.out 1&gt;&gt; a.txt 代表对a.out 这个程序的 标准输出流 <strong>重定向</strong> 到 a.txt （1可以默认不写）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="number">12345</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094636928.png" alt="hello world 输出流重定向"></p>
+<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094657899.png" alt="ls -l 输出流重定向"><br>可以看到 ls -l 的信息被输出到了文件 b.txt</p>
+<p>其实双箭头和单箭头都可以作为流的重定向，他们有小小的区别</p>
+<p>双箭头不会覆盖文件，会在文件末尾写值</p>
+<p>单箭头则会覆盖文件 ./a.out &gt; a.txt</p>
+<p>&lt; 是标准输入流的重定向<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094812322.png" alt="流的重定向"><br>这三个重定向是可以组合使用的</p>
+<h2 id="Linux-管道"><a href="#Linux-管道" class="headerlink" title="Linux 管道"></a>Linux 管道</h2><p>| 表示管道</p>
+<p>比如： ls /etc/ | grep ab</p>
+<p>表示，将 ls 产生的标准输出流，通过管道，传递给 grep（文本搜索的小程序）的标准输入流</p>
+<p>看看实际操作：<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094843144.png" alt="管道"></p>
+<p>这就是grep 搜索 ls 的结果，找出结果里包含ab的行，输出到标准输出流</p>
+<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094914129.png" alt="找出包含ssh的进程"><br>这就是grep 搜索 ps 的结果，找出结果里包含ssh的进程，输出到标准输出流</p>
+<h5 id="Linux-管道实战"><a href="#Linux-管道实战" class="headerlink" title="Linux 管道实战"></a>Linux 管道实战</h5><p>两个程序，一个输出sum和count，一个通过sum和count求平均值<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209100415817.png" alt="Linux管道实战"><br>这两个程序可以直接通过管道相连，让第一个程序的输出进入下一个程序的标准输入<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209100432148.png" alt="Linux 管道实战"><br>这次直接输出来的是平均数</p>
+<p>很简单的将两个独立小工具变成更加复杂的工具使用</p>
+<h2 id="Make-学习"><a href="#Make-学习" class="headerlink" title="Make 学习"></a>Make 学习</h2><p>在代码目录下 编写Makefile 文件</p>
+<p># 代表注释</p>
+<p>hello.out: max.o hello.c #这行代表hello.out 需要max.o 和 hello.c 两个文件</p>
+<p> gcc max.o hello.c -o hello.out # 这行必须以table开头，表示实际的gcc命令</p>
+<p>max.o: max.c</p>
+<p> gcc -c max.c<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209100743504.png" alt="Make"><br>可以看到我的Makefile 里定义了main.out 和 compute.o 的编译方式，为了调试方便我加了 -g</p>
+<p>现在make 试一下</p>
+<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209101228554.png" alt="make"><br>可以看到运行make 后，生成了 main.out compute.o</p>
+<p>运行也是没有问题的<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209101343486.png" alt="在这里插入图片描述"></p>
+<h5 id="为什么使用make？"><a href="#为什么使用make？" class="headerlink" title="为什么使用make？"></a>为什么使用make？</h5><p>使用make ，可以让大型程序在小部分代码改动时，不至于全部重新编写</p>
+<p>make 会在Makefile文件中查询需要的文件是否已经有了，如果某部分文件已经存在则会跳过</p>
+<p>make可以大大的节省编译时间（已经编译了不需要重新编译的文件 make 会帮我们跳过），并且Makefile写好各文件的依赖规则，每次编译都能方便程序员直接调用（大型项目自己写gcc不可想象）</p>
+<h2 id="GDB-调试"><a href="#GDB-调试" class="headerlink" title="GDB 调试"></a>GDB 调试</h2><p>先编译时加 -g 参数</p>
+<p>执行 gdb ./main.out</p>
+<p>b 12 标记断点</p>
+<p>l 输出源代码</p>
+<p>n 下一步</p>
+<p>s 单步进入</p>
+<p>p 打印参数数据、地址、函数等</p>
+<p>bt 打印堆栈</p>
+<p>f 进入栈帧</p>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>指向函数的指针变量。 因此“函数指针”本身首先应是指针变量，只不过该指针变量指向函数。这正如用指针变量可指向整型变量、字符型、数组一样，这里是指向函数。C在编译时，每一个函数都有一个入口地址，该入口地址就是函数指针所指向的地址。有了指向函数的指针变量后，可用该指针变量调用函数，就如同用指针变量可引用其他类型变量一样。</p>
+<p><strong>函数指针有两个用途：调用函数和做函数的参数</strong></p>
+<p>&amp;a 是 得到a的地址</p>
+<p>p 打印一个</p>
+<p>x/3d 打印三个整数</p>
+<p>x/3cb 打印三个字符，b是一个个打印</p>
+<p>回调函数： 在调用一个函数（A函数）时，传入一个函数指针（B函数）作为参数，在A函数运行期间，调用了B函数，那么这就是一个回调。回调函数可以帮助我们实现很多功能</p>
+<p>比如 C语言标准库就为我们实现了快速排序，但是标准库的快速排序它并不知道你要排序的数据是整数、还是字符，甚至是自己定义的结构体，如果是基本类型还好说，但如果是你要对自己定义的结构体排序的话，它并不知道你的结构体是如何进行排序的，这个时候你需要把排序的定义告诉它，即你需要实现一个比较大小的函数，将这个函数作为参数传递给这个标准库函数。这时就可以调用快速排序为你的结构体排序了。</p>
+<p>可以看到有了回调，我们就不需要关心快速排序实现的细节，只需要将我们定义的比较函数传给排序函数，就可以帮助我们实现快速排序。</p>
+<h3 id="操作系统内存管理"><a href="#操作系统内存管理" class="headerlink" title="操作系统内存管理"></a>操作系统内存管理</h3><p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205748706.png" alt="操作系统内存管理"></p>
+<p>如图所示：操作系统内核使用的是高地址段，代码段是最低的地址段</p>
+<p>系统内核是不允许被其他进程修改的</p>
+<p>代码段用于保存运行的各个程序的二进制代码</p>
+<p>代码段上面是数据段，用来存储一些全局变量、常量、字符串等</p>
+<p><strong>堆</strong></p>
+<p>数据段上面是堆内存空间，是程序动态申请的内存空间，堆内存比较大，所以程序如果要申请一个大数组什么的，需要调用malloc来申请一片堆内存，堆内存是需要自己去释放的（C语言），Java、go等语言有垃圾回收，不需要程序员来手动回收</p>
+<p><strong>栈</strong></p>
+<p>栈内存用于维护程序运行时环境，每调用一个函数，即会开辟一个新的栈帧（所以在递归调用时，如果递归深度太高会产生巨大的空间复杂度，甚至会出现段错误，核心转储</p>
+<p>每个栈帧都有两个寄存器，一个栈指针寄存器（ESP寄存器，指向栈顶），一个栈的基地址（EBP，指向栈的底部），当然栈是往下长的，EBP的地址会大一些</p>
+<p>每次调用函数即会在栈帧底部保存一个返回值（EBP的值），然后向下新开辟一个栈帧（让EBP往下指，ESP=EBP - 栈大小），(push ebp) (mov ebp, esp)</p>
+<p>然后栈内存记录函数里新定义的各个变量</p>
+<p>函数执行完，返回的时候，mov esp,ebp， 让esp = ebp，再pop ebp，栈顶弹出之前保存的返回值给ebp，这样就回到了上一个栈帧，返回值一般是eax寄存器传递</p>
+<p><strong>程序调用时内存变化</strong></p>
+<p>当操作系统调用执行一个程序时</p>
+<p>将二进制代码（text）放入代码段</p>
+<p>将二进制程序的常量、字符串、全局变量等 放入数据段</p>
+<p>根据代码段，新开辟栈帧用于维护运行时环境，然后cpu根据PC寄存器取指令，执行指令</p>
+<p>终端执行一个 ./main.out 时，函数的调用流程：</p>
+<p>用户在终端敲击回车时，会触发CPU的中断，CPU会保存当前程序的各种寄存器的值，保存栈帧的信息等，放入进程结构体中（内存），操作系统陷入内核态，根据中断向量表和中断编号，找到对应的中断处理函数，发现现在要调用一个程序，于是操作系统将程序二进制可执行代码载入内存的代码段，常量、字符串等载入内存的数据段，为该程序申请时间片，把程序的状态修改为就绪状态，当程序执行时，新开辟（或者从进程结构体中读取之前的）栈帧，执行代码段段二进制代码</p>
+<h2 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h2><p>昨天写了一些简单程序设计，打印正方形、空心正方形、等腰三角形、空心菱形、“回”字等</p>
+<p>很久没写过这种程序了。。。刚开始写正方形、三角形都还好，基本上写一遍就过了，不会一直调试，反复测试才能过。后面到了复杂的菱形、“回”字，就需要大量的调试，不断的设计 i、j 的值。让 i、j、num这三个变量组成一个线性函数，设计一个二维的矩形</p>
+<p>但是龙哥让我们把一些重复劳动抽象出来</p>
+<p>比如写一个 printChar(char ch, int n) ; 打印 n 个字符，这个简单的函数就大大地提升了我们的开发效率，让我们不需要将注意力集中在打印几个字符上，我们只需要关注这个图形的规律，第几行先打印几个空格，再打印几个字符即可</p>
+<p>程序设计确实应该是一个不断抽象的过程，如果main 函数里的每一行代码都设计到最后的结果，那以后再来看这份代码又看不懂了。开发的时候应该逻辑更清晰一些，哪几行代码干了什么事，什么函数负责干什么，main 函数里只负责很宏观的事情，实现细节应该抽象出来</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://panlianghnu.github.io/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/" data-id="ckin4wyye00082k2t5kug1xms" data-title="操作系统原理与程序逻辑训练" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-2020-12-4-学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/12/13/2020-12-4-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2020-12-13T12:57:04.000Z" itemprop="datePublished">2020-12-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/12/13/2020-12-4-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">2020-12-4-学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="处理器的架构不断变化"><a href="#处理器的架构不断变化" class="headerlink" title="处理器的架构不断变化"></a>处理器的架构不断变化</h3><p>X86架构是通用指令集，X86的芯片也是通用芯片</p>
+<p>即这个芯片可以完成各种其他架构芯片的任务，比如作为鼠标芯片、路由器芯片、交换机芯片等</p>
+<p>ARM架构是精简指令集、功耗低、速度快、手机上和苹果M1芯片是ARM架构</p>
+<h3 id="磁盘阵列"><a href="#磁盘阵列" class="headerlink" title="磁盘阵列"></a>磁盘阵列</h3><p>磁盘阵列就是把几个盘组合起来，操作系统读出来是一个盘，但底层是好几个盘</p>
+<p>RAID0: 操作系统对磁盘的读写在两个盘同时进行，数据被分片在两个盘分开存储，读写速度几乎翻倍，容量不变（还是两个盘的大小）</p>
+<p>RAID1:操作系统对磁盘的读写会被镜像一次，相当于另一个盘作为实时备份，这样两个盘变成一个盘，速度不变，容量减半（两个盘读出来只有一个盘的大小），大大的增加了系统的可靠性，数据损坏可以实时恢复，甚至一个盘坏了还能换一个新盘用</p>
+<p>RAID10（不是十）：四个盘变成一个盘，把RAID0和RAID1结合起来</p>
+<h3 id="负载均衡-集群（今天是简单集群，不是分布式集群）"><a href="#负载均衡-集群（今天是简单集群，不是分布式集群）" class="headerlink" title="负载均衡 集群（今天是简单集群，不是分布式集群）"></a>负载均衡 集群（今天是简单集群，不是分布式集群）</h3><p>服务器对外提供服务时，服务器承受的压力随着用户的增加而增加，对服务器的性能要求也会不断上升，提升服务器性能的方式有两种，一种垂直扩容，一种平行扩容</p>
+<h4 id="垂直扩容"><a href="#垂直扩容" class="headerlink" title="垂直扩容"></a>垂直扩容</h4><p>升级CPU、内存等</p>
+<p>好处：简单、最稳定，源代码不需要修改可以直接获得性能提升</p>
+<p>坏处：花钱多，性能提升一倍、业务负载并不能提升一倍（OS对硬件管理开销增加、散热问题等） 同时服务器也不可能无限升级</p>
+<h4 id="平行扩容"><a href="#平行扩容" class="headerlink" title="平行扩容"></a>平行扩容</h4><p>比较麻烦，需要负载均衡</p>
+<p>很多种负载均衡：</p>
+<p>轮询（默认）</p>
+<p>比如：DNS服务器的域名轮询解析 （dns port 缓存用户的session id，让他每次访问统一服务器，就会话维持），但是数据库不能轮询，</p>
+<p>F5负载均衡器，类似NAT一样接一端外网，一端接很多服务器，可用性高，安全性也高，服务器不会被直接攻击，以前比较贵，现在比较便宜了</p>
+<p>LVS负载均衡，linux服务器作为负载均衡</p>
+<p>nginx反向代理（实验），中小企业最常用，C语言实现，可以承载比tomcat 多10几倍的并发请求</p>
+<hr>
+<p>今天先不写了，晚安</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://panlianghnu.github.io/2020/12/13/2020-12-4-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="ckin4wyxo00002k2t4o9g591s" data-title="2020-12-4-学习笔记" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Linux-安装时的一些坑" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/12/13/Linux-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/" class="article-date">
+  <time class="dt-published" datetime="2020-12-13T12:56:08.000Z" itemprop="datePublished">2020-12-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/12/13/Linux-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">Linux 安装时的一些坑</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Linux-安装时分区的挂载问题"><a href="#Linux-安装时分区的挂载问题" class="headerlink" title="Linux 安装时分区的挂载问题"></a>Linux 安装时分区的挂载问题</h1><p>Linux 单独挂载 /boot。可以单独更新内核，不怕更新内核丢失数据</p>
+<p>Linux 单独挂载/swap。 Swap分区会在内存不够时，作为虚拟内存使用（但速度很慢），现在内存一般都够了，这个分区是否单独挂载就无所谓了。</p>
+<ul>
+<li>有的古老的应用可能对内存小的机器有优化，有的变量内存需求比较高或者不常用，因而故意取一个很大的地址（让操作系统分配不了这么大的内存地址，从而分配一个虚拟内存），这样的软件如果没有挂载swap分区是有可能跑不起来的</li>
+</ul>
+<p>Linux 单独挂载/var 。 默认tomcat、navicat等应用的日志文件放在这里，单独挂载可以在日志快满时换一个盘来，不至于丢失用户日志数据，并且可以热插拔</p>
+<p>Linux单独挂载/opt 。 可以建议自己写的程序放在/opt，非必须</p>
+<p>Linux单独挂载/usr 。 方便备份软件</p>
+<p>Linux单独挂载/user 。 方便备份用户数据</p>
+<h1 id="BIOS、EFI的区别"><a href="#BIOS、EFI的区别" class="headerlink" title="BIOS、EFI的区别"></a>BIOS、EFI的区别</h1><p>主板使用BIOS还是EFI，对Linux 启动盘的制作有很大影响！</p>
+<p><strong>BIOS 是简单输入输出系统</strong></p>
+<p>是固化到计算机主板上一个ROM上的程序</p>
+<p>当计算机启动时，CPU会加载ROM上的程序</p>
+<p>BIOS 完成机器的自检后，会扫描硬盘，读取硬盘特定位置的操作系统引导程序（操作系统自举程序），引导程序启动操作系统的各程序</p>
+<p>BIOS的功能非常简单，对于操作系统来说，如果主板使用的是BIOS，那么操作系统就必须面对所有的硬件，大到主板显卡，小到鼠标键盘，每次重装系统或者系统升级，都必须手动安装新的驱动</p>
+<p>BIOS 主板的系统，虽然攻击者不知道系统盘中操作系统的密码进不了系统，但是可以通过插入一个U盘进入系统，如果其他磁盘没有其他加密手段的话，攻击者可以轻易窃取其他磁盘的数据</p>
+<p><strong>UEFI全称Unified Extensible Firmware Interface，即“统一的可扩展固件接口”</strong></p>
+<p>UEFI是一个微内核系统，具有操控所有硬件资源的能力</p>
+<p>可以在里面进行各种设置，比如安全设置，用户用U盘启动系统，只能查看自己U盘里的数据，不能对别的盘进行操作</p>
+<p>用户可以进入一个类似shell 的环境，调入执行任何UEFI 程序，可以是自检程序、可以是操作系统引导软件等</p>
+<p>Mac 的UEFI 甚至可以在里面驱动网卡、连接投影仪，在UEFI里的各种操作可以直接投影出去</p>
+<p>UEFI 的u盘启动盘一般可以兼容BIOS，即使主板只有BIOS，也可以 UEFI 引导进系统，但是当你u盘拔了，可能又进不了系统了 ， 所以制作启动盘的时候一定要注意主板型号（大部分服务器主板较老还是用的bios）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://panlianghnu.github.io/2020/12/13/Linux-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/" data-id="ckin4wyxy00022k2t0a56hykm" data-title="Linux 安装时的一些坑" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Linux常用命令" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time class="dt-published" datetime="2020-12-13T12:55:30.000Z" itemprop="datePublished">2020-12-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Linux常用命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Linux-常用命令"><a href="#Linux-常用命令" class="headerlink" title="Linux 常用命令"></a>Linux 常用命令</h1><p>Linux 命令太多，很多命令又有很多参数，不常用的命令是很容易忘记的，做一个备忘<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiaonizuoren/article/details/79187444">参考的博客链接</a></p>
+<h3 id="显示目录和文件的命令"><a href="#显示目录和文件的命令" class="headerlink" title="显示目录和文件的命令"></a>显示目录和文件的命令</h3><ul>
+<li>Ls：用于查看所有文件夹的命令。</li>
+<li>ls -l，显示详细信息（常用）</li>
+<li>Tree： 以树状图列出目录内容（需要apt install tree)</li>
+<li>Du：显示目录或文件大小 ，查看磁盘信息</li>
+</ul>
+<h3 id="修改目录，文件权限和属主及数组命令"><a href="#修改目录，文件权限和属主及数组命令" class="headerlink" title="修改目录，文件权限和属主及数组命令"></a>修改目录，文件权限和属主及数组命令</h3><ul>
+<li>Chmod：用于改变指定目录或文件的权限命令。</li>
+<li>Chown：用于改变文件拥有属性的命令。</li>
+<li>Chgrp：用于改变文件群组的命令。</li>
+<li>Chattr：用于设置文件具有不可删除和修改权限。</li>
+<li>Lsattr：用于显示文件或目录的隐藏属性。</li>
+</ul>
+<h3 id="创建和删除目录的命令"><a href="#创建和删除目录的命令" class="headerlink" title="创建和删除目录的命令"></a>创建和删除目录的命令</h3><ul>
+<li>Mkdir：用于创建目录</li>
+<li>Rm -f：用于删除目录</li>
+</ul>
+<h3 id="创建和删除，重命名，复制文件的命令"><a href="#创建和删除，重命名，复制文件的命令" class="headerlink" title="创建和删除，重命名，复制文件的命令"></a>创建和删除，重命名，复制文件的命令</h3><ul>
+<li>Touch：创建一个新的文件</li>
+<li>Vi:创建一个新的文件</li>
+<li>Rm：删除文件或目录</li>
+<li>Mv：重命名或移动文件的命令</li>
+<li>Cp：复制命令</li>
+<li>Scp：用于将本地的文件或目录复制到远程服务器</li>
+<li>Wget：用于下载ftp或http服务器文件到本地。</li>
+</ul>
+<p>##显示文件内容的命令</p>
+<ul>
+<li>Cat：用于显示指定文件的全部内容</li>
+<li>More：用分页的形式显示指定文件的内容</li>
+<li>Less：用分页的形式显示指定文件的内容，区别是more和less翻页使用的操作键不同。</li>
+<li>Head：用于显示文件的前n行内容。</li>
+<li>Tail：用于显示文件的后n行内容。</li>
+<li>Tail -f：用于自动刷新的显示文件后n行数据内容。</li>
+</ul>
+<h3 id="查找命令"><a href="#查找命令" class="headerlink" title="查找命令"></a>查找命令</h3><p>Find：查找指定目录或文件的命令。</p>
+<p>Whereis：查找指定的文件源和二进制文件和手册等</p>
+<p>Which：用于查询命令或别名的位置。</p>
+<p>Locate：快速查找系统数据库中指定的内容。</p>
+<p>Grep：在指定的文件或标准输出，标准输入内，查找满足条件的内容。</p>
+<h3 id="关机和重启计算机的命令"><a href="#关机和重启计算机的命令" class="headerlink" title="关机和重启计算机的命令"></a>关机和重启计算机的命令</h3><ul>
+<li><p>Shutdown：-r 关机后立即重启（reboot now 也行）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">     -k 并不真正的关机，而只是发出警告信息给所有用户</span><br><span class="line"></span><br><span class="line">     -h 关机后不重新启动</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Poweroff：用于关机和关闭电源</p>
+</li>
+<li><p>Init：改变系统运行级别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">0级用于关闭系统</span><br><span class="line"></span><br><span class="line">1 级用于单一使用者模式</span><br><span class="line"></span><br><span class="line">2级用来进行多用户使用模式（但不带网络功能）</span><br><span class="line"></span><br><span class="line">3级用来进行多用户使用模式（带网络全功能）</span><br><span class="line"></span><br><span class="line">4级用来进行用户自定义使用模式</span><br><span class="line"></span><br><span class="line">5级表示进入x  windows时的模式</span><br><span class="line"></span><br><span class="line">6级用来重启系统</span><br><span class="line">12345678910111213</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Reboot： 用于计算机重启</p>
+</li>
+<li><p>Halt：用于关闭计算机系统</p>
+</li>
+</ul>
+<h3 id="压缩和打包命令"><a href="#压缩和打包命令" class="headerlink" title="压缩和打包命令"></a>压缩和打包命令</h3><p>Tar：用于多个文件或目录进行打包，但不压缩，同时也用命令进行解包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">	-A 新增压缩文件到已存在的压缩</span><br><span class="line">	-c 建立新的压缩文件</span><br><span class="line">	-d 记录文件的差别</span><br><span class="line">	-r 添加文件到已经压缩的文件</span><br><span class="line">	-u 添加改变了和现有的文件到已经存在的压缩文件</span><br><span class="line">	-x 从压缩的文件中提取文件</span><br><span class="line">	-t 显示压缩文件的内容</span><br><span class="line">	-z 支持gzip解压文件</span><br><span class="line">	-j 支持bzip2解压文件</span><br><span class="line">	-Z 支持compress解压文件</span><br><span class="line">	-v 显示操作过程</span><br><span class="line">	-l 文件系统边界设置</span><br><span class="line">	-k 保留原有文件不覆盖</span><br><span class="line">	-m 保留文件不被覆盖</span><br><span class="line">	-W 确认压缩文件的正确性</span><br><span class="line">123456789101112131415</span><br></pre></td></tr></table></figure>
+
+<h3 id="用户操作命令"><a href="#用户操作命令" class="headerlink" title="用户操作命令"></a>用户操作命令</h3><p>Linux用户在操作系统可以进行日常管理和维护，涉及到的相关配置文件保存在 /etc/</p>
+<p>Su：切换用户命令</p>
+<p>Sudo：一系统管理员的身份执行命令</p>
+<p>Passwd：用于修改用户的密码</p>
+<p>adduser：用于创建新用户，同时会创建该用户的组，默认用户a属于主组a，还会创建用户的默认home目录等信息</p>
+<p>deluser：用于删除用户，删除用户后home目录并不会主动删除，需要手动再删除</p>
+<h5 id="三个change"><a href="#三个change" class="headerlink" title="三个change"></a>三个change</h5><ul>
+<li>chmod ， 修改文件权限：rwxrwxrwx，比如 chmod 777 a.txt 打开a的所有权限</li>
+<li>chgrp ， 修改文件或文件夹所属的组。 比如chgrp group1 a .txt 让a属于group1</li>
+<li>chown， 修改文件或文件夹的所有者。 比如chown user1 a.txt 让a属于user1</li>
+</ul>
+<h3 id="改变目录和查看当前目录命令"><a href="#改变目录和查看当前目录命令" class="headerlink" title="改变目录和查看当前目录命令"></a>改变目录和查看当前目录命令</h3><p>Cd：进入工作目录</p>
+<p>Cd …：会退到上一级命令</p>
+<p>Pwd：显示当前用户所在工作目录位置</p>
+<h3 id="文件连接命令"><a href="#文件连接命令" class="headerlink" title="文件连接命令"></a>文件连接命令</h3><p>Ln：为源文件创建一个连接，并不将源文件复制一份，即占用的空间很小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    可以分为软件连接和硬链接。</span><br><span class="line"></span><br><span class="line">    软连接：也称为符号连接，即为文件或目录创建一个快捷方式。</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+
+<p>硬链接：给一个文件取多于一个名字，放在不同目录中，方便用户使用。</p>
+<p>Ln命令参数如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   -f：在创建连接时，先将与目的对象同名的文件或目录删除。</span><br><span class="line"></span><br><span class="line">   -d：允许系统管理者硬链接自己的目录。</span><br><span class="line"></span><br><span class="line">   -i：在删除与目的对象同名文件或目录时先询问用户。</span><br><span class="line"></span><br><span class="line">   -n：在创建软连接时，将目的对象视为一般的文件。</span><br><span class="line"></span><br><span class="line">   -s：创建软连接，即符号连接。</span><br><span class="line"></span><br><span class="line">   -v：在连接之前显示文件或目录名。</span><br><span class="line"></span><br><span class="line">   -b：将在连接时会被覆盖或删除的文件进行备份。</span><br><span class="line">12345678910111213</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><p>Ps：显示瞬间进程的动态</p>
+<p>Date：显示或设定系统的日期与时间。</p>
+<p>Kill： 杀死一些特定的进程</p>
+<p>Logout：退出系统</p>
+<p>Clear：清屏</p>
+<p>Passwd：设置用户密码</p>
+<h3 id="vi编辑器"><a href="#vi编辑器" class="headerlink" title="vi编辑器"></a>vi编辑器</h3><p>首先用vi命令打开一个文件</p>
+<p>末行模式命令：</p>
+<p>:n,m w path/filename 保存指定范围文档（ n表开始行，m表结束行）</p>
+<p>:q! 对文件做过修改后，强制退出</p>
+<p>:q 没有对文件做过修改退出</p>
+<p>Wq或x 保存退出</p>
+<p>dd 删除光标所在行</p>
+<p>: set number 显示行号</p>
+<p>: n 跳转到n行</p>
+<p>: s 替换字符串 : s/test/test2/g /g全局替换 /也可以用%代替</p>
+<p>/ 查找字符串</p>
+<h3 id="网络通信常用的命令"><a href="#网络通信常用的命令" class="headerlink" title="网络通信常用的命令"></a>网络通信常用的命令</h3><p>Arp：网络地址显示及控制</p>
+<p>ftp：文件传输</p>
+<p>Lftp：文件传输</p>
+<p>Mail：发送/接收电子邮件</p>
+<p>Mesg：允许或拒绝其他用户向自己所用的终端发送信息</p>
+<p>Mutt E-mail 管理程序</p>
+<p>Ncftp ：文件传输</p>
+<p>Netstat：显示网络连接.路由表和网络接口信息</p>
+<p>Pine：收发电子邮件，浏览新闻组</p>
+<p>Ping：用于查看网络是否连接通畅</p>
+<p>Ssh：安全模式下远程登陆</p>
+<p>Telnet：远程登录</p>
+<p>Traceroute：显示到达某一主机所经由的路径及所使用的时间。</p>
+<p>Wget：从网路上自动下载文件</p>
+<h3 id="SSH-注意事项"><a href="#SSH-注意事项" class="headerlink" title="SSH 注意事项"></a>SSH 注意事项</h3><ul>
+<li>确保配置好了SSH登陆、再关闭密码登陆，否则有登不上服务器的风险</li>
+<li>员工离职了直接deluser、再删除他的home，他就无法再登陆服务器了</li>
+<li>SSH端口最好配置一下端口，默认的22端口可能会被恶意扫描</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://panlianghnu.github.io/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" data-id="ckin4wyy000032k2te15n8ubo" data-title="Linux常用命令" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-安装Ubuntu" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/" class="article-date">
+  <time class="dt-published" datetime="2020-12-13T12:52:33.000Z" itemprop="datePublished">2020-12-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/">安装Ubuntu</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><strong>前言</strong><br>以前我会写一些学习笔记.md，但没有发博客的习惯，现在参加了线下脱产的CSDN技术训练营，要求每个人定期的发自己的学习心得，刚好让我养成发博客的习惯。</p>
+<h1 id="安装Ubuntu"><a href="#安装Ubuntu" class="headerlink" title="安装Ubuntu"></a>安装Ubuntu</h1><p>既然要学习Linux 和C语言编程，那么第一件事当然是装一个Linux系统。<br>我这里选择的是Ubuntu 20.04LTS版本，Ubuntu 的安装有全图形界面、驱动也比较好装（比如对英特尔显卡支持就比很多Linux发行版好），用的是Debian系的软件包管理，软件资源丰富。Ubuntu用的人很多，找各种教程也比较方便。<br>下面是安装Ubuntu的步骤了，安装之前先要空出一个磁盘来，或者分一个盘出来，如果经常用建议50GB往上，我主要就做做实验就只分了20GB</p>
+<h4 id="一、下载镜像"><a href="#一、下载镜像" class="headerlink" title="一、下载镜像"></a>一、下载镜像</h4><p><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70.png" alt="下载Ubuntu镜像"></p>
+<h4 id="二、下载启动盘制作工具"><a href="#二、下载启动盘制作工具" class="headerlink" title="二、下载启动盘制作工具"></a>二、下载启动盘制作工具</h4><p><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205346071.png" alt="下载启动盘制作工具"><br>Rufus 可以方便地制作一个启动盘<br>因为我之前做过kubuntu的启动盘所以我的u盘名字叫Kubuntu…听说要装ubuntu20.04LTS，我又把kubuntu格了…</p>
+<h4 id="三、制作启动盘"><a href="#三、制作启动盘" class="headerlink" title="三、制作启动盘"></a>三、制作启动盘</h4><p><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205346216.png" alt="制作启动盘"><br>导入之前下好的Ubuntu镜像文件，系统类型选择UEFI（后面会介绍EFI和BIOS区别），文件系统选默认的FAT32就好（FAT32可以同时被Windows和MacOS识别，兼容性不错，其他的默认就好</p>
+<h4 id="四、重启电脑"><a href="#四、重启电脑" class="headerlink" title="四、重启电脑"></a>四、重启电脑</h4><p>插入U盘，重启电脑，按住F2进入BIOS</p>
+<h4 id="五、进入bios"><a href="#五、进入bios" class="headerlink" title="五、进入bios"></a>五、进入bios</h4><p><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205352699.png" alt="进入BIOS"><br>直接在Exit里选择UEFI 回车即可从U盘启动</p>
+<h4 id="六、加载启动盘"><a href="#六、加载启动盘" class="headerlink" title="六、加载启动盘"></a>六、加载启动盘</h4><p><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205431118.png" alt="加载启动盘"><br>系统在检查U盘里的数据</p>
+<h4 id="七、选择安装路径"><a href="#七、选择安装路径" class="headerlink" title="七、选择安装路径"></a>七、选择安装路径</h4><p><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205408169.png" alt="选择安装路径"><br>请原谅我的手机拍电脑屏幕…<br>我直接将根目录/ 挂载到我之前分出来的20GB新盘里去了，格式化选择EXT4文件系统（现在Linux一般都用EXT4）<br>我是图省事，只挂载了根目录/ ，其他目录都是默认的，后面会介绍各个目录分别挂载的好处，<strong>我只是图方便</strong>，大家看看就好，没必要照着我的弄</p>
+<p>这一步完了之后都是自动化安装了<br><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205349242.png" alt="自动化安装"></p>
+<h4 id="八、安装成功"><a href="#八、安装成功" class="headerlink" title="八、安装成功"></a>八、安装成功</h4><p>uname -a 查看ubuntu的版本信息<br><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/20201207220818119.png" alt="安装成功"></p>
+<h4 id="九、切换国内源"><a href="#九、切换国内源" class="headerlink" title="九、切换国内源"></a>九、切换国内源</h4><p>在使用Ubuntu的时候，我们会经常用到 apt-get install 命令，这个命令就是从你的源地址下载互联网软件包到本机并安装，Ubuntu官方的源速度很慢，经常有一个软件包下几小时的情况，所以我们得换个源</p>
+<p>Ubuntu20.04自带了换源GUI</p>
+<p>打开<strong>软件和更新</strong>，进入设置-Ubuntu软件-下载自<br>这里可以选择下载服务器，我选择的阿里云的源，确定后会自动让你更新源，相当于执行apt-get update，输密码即可</p>
+<h4 id="十、驱动N卡"><a href="#十、驱动N卡" class="headerlink" title="十、驱动N卡"></a>十、驱动N卡</h4><p>Ubuntu 默认是用核显的，我们想要使用独显还得装一下驱动<br><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205346572.png" alt="驱动N卡"><br>ubuntu 对n卡支持很好，直接在<strong>软件和更新-附加驱动</strong>上点两下就装好了<br>deepin还要加油，装个n卡驱动死活装不上</p>
+<p>终端执行nvidia-smi 查看n卡信息：<br><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205350733.png" alt="nvidia-smi"><br>可以看到n卡被正确驱动了</p>
+<h4 id="安装deepin-wine"><a href="#安装deepin-wine" class="headerlink" title="安装deepin-wine"></a>安装deepin-wine</h4><p>Linux 的软件生态对比Windows 还是差了点<br>比如QQ for Linux 还是09年的界面，微信、钉钉就压根没有官方的Linux 支持版本（QQ微信的Web端还经常不让你用），但是2020年了，谁能摆脱这几个软件呢，想在Linux 里跑Windows 软件，我们需要装一个deepin-wine<br>wget -O- <a target="_blank" rel="noopener" href="https://deepin-wine.i-m.dev/setup.sh">https://deepin-wine.i-m.dev/setup.sh</a> | sh<br>sudo apt-get install deepin.com.wechat<br>sudo apt-get install deepin.com.qq.im<br><img src="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/202012072219355.png" alt="QQ微信"><br>可惜，ubuntu对wine支持不好，最小化有bug，没有deepin支持得好</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://panlianghnu.github.io/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/" data-id="ckin4wyy800062k2t3fyb0nh8" data-title="安装Ubuntu" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-修复不显示图片" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2020/12/13/%E4%BF%AE%E5%A4%8D%E4%B8%8D%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87/" class="article-date">
@@ -110,7 +817,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://panlianghnu.github.io/2020/12/13/%E4%BF%AE%E5%A4%8D%E4%B8%8D%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87/" data-id="ckin4fq4f0002zo2tcdzuhen6" data-title="修复不显示图片" class="article-share-link">Share</a>
+      <a data-url="https://panlianghnu.github.io/2020/12/13/%E4%BF%AE%E5%A4%8D%E4%B8%8D%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87/" data-id="ckin4wyy300042k2t46wgdwys" data-title="修复不显示图片" class="article-share-link">Share</a>
       
       
       
@@ -151,7 +858,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://panlianghnu.github.io/2020/12/12/first-blog/" data-id="ckin4fq480000zo2t88c23j9b" data-title="first blog" class="article-share-link">Share</a>
+      <a data-url="https://panlianghnu.github.io/2020/12/12/first-blog/" data-id="ckin4wyy500052k2teugu3tf3" data-title="first blog" class="article-share-link">Share</a>
       
       
       
@@ -202,7 +909,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://panlianghnu.github.io/2020/12/12/hello-world/" data-id="ckin4fq4d0001zo2tc6hi0e90" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="https://panlianghnu.github.io/2020/12/12/hello-world/" data-id="ckin4wyy900072k2t7v8sa7pf" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
@@ -245,15 +952,23 @@
       <ul>
         
           <li>
-            <a href="/2020/12/13/%E4%BF%AE%E5%A4%8D%E4%B8%8D%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87/">修复不显示图片</a>
+            <a href="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Git 学习笔记</a>
           </li>
         
           <li>
-            <a href="/2020/12/12/first-blog/">first blog</a>
+            <a href="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/">操作系统原理与程序逻辑训练</a>
           </li>
         
           <li>
-            <a href="/2020/12/12/hello-world/">Hello World</a>
+            <a href="/2020/12/13/2020-12-4-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">2020-12-4-学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/13/Linux-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">Linux 安装时的一些坑</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Linux常用命令</a>
           </li>
         
       </ul>

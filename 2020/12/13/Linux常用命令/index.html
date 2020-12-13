@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Linux常用命令 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Linux 常用命令Linux 命令太多，很多命令又有很多参数，不常用的命令是很容易忘记的，做一个备忘参考的博客链接 显示目录和文件的命令 Ls：用于查看所有文件夹的命令。 ls -l，显示详细信息（常用） Tree： 以树状图列出目录内容（需要apt install tree) Du：显示目录或文件大小 ，查看磁盘信息  修改目录，文件权限和属主及数组命令 Chmod：用于改变指定目录或文件的权">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常用命令">
+<meta property="og:url" content="https://panlianghnu.github.io/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Linux 常用命令Linux 命令太多，很多命令又有很多参数，不常用的命令是很容易忘记的，做一个备忘参考的博客链接 显示目录和文件的命令 Ls：用于查看所有文件夹的命令。 ls -l，显示详细信息（常用） Tree： 以树状图列出目录内容（需要apt install tree) Du：显示目录或文件大小 ，查看磁盘信息  修改目录，文件权限和属主及数组命令 Chmod：用于改变指定目录或文件的权">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-13T12:55:30.000Z">
+<meta property="article:modified_time" content="2020-12-13T12:55:51.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://panlianghnu.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Linux常用命令" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time class="dt-published" datetime="2020-12-13T12:55:30.000Z" itemprop="datePublished">2020-12-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Linux常用命令
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Linux-常用命令"><a href="#Linux-常用命令" class="headerlink" title="Linux 常用命令"></a>Linux 常用命令</h1><p>Linux 命令太多，很多命令又有很多参数，不常用的命令是很容易忘记的，做一个备忘<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiaonizuoren/article/details/79187444">参考的博客链接</a></p>
+<h3 id="显示目录和文件的命令"><a href="#显示目录和文件的命令" class="headerlink" title="显示目录和文件的命令"></a>显示目录和文件的命令</h3><ul>
+<li>Ls：用于查看所有文件夹的命令。</li>
+<li>ls -l，显示详细信息（常用）</li>
+<li>Tree： 以树状图列出目录内容（需要apt install tree)</li>
+<li>Du：显示目录或文件大小 ，查看磁盘信息</li>
+</ul>
+<h3 id="修改目录，文件权限和属主及数组命令"><a href="#修改目录，文件权限和属主及数组命令" class="headerlink" title="修改目录，文件权限和属主及数组命令"></a>修改目录，文件权限和属主及数组命令</h3><ul>
+<li>Chmod：用于改变指定目录或文件的权限命令。</li>
+<li>Chown：用于改变文件拥有属性的命令。</li>
+<li>Chgrp：用于改变文件群组的命令。</li>
+<li>Chattr：用于设置文件具有不可删除和修改权限。</li>
+<li>Lsattr：用于显示文件或目录的隐藏属性。</li>
+</ul>
+<h3 id="创建和删除目录的命令"><a href="#创建和删除目录的命令" class="headerlink" title="创建和删除目录的命令"></a>创建和删除目录的命令</h3><ul>
+<li>Mkdir：用于创建目录</li>
+<li>Rm -f：用于删除目录</li>
+</ul>
+<h3 id="创建和删除，重命名，复制文件的命令"><a href="#创建和删除，重命名，复制文件的命令" class="headerlink" title="创建和删除，重命名，复制文件的命令"></a>创建和删除，重命名，复制文件的命令</h3><ul>
+<li>Touch：创建一个新的文件</li>
+<li>Vi:创建一个新的文件</li>
+<li>Rm：删除文件或目录</li>
+<li>Mv：重命名或移动文件的命令</li>
+<li>Cp：复制命令</li>
+<li>Scp：用于将本地的文件或目录复制到远程服务器</li>
+<li>Wget：用于下载ftp或http服务器文件到本地。</li>
+</ul>
+<p>##显示文件内容的命令</p>
+<ul>
+<li>Cat：用于显示指定文件的全部内容</li>
+<li>More：用分页的形式显示指定文件的内容</li>
+<li>Less：用分页的形式显示指定文件的内容，区别是more和less翻页使用的操作键不同。</li>
+<li>Head：用于显示文件的前n行内容。</li>
+<li>Tail：用于显示文件的后n行内容。</li>
+<li>Tail -f：用于自动刷新的显示文件后n行数据内容。</li>
+</ul>
+<h3 id="查找命令"><a href="#查找命令" class="headerlink" title="查找命令"></a>查找命令</h3><p>Find：查找指定目录或文件的命令。</p>
+<p>Whereis：查找指定的文件源和二进制文件和手册等</p>
+<p>Which：用于查询命令或别名的位置。</p>
+<p>Locate：快速查找系统数据库中指定的内容。</p>
+<p>Grep：在指定的文件或标准输出，标准输入内，查找满足条件的内容。</p>
+<h3 id="关机和重启计算机的命令"><a href="#关机和重启计算机的命令" class="headerlink" title="关机和重启计算机的命令"></a>关机和重启计算机的命令</h3><ul>
+<li><p>Shutdown：-r 关机后立即重启（reboot now 也行）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">     -k 并不真正的关机，而只是发出警告信息给所有用户</span><br><span class="line"></span><br><span class="line">     -h 关机后不重新启动</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Poweroff：用于关机和关闭电源</p>
+</li>
+<li><p>Init：改变系统运行级别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">0级用于关闭系统</span><br><span class="line"></span><br><span class="line">1 级用于单一使用者模式</span><br><span class="line"></span><br><span class="line">2级用来进行多用户使用模式（但不带网络功能）</span><br><span class="line"></span><br><span class="line">3级用来进行多用户使用模式（带网络全功能）</span><br><span class="line"></span><br><span class="line">4级用来进行用户自定义使用模式</span><br><span class="line"></span><br><span class="line">5级表示进入x  windows时的模式</span><br><span class="line"></span><br><span class="line">6级用来重启系统</span><br><span class="line">12345678910111213</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Reboot： 用于计算机重启</p>
+</li>
+<li><p>Halt：用于关闭计算机系统</p>
+</li>
+</ul>
+<h3 id="压缩和打包命令"><a href="#压缩和打包命令" class="headerlink" title="压缩和打包命令"></a>压缩和打包命令</h3><p>Tar：用于多个文件或目录进行打包，但不压缩，同时也用命令进行解包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">	-A 新增压缩文件到已存在的压缩</span><br><span class="line">	-c 建立新的压缩文件</span><br><span class="line">	-d 记录文件的差别</span><br><span class="line">	-r 添加文件到已经压缩的文件</span><br><span class="line">	-u 添加改变了和现有的文件到已经存在的压缩文件</span><br><span class="line">	-x 从压缩的文件中提取文件</span><br><span class="line">	-t 显示压缩文件的内容</span><br><span class="line">	-z 支持gzip解压文件</span><br><span class="line">	-j 支持bzip2解压文件</span><br><span class="line">	-Z 支持compress解压文件</span><br><span class="line">	-v 显示操作过程</span><br><span class="line">	-l 文件系统边界设置</span><br><span class="line">	-k 保留原有文件不覆盖</span><br><span class="line">	-m 保留文件不被覆盖</span><br><span class="line">	-W 确认压缩文件的正确性</span><br><span class="line">123456789101112131415</span><br></pre></td></tr></table></figure>
+
+<h3 id="用户操作命令"><a href="#用户操作命令" class="headerlink" title="用户操作命令"></a>用户操作命令</h3><p>Linux用户在操作系统可以进行日常管理和维护，涉及到的相关配置文件保存在 /etc/</p>
+<p>Su：切换用户命令</p>
+<p>Sudo：一系统管理员的身份执行命令</p>
+<p>Passwd：用于修改用户的密码</p>
+<p>adduser：用于创建新用户，同时会创建该用户的组，默认用户a属于主组a，还会创建用户的默认home目录等信息</p>
+<p>deluser：用于删除用户，删除用户后home目录并不会主动删除，需要手动再删除</p>
+<h5 id="三个change"><a href="#三个change" class="headerlink" title="三个change"></a>三个change</h5><ul>
+<li>chmod ， 修改文件权限：rwxrwxrwx，比如 chmod 777 a.txt 打开a的所有权限</li>
+<li>chgrp ， 修改文件或文件夹所属的组。 比如chgrp group1 a .txt 让a属于group1</li>
+<li>chown， 修改文件或文件夹的所有者。 比如chown user1 a.txt 让a属于user1</li>
+</ul>
+<h3 id="改变目录和查看当前目录命令"><a href="#改变目录和查看当前目录命令" class="headerlink" title="改变目录和查看当前目录命令"></a>改变目录和查看当前目录命令</h3><p>Cd：进入工作目录</p>
+<p>Cd …：会退到上一级命令</p>
+<p>Pwd：显示当前用户所在工作目录位置</p>
+<h3 id="文件连接命令"><a href="#文件连接命令" class="headerlink" title="文件连接命令"></a>文件连接命令</h3><p>Ln：为源文件创建一个连接，并不将源文件复制一份，即占用的空间很小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    可以分为软件连接和硬链接。</span><br><span class="line"></span><br><span class="line">    软连接：也称为符号连接，即为文件或目录创建一个快捷方式。</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+
+<p>硬链接：给一个文件取多于一个名字，放在不同目录中，方便用户使用。</p>
+<p>Ln命令参数如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   -f：在创建连接时，先将与目的对象同名的文件或目录删除。</span><br><span class="line"></span><br><span class="line">   -d：允许系统管理者硬链接自己的目录。</span><br><span class="line"></span><br><span class="line">   -i：在删除与目的对象同名文件或目录时先询问用户。</span><br><span class="line"></span><br><span class="line">   -n：在创建软连接时，将目的对象视为一般的文件。</span><br><span class="line"></span><br><span class="line">   -s：创建软连接，即符号连接。</span><br><span class="line"></span><br><span class="line">   -v：在连接之前显示文件或目录名。</span><br><span class="line"></span><br><span class="line">   -b：将在连接时会被覆盖或删除的文件进行备份。</span><br><span class="line">12345678910111213</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><p>Ps：显示瞬间进程的动态</p>
+<p>Date：显示或设定系统的日期与时间。</p>
+<p>Kill： 杀死一些特定的进程</p>
+<p>Logout：退出系统</p>
+<p>Clear：清屏</p>
+<p>Passwd：设置用户密码</p>
+<h3 id="vi编辑器"><a href="#vi编辑器" class="headerlink" title="vi编辑器"></a>vi编辑器</h3><p>首先用vi命令打开一个文件</p>
+<p>末行模式命令：</p>
+<p>:n,m w path/filename 保存指定范围文档（ n表开始行，m表结束行）</p>
+<p>:q! 对文件做过修改后，强制退出</p>
+<p>:q 没有对文件做过修改退出</p>
+<p>Wq或x 保存退出</p>
+<p>dd 删除光标所在行</p>
+<p>: set number 显示行号</p>
+<p>: n 跳转到n行</p>
+<p>: s 替换字符串 : s/test/test2/g /g全局替换 /也可以用%代替</p>
+<p>/ 查找字符串</p>
+<h3 id="网络通信常用的命令"><a href="#网络通信常用的命令" class="headerlink" title="网络通信常用的命令"></a>网络通信常用的命令</h3><p>Arp：网络地址显示及控制</p>
+<p>ftp：文件传输</p>
+<p>Lftp：文件传输</p>
+<p>Mail：发送/接收电子邮件</p>
+<p>Mesg：允许或拒绝其他用户向自己所用的终端发送信息</p>
+<p>Mutt E-mail 管理程序</p>
+<p>Ncftp ：文件传输</p>
+<p>Netstat：显示网络连接.路由表和网络接口信息</p>
+<p>Pine：收发电子邮件，浏览新闻组</p>
+<p>Ping：用于查看网络是否连接通畅</p>
+<p>Ssh：安全模式下远程登陆</p>
+<p>Telnet：远程登录</p>
+<p>Traceroute：显示到达某一主机所经由的路径及所使用的时间。</p>
+<p>Wget：从网路上自动下载文件</p>
+<h3 id="SSH-注意事项"><a href="#SSH-注意事项" class="headerlink" title="SSH 注意事项"></a>SSH 注意事项</h3><ul>
+<li>确保配置好了SSH登陆、再关闭密码登陆，否则有登不上服务器的风险</li>
+<li>员工离职了直接deluser、再删除他的home，他就无法再登陆服务器了</li>
+<li>SSH端口最好配置一下端口，默认的22端口可能会被恶意扫描</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://panlianghnu.github.io/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" data-id="ckin4wyy000032k2te15n8ubo" data-title="Linux常用命令" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/12/13/Linux-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Linux 安装时的一些坑
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">安装Ubuntu</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/13/Git-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Git 学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/">操作系统原理与程序逻辑训练</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/13/2020-12-4-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">2020-12-4-学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/13/Linux-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">Linux 安装时的一些坑</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Linux常用命令</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2020 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
