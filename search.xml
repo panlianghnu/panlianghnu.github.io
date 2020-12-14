@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>MacOS安装python3并设置默认</title>
+      <link href="2020/12/14/MacOS%E5%AE%89%E8%A3%85python3%E5%B9%B6%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4/"/>
+      <url>2020/12/14/MacOS%E5%AE%89%E8%A3%85python3%E5%B9%B6%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4/</url>
+      
+        <content type="html"><![CDATA[<h1 id="MacOS-安装Python3-8并设置为默认版本"><a href="#MacOS-安装Python3-8并设置为默认版本" class="headerlink" title="MacOS 安装Python3.8并设置为默认版本"></a>MacOS 安装Python3.8并设置为默认版本</h1><h3 id="1、安装Python版本管理工具"><a href="#1、安装Python版本管理工具" class="headerlink" title="1、安装Python版本管理工具"></a>1、安装Python版本管理工具</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install pyenv</span><br></pre></td></tr></table></figure><h3 id="2、添加环境变量（使用bash则添加环境变量到-bashrc-或-profile-或-bash-profile）"><a href="#2、添加环境变量（使用bash则添加环境变量到-bashrc-或-profile-或-bash-profile）" class="headerlink" title="2、添加环境变量（使用bash则添加环境变量到.bashrc 或.profile 或.bash_profile）"></a>2、添加环境变量（使用bash则添加环境变量到.bashrc 或.profile 或.bash_profile）</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;$(pyenv root)/shims:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc</span><br></pre></td></tr></table></figure><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure><h3 id="3、安装Python版本"><a href="#3、安装Python版本" class="headerlink" title="3、安装Python版本"></a>3、安装Python版本</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv install <span class="number">3.8</span>.<span class="number">5</span></span><br></pre></td></tr></table></figure><h3 id="4、设置默认版本（以后切换也用这个）"><a href="#4、设置默认版本（以后切换也用这个）" class="headerlink" title="4、设置默认版本（以后切换也用这个）"></a>4、设置默认版本（以后切换也用这个）</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv global <span class="number">3.8</span>.<span class="number">5</span></span><br></pre></td></tr></table></figure><h3 id="5、检查Python版本"><a href="#5、检查Python版本" class="headerlink" title="5、检查Python版本"></a>5、检查Python版本</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python <span class="literal">-V</span></span><br></pre></td></tr></table></figure><p><img src="/2020/12/14/MacOS%E5%AE%89%E8%A3%85python3%E5%B9%B6%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4/image-20201214171822380.png" alt="image-20201214171822380"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> MacOS </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Coder - 语言快速上手</title>
       <link href="2020/12/14/Coder-%E8%AF%AD%E8%A8%80%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/"/>
       <url>2020/12/14/Coder-%E8%AF%AD%E8%A8%80%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/</url>
