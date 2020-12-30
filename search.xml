@@ -25,19 +25,6 @@
     
     
     <entry>
-      <title></title>
-      <link href="2020/12/24/%E4%BF%AE%E6%94%B9%E6%A4%8D%E7%89%A9%E5%A4%A7%E6%88%98%E5%83%B5%E5%B0%B8%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%81/"/>
-      <url>2020/12/24/%E4%BF%AE%E6%94%B9%E6%A4%8D%E7%89%A9%E5%A4%A7%E6%88%98%E5%83%B5%E5%B0%B8%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%81/</url>
-      
-        <content type="html"><![CDATA[<p>修改植物大战僵尸的数据！</p><p>figure out 数据存储</p><p>先打一把，就有存档了</p><p>去植物大战僵尸文件夹，搜索存档（游戏文件夹里面、cache、 data、userdata等文件夹）</p><p>搜索你的username、或者user</p><p>显示隐藏文件、可能在 C:/Program Data</p><p>找到 users.dat 、 users.dat </p><p>如果直接 vi 打开，乱码，说明不是文本文档</p><p>可以用 vi -b 二进制打开，然后 输入 :%!xxd 将二进制内容转换成16进制显示</p><p>发现除了第一行后面全是0</p><p>再去玩，打完第一关，再去看 user1.dat  </p><p>修改文件 :%!xxd -r</p><p>所有通用格式文件都可以解析，自己修改</p><p>可以自己加密、可以自己改成自己的文件格式</p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>JS 单线程</title>
       <link href="2020/12/22/JS-%E5%8D%95%E7%BA%BF%E7%A8%8B/"/>
       <url>2020/12/22/JS-%E5%8D%95%E7%BA%BF%E7%A8%8B/</url>
