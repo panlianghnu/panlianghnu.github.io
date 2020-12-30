@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>简易区块链C语言实现 | PanLiang's blog</title><meta name="keywords" content="c语言,区块链"><meta name="author" content="Pan Liang"><meta name="copyright" content="Pan Liang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="简易区块链C语言实现在CSDN的第四个任务：实现一个最简单的区块链，不带区块链网络、时间戳、merkle tree等 虽然说技术上难度不大，但是想要实现它，还真是一个不小的工程。。。 除了 SHA256 的计算部分，其余的代码都是自己实现的，写的不好还望见谅 区块链数据结构： 如图所示，每个区块分为区块 head，和区块 body 区块头又分为 SHA_ALL、nonce、SHA_PREV、SHA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简易区块链C语言实现">
+<meta property="og:url" content="https://panlianghnu.github.io/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="PanLiang&#39;s blog">
+<meta property="og:description" content="简易区块链C语言实现在CSDN的第四个任务：实现一个最简单的区块链，不带区块链网络、时间戳、merkle tree等 虽然说技术上难度不大，但是想要实现它，还真是一个不小的工程。。。 除了 SHA256 的计算部分，其余的代码都是自己实现的，写的不好还望见谅 区块链数据结构： 如图所示，每个区块分为区块 head，和区块 body 区块头又分为 SHA_ALL、nonce、SHA_PREV、SHA">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://panlianghnu.github.io/img/cover1.jpg">
+<meta property="article:published_time" content="2020-12-30T04:11:39.000Z">
+<meta property="article:modified_time" content="2020-12-30T04:15:27.000Z">
+<meta property="article:author" content="Pan Liang">
+<meta property="article:tag" content="c语言">
+<meta property="article:tag" content="区块链">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://panlianghnu.github.io/img/cover1.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://panlianghnu.github.io/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?aa9636fda8e452e1e5173dd0a909723d";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-12-30 12:15:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">16</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/cover1.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">PanLiang's blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">简易区块链C语言实现</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-12-30T04:11:39.000Z" title="Created 2020-12-30 12:11:39">2020-12-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-12-30T04:15:27.000Z" title="Updated 2020-12-30 12:15:27">2020-12-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="简易区块链C语言实现"><a href="#简易区块链C语言实现" class="headerlink" title="简易区块链C语言实现"></a>简易区块链C语言实现</h1><p>在CSDN的第四个任务：实现一个最简单的区块链，不带区块链网络、时间戳、merkle tree等</p>
+<p>虽然说技术上难度不大，但是想要实现它，还真是一个不小的工程。。。</p>
+<p>除了 SHA256 的计算部分，其余的代码都是自己实现的，写的不好还望见谅</p>
+<h2 id="区块链数据结构："><a href="#区块链数据结构：" class="headerlink" title="区块链数据结构："></a>区块链数据结构：</h2><p><img src= "/img/loading.gif" data-lazy-src="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/image-20201229232408783.png" alt="image-20201229232408783"></p>
+<p>如图所示，每个区块分为区块 head，和区块 body</p>
+<p>区块头又分为 SHA_ALL、nonce、SHA_PREV、SHA_BLOCK</p>
+<blockquote>
+<p>SHA_BLOCK: 对区块的 body 部分进行一次 SHA256运算，保存在SHA_BLOCK</p>
+<p>SHA_PREV: 保存上一个区块整体(head+body)的 SHA256 值</p>
+<p>nonce: 随机数，意义仅仅只是让区块头（不包含SHA_ALL的部分）+区块体一起进行SHA256运算，使得最终的结果刚好出现 n 个前导0，n 可以设置，代表出块的难度，模拟POW共识算法（比特币采用POW），我看了比特币源码，比特币源码的 nonce 是采用的 long long ，那我这里采用 unsigned long，之前龙哥和我说256位的nonce，我跑了跑发现没有必要，nonce跑到10万就需要我电脑好几秒了。。。unsigned long（8字节） 最大值有<strong>18446744073709551615</strong>，根本跑不完好吗。。。</p>
+<p>当然比特币的 nonce 虽然只有8字节，但这里并不是说比特币的区块取值每次只需要计算2^64种情况，比特币实际挖坑时，最终的哈希值前导 0 特别长，只遍历一次 nonce 是几乎不可能的情况，矿机需要不断地改变区块体里面的 coinbase 里的无意义的值，然后不断地去遍历 nonce ，才能试探出前导0多于 n 个的情况，这将耗费巨大的算力，也是比特币POW共识策略的体现</p>
+<p>SHA_ALL: 存放在区块头的最上面，SHA_ALL 保存整个区块（不包含头最上面的这256比特）的SHA256计算结果，必须有 n 个前导0。它的意义在于，只要你修改了这个区块的任意部分，你就需要重新计算 HASH_BLOCK、重新计算 NONCE ，使得最终的 SHA_ALL 算出来要出现 n 个前导0，当 n 比较大，区块链比较长时，想要修改某区块并使整个区块链仍合法的工作量不可估量，这是区块链“不可篡改”的重要因素之一</p>
+</blockquote>
+<p>区块体就比较随意了，我这里只弄了一个字符串</p>
+<p>这样就实现了一个最简单的区块链</p>
+<p>具体代码实现如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">union</span>&#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> byte[<span class="number">104</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">char</span> sha_all[<span class="number">32</span>];       <span class="comment">// 256 bit sha_all</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> nonce;             <span class="comment">// 64 bit nonce</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">char</span> sha_prev[<span class="number">32</span>];      <span class="comment">// 256 bit sha_prev</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">char</span> sha_block[<span class="number">32</span>];     <span class="comment">// 256 bit sha_block</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125; block_chain_head;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> body[<span class="number">1000</span>];</span><br><span class="line">&#125; block_chain_body;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    block_chain_head head;</span><br><span class="line">    block_chain_body body;</span><br><span class="line">&#125; block;</span><br></pre></td></tr></table></figure>
+
+<p>这里补充一下C语言共用体的知识：</p>
+<ul>
+<li><p>我们知道结构体（Struct）是一种构造类型或复杂类型，它可以包含多个类型不同的成员。在C语言中，还有另外一种和结构体非常类似的语法，叫做<strong>共用体（Union）</strong>，它的定义格式为：</p>
+<p>union 共用体名{<br>  成员列表<br>};</p>
+<blockquote>
+<p>共用体有时也被称为联合或者联合体，这也是 Union 这个单词的本意。</p>
+</blockquote>
+<p>结构体和共用体的区别在于：结构体的各个成员会占用不同的内存，互相之间没有影响；而共用体的所有成员占用同一段内存，修改一个成员会影响其余所有成员。</p>
+<p>结构体占用的内存大于等于所有成员占用的内存的总和（成员之间可能会存在缝隙），共用体占用的内存等于最长的成员占用的内存。共用体使用了内存覆盖技术，同一时刻只能保存一个成员的值，如果对新的成员赋值，就会把原来成员的值覆盖掉。</p>
+</li>
+</ul>
+<p>这里采用 Union + Struct 的数据结构，是为了录入数据+读取数据都比较方便直观。当我想要录入数据时，我只需要读字节流，将104个字节赋值给 byte 数组即可，当我想访问某些数据时，我又可以用结构体的方式直接访问成员变量，代码非常的简洁，可读性也高</p>
+<p>题外话：</p>
+<p>之前想着是用哈希值命名文件，区块头可以少一个 sha 字段，看起来好像没啥问题，但是实际实现的时候，用哈希值来命名区块，有一个很严重的 bug</p>
+<p>我们使用最终的哈希值有n个前导0，这样来控制难度，文件名是一个字符串，0在字符串里表现为字符 ‘\0’ ，而这个字符被视为默认的字符串终止符，这个字符串你赋值给 const char* tmp，编译器会发现第一个字符就是字符串终止符，故而会把 tmp 这个字符串常量视为 “” 这样的空字符串保存在常量池，故而不能直接用这个哈希值来作为区块文件的文件名</p>
+<p>同样的，但凡这个哈希值里面有 ‘\0’ ，我们都不能将它作为文件名，所以文件名我不采用哈希值，哈希值还是选择保存在区块头中</p>
+<h2 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h2><p>一个简易的区块链，必须有下面几个功能：</p>
+<ul>
+<li>生成创世纪块</li>
+<li>读取文件夹下的所有区块</li>
+<li>查找创世纪块</li>
+<li>查找区块链的最后一个区块</li>
+<li>在区块链的尾部追加区块</li>
+<li>对区块的SHA计算</li>
+</ul>
+<p>求SHA256:</p>
+<p>我使用了别人实现的SHA256算法，参考：<a target="_blank" rel="noopener" href="https://github.com/panlianghnu/Blockchain-programming-exercises/tree/master/1.Blockchain%20basic%20exercises/2.Cryptography%20and%20security%20technology/SHA256/C%20Code">SHA256-C语言实现</a></p>
+<p>这个程序有一个bug，当我将区块头和尾合并，一起作为字节数组传入时，有时候求出来的SHA256值正常，有时候值是错误的，我检查好久发现他在加密实现的过程中对传入的比特数组做了 strlen() 运算。。。这直接导致了如果传入的数据有 unsigned char 0，将被识别为字符串终结符，strlen() 函数遇到tmp直接终止计算，导致传入的字符串长度识别不正常，故而时好时坏（特别是创世纪块中有大量的 unsigned char 0，一直算出错误的SHA，还难以发现），我手动算字符串长度并作为参数传入计算，算是修了这个bug</p>
+<h4 id="生成创世纪块："><a href="#生成创世纪块：" class="headerlink" title="生成创世纪块："></a>生成创世纪块：</h4><p>先贴代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;    <span class="comment">// 创建创世纪块</span></span><br><span class="line">    block_chain_head* genesis = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(block_chain_head));</span><br><span class="line">    block_chain_body genesis_body;</span><br><span class="line">    <span class="built_in">strcpy</span>(genesis_body.body,<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">    <span class="built_in">memset</span>(genesis-&gt;byte,<span class="number">0</span>,<span class="keyword">sizeof</span>(block_chain_head));    <span class="comment">// 先将区块字节头全部初始化为0</span></span><br><span class="line">    sha256_main(genesis_body.body,<span class="keyword">sizeof</span>(genesis_body.body),genesis-&gt;sha_block);   <span class="comment">// 哈希body</span></span><br><span class="line">    <span class="comment">// 随机 nonce ，对(块头+块体)再次哈希</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;开始随机nonce\n&quot;</span>);</span><br><span class="line">    <span class="keyword">while</span> (genesis-&gt;nonce &lt; <span class="number">0xffffffffffffffff</span>) &#123;</span><br><span class="line">        <span class="comment">// 把块头块体 读入一个 BYTE 数组</span></span><br><span class="line">        BYTE text[<span class="number">10200</span>];</span><br><span class="line">        read_head_body(text,genesis,genesis_body);</span><br><span class="line">        BYTE buf[SHA256_BLOCK_SIZE];</span><br><span class="line">        <span class="keyword">size_t</span> size_of_text = <span class="keyword">sizeof</span>(block_chain_head)<span class="number">-32</span> + <span class="built_in">strlen</span>(genesis_body.body);</span><br><span class="line">        sha256_main(text,size_of_text,buf);    <span class="comment">// 计算 sha256   有bug??? (已解决)</span></span><br><span class="line">        <span class="comment">// 当text 含有 &#x27;\0&#x27; 时，出现bug</span></span><br><span class="line">        <span class="comment">// 所以添加变量 size_of_text (注意要减去32 sha_all)</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;当前nonce为: %lu     &quot;</span>,genesis-&gt;nonce);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;前8bit为:%02x\n&quot;</span>,buf[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">if</span> (check_sha(buf)) &#123;   <span class="comment">// 检查是否为前导0</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;创世纪块nonce为: %lu\n&quot;</span>,genesis-&gt;nonce);</span><br><span class="line">            <span class="keyword">const</span> <span class="keyword">char</span>* filename = <span class="string">&quot;Genesis.block&quot;</span>;</span><br><span class="line">            FILE *fp = fopen(filename,<span class="string">&quot;w&quot;</span>);</span><br><span class="line">            <span class="keyword">int</span> i;</span><br><span class="line">            <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;SHA256_BLOCK_SIZE;i++) &#123;</span><br><span class="line">                genesis-&gt;sha_all[i] = buf[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="keyword">sizeof</span>(block_chain_head);i++) &#123;   <span class="comment">// 写入区块头</span></span><br><span class="line">                <span class="built_in">fprintf</span>(fp,<span class="string">&quot;%c&quot;</span>,genesis-&gt;byte[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(genesis_body.body);i++) &#123;  <span class="comment">// 写入区块体</span></span><br><span class="line">                <span class="built_in">fprintf</span>(fp,<span class="string">&quot;%c&quot;</span>,genesis_body.body[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        genesis-&gt;nonce++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里就体现出联合体的优点了，直接可以通过 memset 对整个头初始化，却不影响我访问对应的结构题属性，计算 SHA256 时，我引用了别人的函数，sha256_main()，将对应的属性保存（创世纪块sha_prev = 0)，不断的计算nonce，由于采用了 unsigned long ，遍历只需要递增即可，注意每次递增 nonce，重新计算 SHA 的时候，一定要注意是从区块头的第32个字节开始往下读，一直把区块体的内容也读完，读出来的所有字节放入一个 BYTE text[SHA256_BLOCK_SIZE] 数组里，一起去求 SHA256，这样算出来的 SHA_ALL才是正确的，我这边难度设置的是前 16个 bit 为0，平均大概10秒能出一个块吧</p>
+<h4 id="验证-genesis-文件："><a href="#验证-genesis-文件：" class="headerlink" title="验证 genesis 文件："></a>验证 genesis 文件：</h4><p>使用 Mac 的二进制编辑器Hex Fiend打开查看：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/image-20201229173435239.png" alt="image-20201229173435239"></p>
+<p>可以看到，前32字节的 sha_all ，是一串乱码，是我们使用SHA256生成的整个文件的256bit 哈希值</p>
+<p>接下来8个字节：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/image-20201229173836110.png" alt="image-20201229173836110"></p>
+<p>再接下来32字节的 sha_prev 全为0，这是我们初始化生成的0，创世纪块没有前一个块嘛</p>
+<p>再接下来32字节是 sha_block ，这是区块体的哈希值，可以看到也是一串乱码</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/image-20201229174021198.png" alt="image-20201229174021198"></p>
+<p>最后的部分就是区块 body 的内容了，创世纪块的body 内容我写的很简单，就是hello world，可以看到在右边已经把它解析出来了</p>
+<h4 id="读取文件夹下的所有区块："><a href="#读取文件夹下的所有区块：" class="headerlink" title="读取文件夹下的所有区块："></a>读取文件夹下的所有区块：</h4><p>C语言标准库没有提供读取文件夹的函数，官方文档也没找到。。。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/image-20201230113237235.png" alt="image-20201230113237235"></p>
+<p>我引用了 “dirent.h” 库来读文件夹，调用 readdir(dir) 和 entry-&gt;d_name 来匹配文件名</p>
+<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/wangqingchuan92/article/details/80109793">C语言读取文件夹</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read_dir_block</span><span class="params">(block block_list[],<span class="keyword">const</span> <span class="keyword">char</span>* filePath)</span></span>&#123; <span class="comment">// 读文件夹所有块文件</span></span><br><span class="line">    DIR *dir = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dirent</span> *<span class="title">entry</span>;</span></span><br><span class="line">    <span class="keyword">if</span> ((dir = opendir(filePath)) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;open dir failed\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> num=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> ((entry = readdir(dir))!=<span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">char</span>* filename = entry-&gt;d_name;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strstr</span>(filename,<span class="string">&quot;.block&quot;</span>)) &#123;      <span class="comment">// 匹配区块文件(以.block结尾)</span></span><br><span class="line">            read_block(&amp;block_list[num],filename);</span><br><span class="line">            num++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    closedir(dir);</span><br><span class="line">    <span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 string.h 库函数 strstr() 子串查找，匹配文件名包含 .block 的文件，调用 read_block() 去读取文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">read_block</span><span class="params">(block *blockitem,<span class="keyword">const</span> <span class="keyword">char</span>* filename)</span></span>&#123;   <span class="comment">// 读一个块</span></span><br><span class="line">    FILE *fp = fopen(filename,<span class="string">&quot;r&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(!fp) &#123;</span><br><span class="line">        perror(<span class="string">&quot;File opening failed&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> c,i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> ((c = fgetc(fp)) != EOF) &#123; <span class="comment">// standard C I/O file reading loop</span></span><br><span class="line">        <span class="keyword">if</span> (i&lt;<span class="keyword">sizeof</span>(block_chain_head)) &#123;</span><br><span class="line">            blockitem-&gt;head.byte[i] = c;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            blockitem-&gt;body.body[i-<span class="keyword">sizeof</span>(block_chain_head)] = c;</span><br><span class="line">        &#125;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>遍历每个字符，这里又体现出联合体的优势了，直接载入文件的字符流，读 sizeof(block_chain_head) 个字符即可录入头部数据，文件剩余字符全部录入 body 即可</p>
+<p>如此便可读取目录下的所有区块文件，放入 block_list 中</p>
+<h4 id="查找创世纪块："><a href="#查找创世纪块：" class="headerlink" title="查找创世纪块："></a>查找创世纪块：</h4><p>实现了读取目录下的所有区块之后，查找创世纪块变得尤其简单，只需要遍历所有的区块，找到某个 SHA_PREV 为全0的区块，即是创世纪块</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">block <span class="title">find_first_block</span><span class="params">()</span></span>&#123;</span><br><span class="line">    block block_list[<span class="number">100</span>];</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *filePath = <span class="string">&quot;.&quot;</span>;</span><br><span class="line">    <span class="keyword">int</span> size = read_dir_block(block_list,filePath);   <span class="comment">// 一共 size 个区块</span></span><br><span class="line">    block tmp;</span><br><span class="line">    <span class="built_in">memset</span>(tmp.head.byte, <span class="number">0</span>, <span class="keyword">sizeof</span>(block_chain_head));</span><br><span class="line">    <span class="keyword">if</span> (size &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;no block file\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    BYTE hash[SHA256_BLOCK_SIZE] = &#123;<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;size;i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> cmp = <span class="built_in">memcmp</span>(hash,block_list[i].head.sha_prev,SHA256_BLOCK_SIZE);</span><br><span class="line">        <span class="keyword">if</span>(cmp == <span class="number">0</span>)&#123;   <span class="comment">// equal， this is the first block</span></span><br><span class="line">            <span class="keyword">return</span> block_list[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我使用memcmp() 函数来比较 SHA_PREV 是否为全0，这是 memcmp 的官方文档：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/image-20201230114505328.png" alt="image-20201230114505328"></p>
+<p>可以看到，memcmp将二者解释为无符号字符数组，一个个比较，全部相等会返回0，特别方便</p>
+<p>所以在这里我直接定义一个32字节全0的字符数组，然后调用 memcmp 比较即可</p>
+<h4 id="查找最后一个区块："><a href="#查找最后一个区块：" class="headerlink" title="查找最后一个区块："></a>查找最后一个区块：</h4><p>这个算是特别常用的一个功能了</p>
+<p>在查找文件夹下所有区块和查找创世纪块的基础之上，我们就可以去做区块的拓扑排序了</p>
+<p>查找最后一个区块也就变成了求区块的拓扑排序，返回拓扑排序的最后一个区块即可</p>
+<p>求拓扑序列的代码很简单我就不展示了，基本上就是一个二重循环，匹配第 j 个区块的 SHA_PREV 和当前区块的 SHA_ALL ，然后在尾部添加即可</p>
+<h4 id="尾部添加区块："><a href="#尾部添加区块：" class="headerlink" title="尾部添加区块："></a>尾部添加区块：</h4><p>有了查找最后一个区块，尾部添加区块也就特别简单了</p>
+<p>只需要找到最后一个区块的 SHA_ALL ，新开一个区块，写入 SHA_PREV ，然后就和之前的生成创世纪块类似了，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">new_block</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* block_name ,<span class="keyword">char</span>* content)</span></span>&#123; <span class="comment">// 和 init 类似，在末尾添加</span></span><br><span class="line">    block last_block = find_last_block();</span><br><span class="line">    </span><br><span class="line">    block_chain_head* genesis = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(block_chain_head));</span><br><span class="line">    block_chain_body genesis_body;</span><br><span class="line">    <span class="built_in">strcpy</span>(genesis_body.body,content);</span><br><span class="line">    <span class="built_in">memset</span>(genesis-&gt;byte,<span class="number">0</span>,<span class="keyword">sizeof</span>(block_chain_head));    <span class="comment">// 先将区块头全部初始化为0</span></span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;SHA256_BLOCK_SIZE;i++) &#123;</span><br><span class="line">        genesis-&gt;sha_prev[i] = last_block.head.sha_all[i];  <span class="comment">// 写入 sha_prev</span></span><br><span class="line">    &#125;</span><br><span class="line">    sha256_main(genesis_body.body,<span class="keyword">sizeof</span>(genesis_body.body),genesis-&gt;sha_block); <span class="comment">// sha_block</span></span><br><span class="line">    <span class="comment">// 随机 nonce ，对(块头+块体)再次哈希</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;开始随机nonce\n&quot;</span>);</span><br><span class="line">    <span class="keyword">while</span> (genesis-&gt;nonce &lt; <span class="number">0xffffffffffffffff</span>) &#123;</span><br><span class="line">        <span class="comment">// 把块头块体 读入一个 BYTE 数组</span></span><br><span class="line">        BYTE text[<span class="number">10200</span>];</span><br><span class="line">        read_head_body(text,genesis,genesis_body);</span><br><span class="line">        BYTE buf[SHA256_BLOCK_SIZE];</span><br><span class="line">        <span class="keyword">size_t</span> size_of_text = <span class="keyword">sizeof</span>(block_chain_head)<span class="number">-32</span> + <span class="built_in">strlen</span>(genesis_body.body);</span><br><span class="line">        sha256_main(text,size_of_text,buf);    <span class="comment">// 计算 sha256   有bug??? (已解决)</span></span><br><span class="line">        <span class="comment">// 当text 含有 &#x27;\0&#x27; 时，出现bug</span></span><br><span class="line">        <span class="comment">// 所以添加变量 size_of_text (注意要减去32 sha_all)</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;当前nonce为: %lu     &quot;</span>,genesis-&gt;nonce);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;前8bit为:%02x\n&quot;</span>,buf[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">if</span> (check_sha(buf)) &#123;   <span class="comment">// 检查是否为前导0</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;新区块nonce为: %lu\n&quot;</span>,genesis-&gt;nonce);</span><br><span class="line">            <span class="keyword">const</span> <span class="keyword">char</span>* filename = <span class="built_in">strcat</span>(block_name, <span class="string">&quot;.block&quot;</span>);</span><br><span class="line">            FILE *fp = fopen(filename,<span class="string">&quot;w&quot;</span>);</span><br><span class="line">            <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;SHA256_BLOCK_SIZE;i++) &#123;</span><br><span class="line">                genesis-&gt;sha_all[i] = buf[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="keyword">sizeof</span>(block_chain_head);i++) &#123;   <span class="comment">// 写入区块头</span></span><br><span class="line">                <span class="built_in">fprintf</span>(fp,<span class="string">&quot;%c&quot;</span>,genesis-&gt;byte[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(genesis_body.body);i++) &#123;  <span class="comment">// 写入区块体</span></span><br><span class="line">                <span class="built_in">fprintf</span>(fp,<span class="string">&quot;%c&quot;</span>,genesis_body.body[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        genesis-&gt;nonce++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><del>不要在意为什么新区块也叫 genesis 我懒得改了</del></p>
+<p>除了区块的 filename 、SHA_PREV 、body 不一样，其他的操作完全和创世纪块一样</p>
+<p>写新区块时，我需要给新区块后缀命名为 .block </p>
+<p>c语言不能直接使用 + 运算符对字符串进行拼接，故使用strcat，跑到一半又报错了。。原因是strcat直接在字符数组尾部添加字符，晕，数组越界了。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/image-20201229223124304.png" alt="image-20201229223124304"></p>
+<p>不得不再次感叹C语言的字符串处理真是太不方便了</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/image-20201229224105511.png" alt="image-20201229224105511"></p>
+<p>可以看到 block_one 的 sha_prev 的部分，变成了 genesis 的前32字节，也就是哈希值指向 genesis </p>
+<p>新区块的产生基本和创世纪块一样，只是调用一下 find_last_block ，找到 sha_prev 的值即可，然后自行输入 block_name 和 block_body</p>
+<p>再看 block_two 和 block_one</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/image-20201229224428292.png" alt="image-20201229224428292"></p>
+<p>相应的 sha_prev、  sha_all 字段都是一一对应起来的</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/image-20201229224529388.png" alt="image-20201229224529388"></p>
+<p>解析出来的 body 也是正常的</p>
+<p>尾部新增区块完成！</p>
+<h4 id="检验区块链合法"><a href="#检验区块链合法" class="headerlink" title="检验区块链合法"></a>检验区块链合法</h4><p>在 find_last_block() 函数的实现中，topo 序列只要能构造出来，说明sha_prev 和 sha_all 能够一一对上，该区块链是合法的，所以实现也和 find_last_block 基本一样。如果创世纪块找不到，则区块链不合法，从创世纪块后找 n个区块（n为区块总数目-1），一旦找不到区块的 sha_prev 指向当前 sha_all，则区块链不合法，具体实现在 check_block_chain() 函数里，得到拓扑序列之后，遍历这个序列，计算各个区块的 SHA_，任意区块的 SHA 计算错误则该区块链不合法</p>
+<h4 id="建立区块链索引"><a href="#建立区块链索引" class="headerlink" title="建立区块链索引"></a>建立区块链索引</h4><p>find_last_block() 和 check_block_chain() 函数里都做过拓扑排序的操作，参考上面的函数即可</p>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><p>感谢能看到最后的小伙伴！代码我开源到 GitHub 了</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/panlianghnu/block_chain">https://github.com/panlianghnu/block_chain</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Pan Liang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://panlianghnu.github.io/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/">https://panlianghnu.github.io/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/c%E8%AF%AD%E8%A8%80/">c语言</a><a class="post-meta__tags" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></div><div class="post_share"><div class="social-share" data-image="/img/cover1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2020/12/24/%E4%BF%AE%E6%94%B9%E6%A4%8D%E7%89%A9%E5%A4%A7%E6%88%98%E5%83%B5%E5%B0%B8%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%81/"><img class="next-cover" data-lazy-src="/img/cover3.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info"></div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2020/12/13/操作系统原理与程序逻辑训练/" title="操作系统原理与程序逻辑训练"><img class="cover" data-lazy-src="/img/cover10.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-13</div><div class="title">操作系统原理与程序逻辑训练</div></div></a></div></div></div></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Pan Liang</div><div class="author-info__description">今日事，今日毕</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">16</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/panlianghnu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/panlianghnu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:panliang@hnu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">panliang's blog</div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="card-content"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">简易区块链C语言实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97%E9%93%BE%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">区块链数据结构：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.2.</span> <span class="toc-text">功能实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%88%9B%E4%B8%96%E7%BA%AA%E5%9D%97%EF%BC%9A"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">生成创世纪块：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81-genesis-%E6%96%87%E4%BB%B6%EF%BC%9A"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">验证 genesis 文件：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E5%8C%BA%E5%9D%97%EF%BC%9A"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">读取文件夹下的所有区块：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E5%88%9B%E4%B8%96%E7%BA%AA%E5%9D%97%EF%BC%9A"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">查找创世纪块：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%8C%BA%E5%9D%97%EF%BC%9A"><span class="toc-number">1.2.0.5.</span> <span class="toc-text">查找最后一个区块：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%BE%E9%83%A8%E6%B7%BB%E5%8A%A0%E5%8C%BA%E5%9D%97%EF%BC%9A"><span class="toc-number">1.2.0.6.</span> <span class="toc-text">尾部添加区块：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E9%AA%8C%E5%8C%BA%E5%9D%97%E9%93%BE%E5%90%88%E6%B3%95"><span class="toc-number">1.2.0.7.</span> <span class="toc-text">检验区块链合法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%8C%BA%E5%9D%97%E9%93%BE%E7%B4%A2%E5%BC%95"><span class="toc-number">1.2.0.8.</span> <span class="toc-text">建立区块链索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81"><span class="toc-number">1.3.</span> <span class="toc-text">源码</span></a></li></ol></li></ol></div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/" title="简易区块链C语言实现"><img data-lazy-src="/img/cover1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="简易区块链C语言实现"/></a><div class="content"><a class="title" href="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/" title="简易区块链C语言实现">简易区块链C语言实现</a><time datetime="2020-12-30T04:11:39.000Z" title="Created 2020-12-30 12:11:39">2020-12-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/24/%E4%BF%AE%E6%94%B9%E6%A4%8D%E7%89%A9%E5%A4%A7%E6%88%98%E5%83%B5%E5%B0%B8%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%81/" title="No title"><img data-lazy-src="/img/cover3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="No title"/></a><div class="content"><a class="title" href="/2020/12/24/%E4%BF%AE%E6%94%B9%E6%A4%8D%E7%89%A9%E5%A4%A7%E6%88%98%E5%83%B5%E5%B0%B8%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%81/" title="No title">No title</a><time datetime="2020-12-24T05:41:51.000Z" title="Created 2020-12-24 13:41:51">2020-12-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/22/JS-%E5%8D%95%E7%BA%BF%E7%A8%8B/" title="JS 单线程"><img data-lazy-src="/img/cover7.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS 单线程"/></a><div class="content"><a class="title" href="/2020/12/22/JS-%E5%8D%95%E7%BA%BF%E7%A8%8B/" title="JS 单线程">JS 单线程</a><time datetime="2020-12-22T12:44:08.000Z" title="Created 2020-12-22 20:44:08">2020-12-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/" title="python 文字版RPG小游戏"><img data-lazy-src="/img/cover11.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python 文字版RPG小游戏"/></a><div class="content"><a class="title" href="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/" title="python 文字版RPG小游戏">python 文字版RPG小游戏</a><time datetime="2020-12-17T07:44:24.000Z" title="Created 2020-12-17 15:44:24">2020-12-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/15/Python%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" title="Python快速入门"><img data-lazy-src="/img/cover16.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python快速入门"/></a><div class="content"><a class="title" href="/2020/12/15/Python%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" title="Python快速入门">Python快速入门</a><time datetime="2020-12-15T02:49:20.000Z" title="Created 2020-12-15 10:49:20">2020-12-15</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By Pan Liang</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.spacingElementById('content-inner')
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.spacingElementById('content-inner')
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})</script></div></body></html>
