@@ -1,11 +1,30 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux常用命令 | PanLiang's blog</title><meta name="keywords" content="linux,ubuntu,转载"><meta name="author" content="Pan Liang"><meta name="copyright" content="Pan Liang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="Linux 常用命令Linux 命令太多，很多命令又有很多参数，不常用的命令是很容易忘记的，做一个备忘参考的博客链接 显示目录和文件的命令 Ls：用于查看所有文件夹的命令。 ls -l，显示详细信息（常用） Tree： 以树状图列出目录内容（需要apt install tree) Du：显示目录或文件大小 ，查看磁盘信息  修改目录，文件权限和属主及数组命令 Chmod：用于改变指定目录或文件的权">
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Linux常用命令 | Panliang</title>
+  <meta name="description" content="Linux 常用命令 Linux 命令太多，很多命令又有很多参数，不常用的命令是很容易忘记的，做一个备忘 参考的博客链接  显示目录和文件的命令  Ls：用于查看所有文件夹的命令。 ls -l，显示详细信息（常用） Tree： 以树状图列出目录内容（需要apt install tree) Du：显示目录或文件大小 ，查看磁盘信息   修改目录，文件权限和属主及数组命令  Chmod：用于改变指定">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux常用命令">
 <meta property="og:url" content="https://panlianghnu.github.io/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="PanLiang&#39;s blog">
-<meta property="og:description" content="Linux 常用命令Linux 命令太多，很多命令又有很多参数，不常用的命令是很容易忘记的，做一个备忘参考的博客链接 显示目录和文件的命令 Ls：用于查看所有文件夹的命令。 ls -l，显示详细信息（常用） Tree： 以树状图列出目录内容（需要apt install tree) Du：显示目录或文件大小 ，查看磁盘信息  修改目录，文件权限和属主及数组命令 Chmod：用于改变指定目录或文件的权">
+<meta property="og:description" content="Linux 常用命令 Linux 命令太多，很多命令又有很多参数，不常用的命令是很容易忘记的，做一个备忘 参考的博客链接  显示目录和文件的命令  Ls：用于查看所有文件夹的命令。 ls -l，显示详细信息（常用） Tree： 以树状图列出目录内容（需要apt install tree) Du：显示目录或文件大小 ，查看磁盘信息   修改目录，文件权限和属主及数组命令  Chmod：用于改变指定">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://panlianghnu.github.io/img/cover16.png">
 <meta property="article:published_time" content="2020-12-13T12:55:30.000Z">
 <meta property="article:modified_time" content="2020-12-15T12:36:08.000Z">
 <meta property="article:author" content="Pan Liang">
@@ -13,186 +32,339 @@
 <meta property="article:tag" content="ubuntu">
 <meta property="article:tag" content="转载">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://panlianghnu.github.io/img/cover16.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://panlianghnu.github.io/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?aa9636fda8e452e1e5173dd0a909723d";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script><script>var GLOBAL_CONFIG = { 
-  root: '/',
-  algolia: undefined,
-  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
-  copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  date_suffix: {
-    just: 'Just',
-    min: 'minutes ago',
-    hour: 'hours ago',
-    day: 'days ago',
-    month: 'months ago'
-  },
-  copyright: undefined,
-  lightbox: 'mediumZoom',
-  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
-  source: {
-    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
-    },
-    fancybox: {
-      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
-    }
-  },
-  isPhotoFigcaption: false,
-  islazyload: true,
-  isanchor: false
-};
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://panlianghnu.github.io/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="PanLiang&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
 
-var saveToLocal = {
-  set: function setWithExpiry(key, value, ttl) {
-    const now = new Date()
-    const expiryDay = ttl * 86400000
-    const item = {
-      value: value,
-      expiry: now.getTime() + expiryDay,
-    }
-    localStorage.setItem(key, JSON.stringify(item))
-  },
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
 
-  get: function getWithExpiry(key) {
-    const itemStr = localStorage.getItem(key)
 
-    if (!itemStr) {
-      return undefined
-    }
-    const item = JSON.parse(itemStr)
-    const now = new Date()
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/panlianghnu" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">panliang</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Changsha, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
 
-    if (now.getTime() > item.expiry) {
-      localStorage.removeItem(key)
-      return undefined
-    }
-    return item.value
-  }
-}
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
 
-// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
-const getScript = url => new Promise((resolve, reject) => {
-  const script = document.createElement('script')
-  script.src = url
-  script.async = true
-  script.onerror = reject
-  script.onload = script.onreadystatechange = function() {
-    const loadState = this.readyState
-    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-    script.onload = script.onreadystatechange = null
-    resolve()
-  }
-  document.head.appendChild(script)
-})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
-  isPost: true,
-  isHome: false,
-  isHighlightShrink: false,
-  isToc: true,
-  postUpdate: '2020-12-15 20:36:08'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
 
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(function () {  window.activateDarkMode = function () {
-    document.documentElement.setAttribute('data-theme', 'dark')
-    if (document.querySelector('meta[name="theme-color"]') !== null) {
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-    }
-  }
-  window.activateLightMode = function () {
-    document.documentElement.setAttribute('data-theme', 'light')
-   if (document.querySelector('meta[name="theme-color"]') !== null) {
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-    }
-  }
-  const autoChangeMode = 'false'
-  const t = saveToLocal.get('theme')
-  if (autoChangeMode === '1') {
-    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
-    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
-    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-    if (t === undefined) {
-      if (isLightMode) activateLightMode()
-      else if (isDarkMode) activateDarkMode()
-      else if (isNotSpecified || hasNoSupport) {
-        const now = new Date()
-        const hour = now.getHours()
-        const isNight = hour <= 6 || hour >= 18
-        isNight ? activateDarkMode() : activateLightMode()
-      }
-      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
-        if (saveToLocal.get('theme') === undefined) {
-          e.matches ? activateDarkMode() : activateLightMode()
-        }
-      })
-    } else if (t === 'light') activateLightMode()
-    else activateDarkMode()
-  } else if (autoChangeMode === '2') {
-    const now = new Date()
-    const hour = now.getHours()
-    const isNight = hour <= 6 || hour >= 18
-    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
-    else if (t === 'light') activateLightMode()
-    else activateDarkMode()
-  } else {
-    if (t === 'dark') activateDarkMode()
-    else if (t === 'light') activateLightMode()
-  }const asideStatus = saveToLocal.get('aside-status')
-if (asideStatus !== undefined) {
-   if (asideStatus === 'hide') {
-     document.documentElement.classList.add('hide-aside')
-   } else {
-     document.documentElement.classList.remove('hide-aside')
-   }
-}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">19</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/cover16.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">PanLiang's blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux常用命令</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-12-13T12:55:30.000Z" title="Created 2020-12-13 20:55:30">2020-12-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-12-15T12:36:08.000Z" title="Updated 2020-12-15 20:36:08">2020-12-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Linux-常用命令"><a href="#Linux-常用命令" class="headerlink" title="Linux 常用命令"></a>Linux 常用命令</h1><p>Linux 命令太多，很多命令又有很多参数，不常用的命令是很容易忘记的，做一个备忘<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiaonizuoren/article/details/79187444">参考的博客链接</a></p>
-<h3 id="显示目录和文件的命令"><a href="#显示目录和文件的命令" class="headerlink" title="显示目录和文件的命令"></a>显示目录和文件的命令</h3><ul>
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Anaconda/" style="font-size: 13px;">Anaconda</a> <a href="/tags/Language/" style="font-size: 13px;">Language</a> <a href="/tags/MacOS/" style="font-size: 13px;">MacOS</a> <a href="/tags/P2P/" style="font-size: 13px;">P2P</a> <a href="/tags/bios/" style="font-size: 13px;">bios</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.33px;">c语言</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.67px;">linux</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/ubuntu/" style="font-size: 13.33px;">ubuntu</a> <a href="/tags/websocket/" style="font-size: 13px;">websocket</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 13px;">分布式</a> <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13px;">区块链</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13px;">机器学习</a> <a href="/tags/%E8%81%8A%E5%A4%A9%E5%AE%A4/" style="font-size: 13px;">聊天室</a> <a href="/tags/%E8%BD%AC%E8%BD%BD/" style="font-size: 13.33px;">转载</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">16</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/02/25/testBlog/" class="title">testBlog</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-02-25T02:45:45.000Z" itemprop="datePublished">2021-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/02/19/%E7%AE%80%E5%8D%95%E6%A0%91%E5%BD%A2P2P%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0/" class="title">简单树形P2P网络实现</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-02-19T04:36:20.000Z" itemprop="datePublished">2021-02-19</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/02/04/%E5%9F%BA%E4%BA%8EWebSocket%E7%9A%84%E8%81%8A%E5%A4%A9%E5%AE%A4/" class="title">基于WebSocket的聊天室</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-02-04T01:57:56.000Z" itemprop="datePublished">2021-02-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/03/ML%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" class="title">ML学习笔记-1</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-03T08:45:14.000Z" itemprop="datePublished">2021-01-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/" class="title">简易区块链C语言实现</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-30T04:11:39.000Z" itemprop="datePublished">2020-12-30</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Linux常用命令" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux常用命令
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
+	  <time datetime="2020-12-13T12:55:30.000Z" itemprop="datePublished">2020-12-13</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/linux/" rel="tag">linux</a>, <a class="article-tag-link-link" href="/tags/ubuntu/" rel="tag">ubuntu</a>, <a class="article-tag-link-link" href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag">转载</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="linux-常用命令"><a class="markdownIt-Anchor" href="#linux-常用命令"></a> Linux 常用命令</h1>
+<p>Linux 命令太多，很多命令又有很多参数，不常用的命令是很容易忘记的，做一个备忘<br>
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/jiaonizuoren/article/details/79187444">参考的博客链接</a></p>
+<h3 id="显示目录和文件的命令"><a class="markdownIt-Anchor" href="#显示目录和文件的命令"></a> 显示目录和文件的命令</h3>
+<ul>
 <li>Ls：用于查看所有文件夹的命令。</li>
 <li>ls -l，显示详细信息（常用）</li>
 <li>Tree： 以树状图列出目录内容（需要apt install tree)</li>
 <li>Du：显示目录或文件大小 ，查看磁盘信息</li>
 </ul>
-<h3 id="修改目录，文件权限和属主及数组命令"><a href="#修改目录，文件权限和属主及数组命令" class="headerlink" title="修改目录，文件权限和属主及数组命令"></a>修改目录，文件权限和属主及数组命令</h3><ul>
+<h3 id="修改目录文件权限和属主及数组命令"><a class="markdownIt-Anchor" href="#修改目录文件权限和属主及数组命令"></a> 修改目录，文件权限和属主及数组命令</h3>
+<ul>
 <li>Chmod：用于改变指定目录或文件的权限命令。</li>
 <li>Chown：用于改变文件拥有属性的命令。</li>
 <li>Chgrp：用于改变文件群组的命令。</li>
 <li>Chattr：用于设置文件具有不可删除和修改权限。</li>
 <li>Lsattr：用于显示文件或目录的隐藏属性。</li>
 </ul>
-<h3 id="创建和删除目录的命令"><a href="#创建和删除目录的命令" class="headerlink" title="创建和删除目录的命令"></a>创建和删除目录的命令</h3><ul>
+<h3 id="创建和删除目录的命令"><a class="markdownIt-Anchor" href="#创建和删除目录的命令"></a> 创建和删除目录的命令</h3>
+<ul>
 <li>Mkdir：用于创建目录</li>
 <li>Rm -f：用于删除目录</li>
 </ul>
-<h3 id="创建和删除，重命名，复制文件的命令"><a href="#创建和删除，重命名，复制文件的命令" class="headerlink" title="创建和删除，重命名，复制文件的命令"></a>创建和删除，重命名，复制文件的命令</h3><ul>
+<h3 id="创建和删除重命名复制文件的命令"><a class="markdownIt-Anchor" href="#创建和删除重命名复制文件的命令"></a> 创建和删除，重命名，复制文件的命令</h3>
+<ul>
 <li>Touch：创建一个新的文件</li>
 <li>Vi:创建一个新的文件</li>
 <li>Rm：删除文件或目录</li>
@@ -210,67 +382,87 @@ if (asideStatus !== undefined) {
 <li>Tail：用于显示文件的后n行内容。</li>
 <li>Tail -f：用于自动刷新的显示文件后n行数据内容。</li>
 </ul>
-<h3 id="查找命令"><a href="#查找命令" class="headerlink" title="查找命令"></a>查找命令</h3><p>Find：查找指定目录或文件的命令。</p>
+<h3 id="查找命令"><a class="markdownIt-Anchor" href="#查找命令"></a> 查找命令</h3>
+<p>Find：查找指定目录或文件的命令。</p>
 <p>Whereis：查找指定的文件源和二进制文件和手册等</p>
 <p>Which：用于查询命令或别名的位置。</p>
 <p>Locate：快速查找系统数据库中指定的内容。</p>
 <p>Grep：在指定的文件或标准输出，标准输入内，查找满足条件的内容。</p>
-<h3 id="关机和重启计算机的命令"><a href="#关机和重启计算机的命令" class="headerlink" title="关机和重启计算机的命令"></a>关机和重启计算机的命令</h3><ul>
-<li><p>Shutdown：-r 关机后立即重启（reboot now 也行）</p>
+<h3 id="关机和重启计算机的命令"><a class="markdownIt-Anchor" href="#关机和重启计算机的命令"></a> 关机和重启计算机的命令</h3>
+<ul>
+<li>
+<p>Shutdown：-r 关机后立即重启（reboot now 也行）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-k 并不真正的关机，而只是发出警告信息给所有用户</span><br><span class="line">  </span><br><span class="line">-h 关机后不重新启动</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Poweroff：用于关机和关闭电源</p>
+<li>
+<p>Poweroff：用于关机和关闭电源</p>
 </li>
-<li><p>Init：改变系统运行级别</p>
+<li>
+<p>Init：改变系统运行级别</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">0级用于关闭系统</span><br><span class="line"></span><br><span class="line">1 级用于单一使用者模式</span><br><span class="line"></span><br><span class="line">2级用来进行多用户使用模式（但不带网络功能）</span><br><span class="line"></span><br><span class="line">3级用来进行多用户使用模式（带网络全功能）</span><br><span class="line"></span><br><span class="line">4级用来进行用户自定义使用模式</span><br><span class="line"></span><br><span class="line">5级表示进入x  windows时的模式</span><br><span class="line"></span><br><span class="line">6级用来重启系统</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Reboot： 用于计算机重启</p>
+<li>
+<p>Reboot： 用于计算机重启</p>
 </li>
-<li><p>Halt：用于关闭计算机系统</p>
+<li>
+<p>Halt：用于关闭计算机系统</p>
 </li>
 </ul>
-<h3 id="压缩和打包命令"><a href="#压缩和打包命令" class="headerlink" title="压缩和打包命令"></a>压缩和打包命令</h3><p>Tar：用于多个文件或目录进行打包，但不压缩，同时也用命令进行解包</p>
+<h3 id="压缩和打包命令"><a class="markdownIt-Anchor" href="#压缩和打包命令"></a> 压缩和打包命令</h3>
+<p>Tar：用于多个文件或目录进行打包，但不压缩，同时也用命令进行解包</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-A 新增压缩文件到已存在的压缩</span><br><span class="line">-c 建立新的压缩文件</span><br><span class="line">-d 记录文件的差别</span><br><span class="line">-r 添加文件到已经压缩的文件</span><br><span class="line">-u 添加改变了和现有的文件到已经存在的压缩文件</span><br><span class="line">-x 从压缩的文件中提取文件</span><br><span class="line">-t 显示压缩文件的内容</span><br><span class="line">-z 支持gzip解压文件</span><br><span class="line">-j 支持bzip2解压文件</span><br><span class="line">-Z 支持compress解压文件</span><br><span class="line">-v 显示操作过程</span><br><span class="line">-l 文件系统边界设置</span><br><span class="line">-k 保留原有文件不覆盖</span><br><span class="line">-m 保留文件不被覆盖</span><br><span class="line">-W 确认压缩文件的正确性</span><br></pre></td></tr></table></figure>
-
-<h3 id="用户操作命令"><a href="#用户操作命令" class="headerlink" title="用户操作命令"></a>用户操作命令</h3><p>Linux用户在操作系统可以进行日常管理和维护，涉及到的相关配置文件保存在 /etc/</p>
+<h3 id="用户操作命令"><a class="markdownIt-Anchor" href="#用户操作命令"></a> 用户操作命令</h3>
+<p>Linux用户在操作系统可以进行日常管理和维护，涉及到的相关配置文件保存在 /etc/</p>
 <p>Su：切换用户命令</p>
 <p>Sudo：一系统管理员的身份执行命令</p>
 <p>Passwd：用于修改用户的密码</p>
 <p>adduser：用于创建新用户，同时会创建该用户的组，默认用户a属于主组a，还会创建用户的默认home目录等信息</p>
 <p>deluser：用于删除用户，删除用户后home目录并不会主动删除，需要手动再删除</p>
-<h5 id="三个change"><a href="#三个change" class="headerlink" title="三个change"></a>三个change</h5><ul>
+<h5 id="三个change"><a class="markdownIt-Anchor" href="#三个change"></a> 三个change</h5>
+<ul>
 <li>chmod ， 修改文件权限：rwxrwxrwx，比如 chmod 777 a.txt 打开a的所有权限</li>
 <li>chgrp ， 修改文件或文件夹所属的组。 比如chgrp group1 a .txt 让a属于group1</li>
 <li>chown， 修改文件或文件夹的所有者。 比如chown user1 a.txt 让a属于user1</li>
 </ul>
-<h3 id="改变目录和查看当前目录命令"><a href="#改变目录和查看当前目录命令" class="headerlink" title="改变目录和查看当前目录命令"></a>改变目录和查看当前目录命令</h3><p>Cd：进入工作目录</p>
+<h3 id="改变目录和查看当前目录命令"><a class="markdownIt-Anchor" href="#改变目录和查看当前目录命令"></a> 改变目录和查看当前目录命令</h3>
+<p>Cd：进入工作目录</p>
 <p>Cd …：会退到上一级命令</p>
 <p>Pwd：显示当前用户所在工作目录位置</p>
-<h3 id="文件连接命令"><a href="#文件连接命令" class="headerlink" title="文件连接命令"></a>文件连接命令</h3><p>Ln：为源文件创建一个连接，并不将源文件复制一份，即占用的空间很小。</p>
+<h3 id="文件连接命令"><a class="markdownIt-Anchor" href="#文件连接命令"></a> 文件连接命令</h3>
+<p>Ln：为源文件创建一个连接，并不将源文件复制一份，即占用的空间很小。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">可以分为软件连接和硬链接。</span><br><span class="line"></span><br><span class="line">软连接：也称为符号连接，即为文件或目录创建一个快捷方式。</span><br></pre></td></tr></table></figure>
-
 <p>硬链接：给一个文件取多于一个名字，放在不同目录中，方便用户使用。</p>
 <p>Ln命令参数如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">-f：在创建连接时，先将与目的对象同名的文件或目录删除。</span><br><span class="line"></span><br><span class="line">-d：允许系统管理者硬链接自己的目录。</span><br><span class="line"></span><br><span class="line">-i：在删除与目的对象同名文件或目录时先询问用户。</span><br><span class="line"></span><br><span class="line">-n：在创建软连接时，将目的对象视为一般的文件。</span><br><span class="line"></span><br><span class="line">-s：创建软连接，即符号连接。</span><br><span class="line"></span><br><span class="line">-v：在连接之前显示文件或目录名。</span><br><span class="line"></span><br><span class="line">-b：将在连接时会被覆盖或删除的文件进行备份。</span><br></pre></td></tr></table></figure>
-
-<h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><p>Ps：显示瞬间进程的动态</p>
+<h3 id="其他命令"><a class="markdownIt-Anchor" href="#其他命令"></a> 其他命令</h3>
+<p>Ps：显示瞬间进程的动态</p>
 <p>Date：显示或设定系统的日期与时间。</p>
 <p>Kill： 杀死一些特定的进程</p>
 <p>Logout：退出系统</p>
 <p>Clear：清屏</p>
 <p>Passwd：设置用户密码</p>
-<h3 id="vi编辑器"><a href="#vi编辑器" class="headerlink" title="vi编辑器"></a>vi编辑器</h3><p>首先用vi命令打开一个文件</p>
+<h3 id="vi编辑器"><a class="markdownIt-Anchor" href="#vi编辑器"></a> vi编辑器</h3>
+<p>首先用vi命令打开一个文件</p>
 <p>末行模式命令：</p>
 <p>:n,m w path/filename 保存指定范围文档（ n表开始行，m表结束行）</p>
 <p>:q! 对文件做过修改后，强制退出</p>
 <p>:q 没有对文件做过修改退出</p>
 <p>Wq或x 保存退出</p>
-<p>dd 删除光标所在行</p>
-<p>: set number 显示行号</p>
-<p>: n 跳转到n行</p>
-<p>: s 替换字符串 : s/test/test2/g /g全局替换 /也可以用%代替</p>
+<dl>
+<dt>dd 删除光标所在行</dt>
+<dd>
+<p>set number 显示行号</p>
+</dd>
+<dd>
+<p>n 跳转到n行</p>
+</dd>
+<dd>
+<p>s 替换字符串 : s/test/test2/g /g全局替换 /也可以用%代替</p>
+</dd>
+</dl>
 <p>/ 查找字符串</p>
-<h3 id="网络通信常用的命令"><a href="#网络通信常用的命令" class="headerlink" title="网络通信常用的命令"></a>网络通信常用的命令</h3><p>Arp：网络地址显示及控制</p>
+<h3 id="网络通信常用的命令"><a class="markdownIt-Anchor" href="#网络通信常用的命令"></a> 网络通信常用的命令</h3>
+<p>Arp：网络地址显示及控制</p>
 <p>ftp：文件传输</p>
 <p>Lftp：文件传输</p>
 <p>Mail：发送/接收电子邮件</p>
@@ -284,99 +476,256 @@ if (asideStatus !== undefined) {
 <p>Telnet：远程登录</p>
 <p>Traceroute：显示到达某一主机所经由的路径及所使用的时间。</p>
 <p>Wget：从网路上自动下载文件</p>
-<h3 id="SSH-注意事项"><a href="#SSH-注意事项" class="headerlink" title="SSH 注意事项"></a>SSH 注意事项</h3><ul>
+<h3 id="ssh-注意事项"><a class="markdownIt-Anchor" href="#ssh-注意事项"></a> SSH 注意事项</h3>
+<ul>
 <li>确保配置好了SSH登陆、再关闭密码登陆，否则有登不上服务器的风险</li>
 <li>员工离职了直接deluser、再删除他的home，他就无法再登陆服务器了</li>
 <li>SSH端口最好配置一下端口，默认的22端口可能会被恶意扫描</li>
 </ul>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Pan Liang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://panlianghnu.github.io/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">https://panlianghnu.github.io/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux/">linux</a><a class="post-meta__tags" href="/tags/ubuntu/">ubuntu</a><a class="post-meta__tags" href="/tags/%E8%BD%AC%E8%BD%BD/">转载</a></div><div class="post_share"><div class="social-share" data-image="/img/cover16.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/12/13/Linux-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/"><img class="prev-cover" data-lazy-src="/img/cover12.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Linux 安装时的一些坑</div></div></a></div><div class="next-post pull-right"><a href="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/"><img class="next-cover" data-lazy-src="/img/cover1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">安装Ubuntu</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2020/12/13/安装Ubuntu/" title="安装Ubuntu"><img class="cover" data-lazy-src="/img/cover1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-13</div><div class="title">安装Ubuntu</div></div></a></div><div><a href="/2020/12/13/Linux-安装时的一些坑/" title="Linux 安装时的一些坑"><img class="cover" data-lazy-src="/img/cover12.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-13</div><div class="title">Linux 安装时的一些坑</div></div></a></div><div><a href="/2020/12/13/操作系统原理与程序逻辑训练/" title="操作系统原理与程序逻辑训练"><img class="cover" data-lazy-src="/img/cover11.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-13</div><div class="title">操作系统原理与程序逻辑训练</div></div></a></div><div><a href="/2020/12/14/python简史/" title="python简史"><img class="cover" data-lazy-src="/img/cover8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-14</div><div class="title">python简史</div></div></a></div></div></div></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Pan Liang</div><div class="author-info__description">今日事，今日毕</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">19</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/panlianghnu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/panlianghnu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:panliang@hnu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">panliang's blog</div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="card-content"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">Linux 常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.1.</span> <span class="toc-text">显示目录和文件的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%9B%AE%E5%BD%95%EF%BC%8C%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E5%92%8C%E5%B1%9E%E4%B8%BB%E5%8F%8A%E6%95%B0%E7%BB%84%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.2.</span> <span class="toc-text">修改目录，文件权限和属主及数组命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.3.</span> <span class="toc-text">创建和删除目录的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E5%88%A0%E9%99%A4%EF%BC%8C%E9%87%8D%E5%91%BD%E5%90%8D%EF%BC%8C%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.4.</span> <span class="toc-text">创建和删除，重命名，复制文件的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.5.</span> <span class="toc-text">查找命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E6%9C%BA%E5%92%8C%E9%87%8D%E5%90%AF%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.6.</span> <span class="toc-text">关机和重启计算机的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E5%92%8C%E6%89%93%E5%8C%85%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.7.</span> <span class="toc-text">压缩和打包命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.8.</span> <span class="toc-text">用户操作命令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%89%E4%B8%AAchange"><span class="toc-number">1.0.8.0.1.</span> <span class="toc-text">三个change</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B9%E5%8F%98%E7%9B%AE%E5%BD%95%E5%92%8C%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.9.</span> <span class="toc-text">改变目录和查看当前目录命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%BF%9E%E6%8E%A5%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.10.</span> <span class="toc-text">文件连接命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.11.</span> <span class="toc-text">其他命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vi%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">1.0.12.</span> <span class="toc-text">vi编辑器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.13.</span> <span class="toc-text">网络通信常用的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.0.14.</span> <span class="toc-text">SSH 注意事项</span></a></li></ol></li></ol></li></ol></div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/02/04/%E5%9F%BA%E4%BA%8EWebSocket%E7%9A%84%E8%81%8A%E5%A4%A9%E5%AE%A4/" title="基于WebSocket的聊天室">基于WebSocket的聊天室</a><time datetime="2021-02-04T01:57:56.000Z" title="Created 2021-02-04 09:57:56">2021-02-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/01/03/ML%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" title="ML学习笔记-1">ML学习笔记-1</a><time datetime="2021-01-03T08:45:14.000Z" title="Created 2021-01-03 16:45:14">2021-01-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/" title="简易区块链C语言实现">简易区块链C语言实现</a><time datetime="2020-12-30T04:11:39.000Z" title="Created 2020-12-30 12:11:39">2020-12-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/12/22/JS-%E5%8D%95%E7%BA%BF%E7%A8%8B/" title="JS 单线程">JS 单线程</a><time datetime="2020-12-22T12:44:08.000Z" title="Created 2020-12-22 20:44:08">2020-12-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/" title="python 文字版RPG小游戏">python 文字版RPG小游戏</a><time datetime="2020-12-17T07:44:24.000Z" title="Created 2020-12-17 15:44:24">2020-12-17</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Pan Liang</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
-  if (typeof pangu === 'object') pangu.spacingElementById('content-inner')
-  else {
-    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
-      .then(() => {
-        pangu.spacingElementById('content-inner')
-      })
-  }
-}
 
-function panguInit () {
-  if (false){
-    GLOBAL_CONFIG_SITE.isPost && panguFn()
-  } else {
-    panguFn()
-  }
-}
-
-document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
-  'title',
-  '#config_change',
-  '#body-wrap',
-  '#rightside-config-hide',
-  '#rightside-config-show',
-  '.js-pjax'
-]
-
-if (false) {
-  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
-}
-
-var pjax = new Pjax({
-  elements: 'a:not([target="_blank"])',
-  selectors: pjaxSelectors,
-  cacheBust: false,
-  analytics: false,
-  scrollRestoration: false
-})
-
-document.addEventListener('pjax:complete', function () {
-  window.refreshFn()
-
-  document.querySelectorAll('script[data-pjax]').forEach(item => {
-    const newScript = document.createElement('script')
-    const content = item.text || item.textContent || item.innerHTML || ""
-    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.appendChild(document.createTextNode(content))
-    item.parentNode.replaceChild(newScript, item)
-  })
-
-  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
-
-  typeof chatBtnFn === 'function' && chatBtnFn()
-  typeof panguInit === 'function' && panguInit()
-
-  if (typeof gtag === 'function') {
-    gtag('config', '', {'page_path': window.location.pathname});
-  }
-
-  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
-
-  // Analytics
-  if (false) {
-    MtaH5.pgv()
-  }
-
-  // prismjs
-  typeof Prism === 'object' && Prism.highlightAll()
-
-  typeof preloader === 'object' && preloader.endLoading()
-})
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+    <ul class="post-copyright list-unstyled">
+        
+        <li class="post-copyright-link hidden-xs">
+            <strong>本文链接：</strong>
+            <a
+                href="https://panlianghnu.github.io/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"
+                title="Linux常用命令"
+                target="_blank"
+                rel="external"
+                >https://panlianghnu.github.io/2020/12/13/Linux常用命令/</a
+            >
+        </li>
+        
+        <li class="post-copyright-license">
+            <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用
+            <a
+                href="http://creativecommons.org/licenses/by/4.0/deed.zh"
+                target="_blank"
+                rel="external"
+                >CC BY 4.0 CN协议</a
+            >
+            许可协议。转载请注明出处！
+        </li>
+    </ul>
+</blockquote>
+ 
+<div class="panel panel-default panel-badger">
+    <div class="panel-body">
+        <figure class="media">
+            <div class="media-left">
+                <a
+                    href="https://github.com/panlianghnu"
+                    target="_blank"
+                    class="img-burn thumb-sm visible-lg"
+                >
+                    <img
+                        src="/images/avatar.png"
+                        class="img-rounded w-full"
+                        alt=""
+                    />
+                </a>
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="https://github.com/panlianghnu" target="_blank"
+                        ><span class="text-dark">panliang</span
+                        ><small class="ml-1x"
+                            ></small
+                        ></a
+                    >
+                </h3>
+                <div>个人简介。</div>
+            </div>
+        </figure>
+    </div>
+</div>
 
 
-document.addEventListener('pjax:send', function () {
-  typeof preloader === 'object' && preloader.initLoading()
+    </div>
+  </article>
   
-  if (window.aplayers) {
-    for (let i = 0; i < window.aplayers.length; i++) {
-      if (!window.aplayers[i].options.fixed) {
-        window.aplayers[i].destroy()
-      }
-    }
-  }
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
 
-  typeof typed === 'object' && typed.destroy()
 
-  //reset readmode
-  const $bodyClassList = document.body.classList
-  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+  
+</div>
 
-})</script></div></body></html>
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/12/13/Linux-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/" title="Linux 安装时的一些坑"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/12/13/%E5%AE%89%E8%A3%85Ubuntu/" title="安装Ubuntu"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <!--div class="copyright">
+        
+        <!--div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div-->
+    <!--/div-->
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

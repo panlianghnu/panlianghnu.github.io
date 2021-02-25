@@ -1,187 +1,357 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>python 文字版RPG小游戏 | PanLiang's blog</title><meta name="keywords" content="python"><meta name="author" content="Pan Liang"><meta name="copyright" content="Pan Liang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="之前龙哥给我们布置了两个任务 语言快速上手-学习任务  这是第一个  基本就是实现一个文字版本的RPG小游戏，刚好我今天在bilibili看到一个互动视频觉得很有意思，就想着把这个视频用文字的形式复现出来 视频链接：【互动视频】卢本伟越狱记 这种互动视频有很多选项，每个选项都会影响之后的剧情，所以我使用一个栈来保存之前的选择，也方便每次互动时，玩家选错选项来有机会反悔回到上一步 代码如下： 123">
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>python 文字版RPG小游戏 | Panliang</title>
+  <meta name="description" content="之前龙哥给我们布置了两个任务 语言快速上手-学习任务 这是第一个  基本就是实现一个文字版本的RPG小游戏，刚好我今天在bilibili看到一个互动视频觉得很有意思，就想着把这个视频用文字的形式复现出来 视频链接：【互动视频】卢本伟越狱记 这种互动视频有很多选项，每个选项都会影响之后的剧情，所以我使用一个栈来保存之前的选择，也方便每次互动时，玩家选错选项来有机会反悔回到上一步 代码如下： 1234">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python 文字版RPG小游戏">
 <meta property="og:url" content="https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/index.html">
 <meta property="og:site_name" content="PanLiang&#39;s blog">
-<meta property="og:description" content="之前龙哥给我们布置了两个任务 语言快速上手-学习任务  这是第一个  基本就是实现一个文字版本的RPG小游戏，刚好我今天在bilibili看到一个互动视频觉得很有意思，就想着把这个视频用文字的形式复现出来 视频链接：【互动视频】卢本伟越狱记 这种互动视频有很多选项，每个选项都会影响之后的剧情，所以我使用一个栈来保存之前的选择，也方便每次互动时，玩家选错选项来有机会反悔回到上一步 代码如下： 123">
+<meta property="og:description" content="之前龙哥给我们布置了两个任务 语言快速上手-学习任务 这是第一个  基本就是实现一个文字版本的RPG小游戏，刚好我今天在bilibili看到一个互动视频觉得很有意思，就想着把这个视频用文字的形式复现出来 视频链接：【互动视频】卢本伟越狱记 这种互动视频有很多选项，每个选项都会影响之后的剧情，所以我使用一个栈来保存之前的选择，也方便每次互动时，玩家选错选项来有机会反悔回到上一步 代码如下： 1234">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://panlianghnu.github.io/img/cover8.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/image-20201217155246062.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/image-20201217155929460.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/image-20201217155949961.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/UNADJUSTEDNONRAW_thumb_10c.png">
 <meta property="article:published_time" content="2020-12-17T07:44:24.000Z">
 <meta property="article:modified_time" content="2020-12-21T01:31:37.000Z">
 <meta property="article:author" content="Pan Liang">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://panlianghnu.github.io/img/cover8.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?aa9636fda8e452e1e5173dd0a909723d";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script><script>var GLOBAL_CONFIG = { 
-  root: '/',
-  algolia: undefined,
-  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
-  copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  date_suffix: {
-    just: 'Just',
-    min: 'minutes ago',
-    hour: 'hours ago',
-    day: 'days ago',
-    month: 'months ago'
-  },
-  copyright: undefined,
-  lightbox: 'mediumZoom',
-  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
-  source: {
-    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
-    },
-    fancybox: {
-      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
-    }
-  },
-  isPhotoFigcaption: false,
-  islazyload: true,
-  isanchor: false
-};
+<meta name="twitter:image" content="https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/image-20201217155246062.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="PanLiang&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
 
-var saveToLocal = {
-  set: function setWithExpiry(key, value, ttl) {
-    const now = new Date()
-    const expiryDay = ttl * 86400000
-    const item = {
-      value: value,
-      expiry: now.getTime() + expiryDay,
-    }
-    localStorage.setItem(key, JSON.stringify(item))
-  },
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
 
-  get: function getWithExpiry(key) {
-    const itemStr = localStorage.getItem(key)
 
-    if (!itemStr) {
-      return undefined
-    }
-    const item = JSON.parse(itemStr)
-    const now = new Date()
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/panlianghnu" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">panliang</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Changsha, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
 
-    if (now.getTime() > item.expiry) {
-      localStorage.removeItem(key)
-      return undefined
-    }
-    return item.value
-  }
-}
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
 
-// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
-const getScript = url => new Promise((resolve, reject) => {
-  const script = document.createElement('script')
-  script.src = url
-  script.async = true
-  script.onerror = reject
-  script.onload = script.onreadystatechange = function() {
-    const loadState = this.readyState
-    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-    script.onload = script.onreadystatechange = null
-    resolve()
-  }
-  document.head.appendChild(script)
-})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
-  isPost: true,
-  isHome: false,
-  isHighlightShrink: false,
-  isToc: false,
-  postUpdate: '2020-12-21 09:31:37'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
 
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(function () {  window.activateDarkMode = function () {
-    document.documentElement.setAttribute('data-theme', 'dark')
-    if (document.querySelector('meta[name="theme-color"]') !== null) {
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-    }
-  }
-  window.activateLightMode = function () {
-    document.documentElement.setAttribute('data-theme', 'light')
-   if (document.querySelector('meta[name="theme-color"]') !== null) {
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-    }
-  }
-  const autoChangeMode = 'false'
-  const t = saveToLocal.get('theme')
-  if (autoChangeMode === '1') {
-    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
-    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
-    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-    if (t === undefined) {
-      if (isLightMode) activateLightMode()
-      else if (isDarkMode) activateDarkMode()
-      else if (isNotSpecified || hasNoSupport) {
-        const now = new Date()
-        const hour = now.getHours()
-        const isNight = hour <= 6 || hour >= 18
-        isNight ? activateDarkMode() : activateLightMode()
-      }
-      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
-        if (saveToLocal.get('theme') === undefined) {
-          e.matches ? activateDarkMode() : activateLightMode()
-        }
-      })
-    } else if (t === 'light') activateLightMode()
-    else activateDarkMode()
-  } else if (autoChangeMode === '2') {
-    const now = new Date()
-    const hour = now.getHours()
-    const isNight = hour <= 6 || hour >= 18
-    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
-    else if (t === 'light') activateLightMode()
-    else activateDarkMode()
-  } else {
-    if (t === 'dark') activateDarkMode()
-    else if (t === 'light') activateLightMode()
-  }const asideStatus = saveToLocal.get('aside-status')
-if (asideStatus !== undefined) {
-   if (asideStatus === 'hide') {
-     document.documentElement.classList.add('hide-aside')
-   } else {
-     document.documentElement.classList.remove('hide-aside')
-   }
-}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">19</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/cover8.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">PanLiang's blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">python 文字版RPG小游戏</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-12-17T07:44:24.000Z" title="Created 2020-12-17 15:44:24">2020-12-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-12-21T01:31:37.000Z" title="Updated 2020-12-21 09:31:37">2020-12-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>之前龙哥给我们布置了两个任务</p>
-<p><a href="https://panlianghnu.github.io/2020/12/14/Coder-%E8%AF%AD%E8%A8%80%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/">语言快速上手-学习任务</a> </p>
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Anaconda/" style="font-size: 13px;">Anaconda</a> <a href="/tags/Language/" style="font-size: 13px;">Language</a> <a href="/tags/MacOS/" style="font-size: 13px;">MacOS</a> <a href="/tags/P2P/" style="font-size: 13px;">P2P</a> <a href="/tags/bios/" style="font-size: 13px;">bios</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.33px;">c语言</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.67px;">linux</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/ubuntu/" style="font-size: 13.33px;">ubuntu</a> <a href="/tags/websocket/" style="font-size: 13px;">websocket</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 13px;">分布式</a> <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13px;">区块链</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13px;">机器学习</a> <a href="/tags/%E8%81%8A%E5%A4%A9%E5%AE%A4/" style="font-size: 13px;">聊天室</a> <a href="/tags/%E8%BD%AC%E8%BD%BD/" style="font-size: 13.33px;">转载</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">16</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/02/25/testBlog/" class="title">testBlog</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-02-25T02:45:45.000Z" itemprop="datePublished">2021-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/02/19/%E7%AE%80%E5%8D%95%E6%A0%91%E5%BD%A2P2P%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0/" class="title">简单树形P2P网络实现</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-02-19T04:36:20.000Z" itemprop="datePublished">2021-02-19</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/02/04/%E5%9F%BA%E4%BA%8EWebSocket%E7%9A%84%E8%81%8A%E5%A4%A9%E5%AE%A4/" class="title">基于WebSocket的聊天室</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-02-04T01:57:56.000Z" itemprop="datePublished">2021-02-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/03/ML%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" class="title">ML学习笔记-1</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-03T08:45:14.000Z" itemprop="datePublished">2021-01-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/" class="title">简易区块链C语言实现</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-30T04:11:39.000Z" itemprop="datePublished">2020-12-30</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-python-文字版RPG小游戏" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python 文字版RPG小游戏
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/" class="article-date">
+	  <time datetime="2020-12-17T07:44:24.000Z" itemprop="datePublished">2020-12-17</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/python/" rel="tag">python</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>之前龙哥给我们布置了两个任务</p>
+<p><a href="https://panlianghnu.github.io/2020/12/14/Coder-%E8%AF%AD%E8%A8%80%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/">语言快速上手-学习任务</a></p>
 <p>这是第一个</p>
-<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/image-20201217155246062.png" alt="image-20201217155246062"></p>
+<p><img src="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/image-20201217155246062.png" alt="image-20201217155246062"></p>
 <p>基本就是实现一个文字版本的RPG小游戏，刚好我今天在bilibili看到一个互动视频觉得很有意思，就想着把这个视频用文字的形式复现出来</p>
-<p>视频链接：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1pZ4y1W7LK?from=search&seid=15774110568370964830">【互动视频】卢本伟越狱记</a></p>
+<p>视频链接：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1pZ4y1W7LK?from=search&amp;seid=15774110568370964830">【互动视频】卢本伟越狱记</a></p>
 <p>这种互动视频有很多选项，每个选项都会影响之后的剧情，所以我使用一个栈来保存之前的选择，也方便每次互动时，玩家选错选项来有机会反悔回到上一步</p>
 <p>代码如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br></pre></td><td class="code"><pre><span class="line">stack = []</span><br><span class="line">stack.append(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="built_in">len</span>(stack)&gt;<span class="number">0</span>:</span><br><span class="line">    case = stack[-<span class="number">1</span>]   <span class="comment">#  读最后一个case</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">0</span>:      <span class="comment">#  case0:等待开始游戏</span></span><br><span class="line">        print(<span class="string">&#x27;卢本伟越狱记&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;卢本伟开挂被抓了，你能帮助卢本伟成功越狱吗？（你需要扮演卢本伟完成越狱）&#x27;</span>)</span><br><span class="line">        start = <span class="built_in">input</span>(<span class="string">&quot;输入&#x27;start&#x27;开始游戏，输入其他结束\n&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> start != <span class="string">&#x27;start&#x27;</span>:</span><br><span class="line">            print(<span class="string">&quot;你输入了：&quot;</span>,start,<span class="string">&quot; 游戏结束...&quot;</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">else</span>: <span class="comment"># 游戏开始</span></span><br><span class="line">            stack.append(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">1</span>:      <span class="comment">#  case1:开始游戏</span></span><br><span class="line">        print(<span class="string">&quot;卢本伟被关在牢房，这时来了俩警察&quot;</span>)</span><br><span class="line">        print(<span class="string">&#x27;警察1:“you are free guy now...骗你的哈哈哈”&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;警察1:“你有个朋友给你寄了一个包裹，但是你不要想着轻举妄动，我们已经检查过里面了，是吧？”&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;警察2:“（心虚）是啊是啊，我当然检查过了，这是我的工作嘛”&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;两个警察把包裹留下就走了&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;卢本伟打开了包裹，发现一个生日蛋糕，生日蛋糕里面居然藏了东西，你会选择？&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;A.锉刀 B.钻机 C.返回上一步 其他.结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span> :</span><br><span class="line">            stack.append(<span class="number">2</span>)   <span class="comment">#  case2: 选择锉刀</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span> :</span><br><span class="line">            stack.append(<span class="number">3</span>)   <span class="comment">#  case3: 选择钻机</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;C&quot;</span> :</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">2</span>:       <span class="comment"># case2：选择锉刀</span></span><br><span class="line">        print(<span class="string">&#x27;你选择了锉刀，卢本伟切割了监狱门，并打倒了守卫，这时有人追了过来&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;卢本伟灵机一动，躲进了一个小房间，但是这不是长久之计，必须找到方法越狱&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;卢本伟发现房间里有：A.手雷   B.椅子&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;聪明的你会选择：A.手雷  B.椅子 C.返回上一步 其他.结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span> :</span><br><span class="line">            stack.append(<span class="number">4</span>)  <span class="comment"># case4: 选择手雷</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span> :</span><br><span class="line">            stack.append(<span class="number">5</span>)  <span class="comment"># case5: 选择椅子</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;C&quot;</span> :</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">4</span>:       <span class="comment"># case4: 选择手雷</span></span><br><span class="line">        print(<span class="string">&#x27;情急之下，卢本伟拿起了地上的手雷，准备和追来的警察拼死一搏&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;两个警察追过俩把门堵上，卢本伟失手把自己炸死了&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;game over&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;输入A重开游戏，输入B返回上一步，输入其他结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            stack = []</span><br><span class="line">            stack.append(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span>:</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">5</span>:       <span class="comment"># case5: 选择椅子</span></span><br><span class="line">        print(<span class="string">&#x27;聪明的卢本伟发现通过椅子可以钻进天花板的通风管道&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;这个时候问题来了，通风管道只能向左或向右&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;你会选择？ A.向右 B.向左 C.返回上一步 其他.结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span> : </span><br><span class="line">            stack.append(<span class="number">6</span>)  <span class="comment"># case6: 选择向右</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span> :</span><br><span class="line">            stack.append(<span class="number">7</span>)  <span class="comment"># case7: 选择向左</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;C&quot;</span> :</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">6</span>:     <span class="comment"># 选择向右</span></span><br><span class="line">        print(<span class="string">&#x27;卢本伟顺着通风管道爬到了天台&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;在天台，卢本伟发现了 A.喷气背包 B.马桶塞&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;你会选择什么装备逃生？&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;A.喷气背包 B.马桶塞 C.返回上一步 其他.结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span> : </span><br><span class="line">            stack.append(<span class="number">8</span>)  <span class="comment"># case8: 选择喷气背包</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span> :</span><br><span class="line">            stack.append(<span class="number">9</span>)  <span class="comment"># case9: 选择马桶塞</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;C&quot;</span> :</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">7</span>:     <span class="comment"># 选择向左</span></span><br><span class="line">        print(<span class="string">&#x27;警察们在会议室开会，而卢本伟不小心掉进了会议室，game over&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;输入A重开游戏，输入B返回上一步，输入其他结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            stack = []</span><br><span class="line">            stack.append(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span>:</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">8</span>:       <span class="comment"># case8: 选择喷气背包</span></span><br><span class="line">        print(<span class="string">&#x27;伞兵一号卢本伟准备就绪！！！&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;Oh这是个坏的喷气背包，卢本伟摔死了&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;输入A重开游戏，输入B返回上一步，输入其他结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            stack = []</span><br><span class="line">            stack.append(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span>:</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">9</span>:       <span class="comment"># case9: 选择马桶塞</span></span><br><span class="line">        print(<span class="string">&#x27;卢本伟左手一个马桶塞，右手一个马桶塞&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;凭借强大的臂力和马桶塞的吸力，卢本伟成功的飞檐走壁逃出监狱！！&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;输入A重开游戏，输入B返回上一步，输入其他结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            stack = []</span><br><span class="line">            stack.append(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span>:</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">3</span>:       <span class="comment"># case3: 选择钻机</span></span><br><span class="line">        print(<span class="string">&#x27;你选择了钻机，卢本伟使用钻机钻地，发现地下还有个房间&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;卢本伟想都没想直接跳进了下面的房间，环顾四周&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;房间里有一个井盖好像可以撬开，还有一个传送器上面写着“你会变得透明并可以穿墙”&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;你会选择？ A.传送器 B.撬棍 C.返回上一步 其他.结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span> : </span><br><span class="line">            stack.append(<span class="number">10</span>)  <span class="comment"># case10: 选择传送器</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span> :</span><br><span class="line">            stack.append(<span class="number">11</span>)  <span class="comment"># case11: 选择撬棍</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;C&quot;</span> :</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">10</span>:</span><br><span class="line">        print(<span class="string">&#x27;你选择了传送器&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;卢本伟按下了传送器，他开始变得透明，墙无法阻挡他，但是地面也无法支撑他，卢本伟直接沉到了地心，死了&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;输入A重开游戏，输入B返回上一步，输入其他结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            stack = []</span><br><span class="line">            stack.append(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span>:</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">11</span>:</span><br><span class="line">        print(<span class="string">&#x27;你选择了撬棍&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;卢本伟撬开了井盖，钻进井盖发现掉到了一楼大厅走廊上&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;卢本伟被两个警察发现，警察们追着他跑&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;这时你会？ A.往左跑 B.往右跑 C.返回上一步 其他.结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            stack.append(<span class="number">12</span>)   <span class="comment"># case12: 往左跑</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span>:</span><br><span class="line">            stack.append(<span class="number">13</span>)   <span class="comment"># case13: 往右跑</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;C&quot;</span>:</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">12</span>:</span><br><span class="line">        print(<span class="string">&#x27;你选择向左逃跑&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;那两个警察追不上卢本伟，但是追的人越来越多&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;现在卢本伟被五个带枪的警察包围&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;但是凭借卢本伟的走位，他们一枪没中，甚至射死了自己人&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;卢本赶紧趁乱跑到门口抢了一辆警车跑了&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;越狱成功，game over...&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;输入A重开游戏，输入B返回上一步，输入其他结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            stack = []</span><br><span class="line">            stack.append(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span>:</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> case == <span class="number">13</span>:</span><br><span class="line">        print(<span class="string">&#x27;卢本伟边走位边逃跑的时候还就那个不小心一头簪死在柱子上&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;无敌的卢本伟倒下了&#x27;</span>)</span><br><span class="line">        print(<span class="string">&#x27;game over...&#x27;</span>)</span><br><span class="line">        tmp = <span class="built_in">input</span>(<span class="string">&#x27;输入A重开游戏，输入B返回上一步，输入其他结束游戏\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            stack = []</span><br><span class="line">            stack.append(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> tmp == <span class="string">&quot;B&quot;</span>:</span><br><span class="line">            <span class="keyword">del</span> stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
-
 <p>下面是剧情介绍（建议去上面的视频链接，更加清晰）：</p>
 <blockquote>
 <p>卢本伟越狱记</p>
@@ -205,103 +375,259 @@ if (asideStatus !== undefined) {
 <p>​    A.你按下了传送器，墙无法阻挡你，地面也无法支撑你，你直接沉到了地球核心，死了</p>
 <p>​    B.你撬开了井盖，掉到了走廊，两个警察追着你跑</p>
 <p>​        A.往左 你被五个人围住，但是凭借着走位，他们一枪没中，你抢了一辆警车跑路了</p>
-<p>​        B.往右 你撞上了柱子，无敌的你倒下了 </p>
+<p>​        B.往右 你撞上了柱子，无敌的你倒下了</p>
 </blockquote>
 <p>游戏装备介绍：</p>
 <p>传送器：</p>
-<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/image-20201217155929460.png" alt="image-20201217155929460"></p>
+<p><img src="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/image-20201217155929460.png" alt="image-20201217155929460"></p>
 <p>马桶塞：</p>
-<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/image-20201217155949961.png" alt="image-20201217155949961"></p>
+<p><img src="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/image-20201217155949961.png" alt="image-20201217155949961"></p>
 <p>步骤：</p>
-<p><img src= "/img/loading.gif" data-lazy-src="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/UNADJUSTEDNONRAW_thumb_10c.png" alt="UNADJUSTEDNONRAW_thumb_10c"></p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Pan Liang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/">https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a></div><div class="post_share"><div class="social-share" data-image="/img/cover8.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/12/22/JS-%E5%8D%95%E7%BA%BF%E7%A8%8B/"><img class="prev-cover" data-lazy-src="/img/cover10.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">JS 单线程</div></div></a></div><div class="next-post pull-right"><a href="/2020/12/15/Python%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"><img class="next-cover" data-lazy-src="/img/cover16.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Python快速入门</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2020/12/14/Anaconda安装/" title="Anaconda安装"><img class="cover" data-lazy-src="/img/cover11.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-14</div><div class="title">Anaconda安装</div></div></a></div><div><a href="/2020/12/14/MacOS安装python3并设置默认/" title="MacOS安装python3并设置默认"><img class="cover" data-lazy-src="/img/cover16.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-14</div><div class="title">MacOS安装python3并设置默认</div></div></a></div><div><a href="/2020/12/14/python简史/" title="python简史"><img class="cover" data-lazy-src="/img/cover8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-14</div><div class="title">python简史</div></div></a></div><div><a href="/2020/12/15/Python快速入门/" title="Python快速入门"><img class="cover" data-lazy-src="/img/cover16.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-15</div><div class="title">Python快速入门</div></div></a></div></div></div></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Pan Liang</div><div class="author-info__description">今日事，今日毕</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">19</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/panlianghnu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/panlianghnu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:panliang@hnu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">panliang's blog</div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/02/04/%E5%9F%BA%E4%BA%8EWebSocket%E7%9A%84%E8%81%8A%E5%A4%A9%E5%AE%A4/" title="基于WebSocket的聊天室">基于WebSocket的聊天室</a><time datetime="2021-02-04T01:57:56.000Z" title="Created 2021-02-04 09:57:56">2021-02-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/01/03/ML%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" title="ML学习笔记-1">ML学习笔记-1</a><time datetime="2021-01-03T08:45:14.000Z" title="Created 2021-01-03 16:45:14">2021-01-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/12/30/%E7%AE%80%E6%98%93%E5%8C%BA%E5%9D%97%E9%93%BEC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/" title="简易区块链C语言实现">简易区块链C语言实现</a><time datetime="2020-12-30T04:11:39.000Z" title="Created 2020-12-30 12:11:39">2020-12-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/12/22/JS-%E5%8D%95%E7%BA%BF%E7%A8%8B/" title="JS 单线程">JS 单线程</a><time datetime="2020-12-22T12:44:08.000Z" title="Created 2020-12-22 20:44:08">2020-12-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/" title="python 文字版RPG小游戏">python 文字版RPG小游戏</a><time datetime="2020-12-17T07:44:24.000Z" title="Created 2020-12-17 15:44:24">2020-12-17</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Pan Liang</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
-  if (typeof pangu === 'object') pangu.spacingElementById('content-inner')
-  else {
-    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
-      .then(() => {
-        pangu.spacingElementById('content-inner')
-      })
-  }
-}
+<p><img src="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/UNADJUSTEDNONRAW_thumb_10c.png" alt="UNADJUSTEDNONRAW_thumb_10c"></p>
 
-function panguInit () {
-  if (false){
-    GLOBAL_CONFIG_SITE.isPost && panguFn()
-  } else {
-    panguFn()
-  }
-}
-
-document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
-  'title',
-  '#config_change',
-  '#body-wrap',
-  '#rightside-config-hide',
-  '#rightside-config-show',
-  '.js-pjax'
-]
-
-if (false) {
-  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
-}
-
-var pjax = new Pjax({
-  elements: 'a:not([target="_blank"])',
-  selectors: pjaxSelectors,
-  cacheBust: false,
-  analytics: false,
-  scrollRestoration: false
-})
-
-document.addEventListener('pjax:complete', function () {
-  window.refreshFn()
-
-  document.querySelectorAll('script[data-pjax]').forEach(item => {
-    const newScript = document.createElement('script')
-    const content = item.text || item.textContent || item.innerHTML || ""
-    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.appendChild(document.createTextNode(content))
-    item.parentNode.replaceChild(newScript, item)
-  })
-
-  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
-
-  typeof chatBtnFn === 'function' && chatBtnFn()
-  typeof panguInit === 'function' && panguInit()
-
-  if (typeof gtag === 'function') {
-    gtag('config', '', {'page_path': window.location.pathname});
-  }
-
-  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
-
-  // Analytics
-  if (false) {
-    MtaH5.pgv()
-  }
-
-  // prismjs
-  typeof Prism === 'object' && Prism.highlightAll()
-
-  typeof preloader === 'object' && preloader.endLoading()
-})
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+    <ul class="post-copyright list-unstyled">
+        
+        <li class="post-copyright-link hidden-xs">
+            <strong>本文链接：</strong>
+            <a
+                href="https://panlianghnu.github.io/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/"
+                title="python 文字版RPG小游戏"
+                target="_blank"
+                rel="external"
+                >https://panlianghnu.github.io/2020/12/17/python-文字版RPG小游戏/</a
+            >
+        </li>
+        
+        <li class="post-copyright-license">
+            <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用
+            <a
+                href="http://creativecommons.org/licenses/by/4.0/deed.zh"
+                target="_blank"
+                rel="external"
+                >CC BY 4.0 CN协议</a
+            >
+            许可协议。转载请注明出处！
+        </li>
+    </ul>
+</blockquote>
+ 
+<div class="panel panel-default panel-badger">
+    <div class="panel-body">
+        <figure class="media">
+            <div class="media-left">
+                <a
+                    href="https://github.com/panlianghnu"
+                    target="_blank"
+                    class="img-burn thumb-sm visible-lg"
+                >
+                    <img
+                        src="/images/avatar.png"
+                        class="img-rounded w-full"
+                        alt=""
+                    />
+                </a>
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="https://github.com/panlianghnu" target="_blank"
+                        ><span class="text-dark">panliang</span
+                        ><small class="ml-1x"
+                            ></small
+                        ></a
+                    >
+                </h3>
+                <div>个人简介。</div>
+            </div>
+        </figure>
+    </div>
+</div>
 
 
-document.addEventListener('pjax:send', function () {
-  typeof preloader === 'object' && preloader.initLoading()
+    </div>
+  </article>
   
-  if (window.aplayers) {
-    for (let i = 0; i < window.aplayers.length; i++) {
-      if (!window.aplayers[i].options.fixed) {
-        window.aplayers[i].destroy()
-      }
-    }
-  }
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
 
-  typeof typed === 'object' && typed.destroy()
 
-  //reset readmode
-  const $bodyClassList = document.body.classList
-  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+  
+</div>
 
-})</script></div></body></html>
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/12/22/JS-%E5%8D%95%E7%BA%BF%E7%A8%8B/" title="JS 单线程"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/12/15/Python%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" title="Python快速入门"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <!--div class="copyright">
+        
+        <!--div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div-->
+    <!--/div-->
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
