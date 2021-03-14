@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>杭电OJ | Panliang</title>
+  <meta name="description" content="刷刷OJ放松一下  1001-数列和 原题链接 这个题目就是给一个正整数n，求 sum &#x3D;  1 + 2 + 3 + … + n 我的第一反应就是循环相加或者递归相加复杂度太高，可能过不了。直接用求和公式即可 当我写下 sum &#x3D; (n+1)*n&#x2F;2 以为稳过的时候，提交后 err 了。。。想了很久代码应该没问题，去网上查发现这个题递归就能AC，崩溃！最后发现是中间结果爆 int 了，改成判断奇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杭电OJ">
+<meta property="og:url" content="https://panlianghnu.github.io/2021/03/14/%E6%9D%AD%E7%94%B5OJ/index.html">
+<meta property="og:site_name" content="PanLiang&#39;s blog">
+<meta property="og:description" content="刷刷OJ放松一下  1001-数列和 原题链接 这个题目就是给一个正整数n，求 sum &#x3D;  1 + 2 + 3 + … + n 我的第一反应就是循环相加或者递归相加复杂度太高，可能过不了。直接用求和公式即可 当我写下 sum &#x3D; (n+1)*n&#x2F;2 以为稳过的时候，提交后 err 了。。。想了很久代码应该没问题，去网上查发现这个题递归就能AC，崩溃！最后发现是中间结果爆 int 了，改成判断奇">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-14T09:05:52.000Z">
+<meta property="article:modified_time" content="2021-03-14T12:22:56.015Z">
+<meta property="article:author" content="Pan Liang">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://panlianghnu.github.io/2021/03/14/%E6%9D%AD%E7%94%B5OJ/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="PanLiang&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/panlianghnu" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">panliang</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Changsha, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Anaconda/" style="font-size: 13px;">Anaconda</a> <a href="/tags/Language/" style="font-size: 13px;">Language</a> <a href="/tags/MacOS/" style="font-size: 13px;">MacOS</a> <a href="/tags/P2P/" style="font-size: 13px;">P2P</a> <a href="/tags/bios/" style="font-size: 13px;">bios</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.33px;">c语言</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.67px;">linux</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/ubuntu/" style="font-size: 13.33px;">ubuntu</a> <a href="/tags/websocket/" style="font-size: 13px;">websocket</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 13px;">分布式</a> <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13px;">区块链</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/%E8%81%8A%E5%A4%A9%E5%AE%A4/" style="font-size: 13px;">聊天室</a> <a href="/tags/%E8%BD%AC%E8%BD%BD/" style="font-size: 13.33px;">转载</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">16</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/14/%E6%9D%AD%E7%94%B5OJ/" class="title">杭电OJ</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-14T09:05:52.000Z" itemprop="datePublished">2021-03-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/10/ML%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2/" class="title">ML学习笔记-2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-10T07:10:34.000Z" itemprop="datePublished">2021-03-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/03/AOPEDF%E5%AD%A6%E4%B9%A0/" class="title">AOPEDF学习</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-03T11:26:04.000Z" itemprop="datePublished">2021-03-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/02/Vue%E5%AD%A6%E4%B9%A01/" class="title">(no title)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-02T08:07:04.821Z" itemprop="datePublished">2021-03-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/02/19/%E7%AE%80%E5%8D%95%E6%A0%91%E5%BD%A2P2P%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0/" class="title">简单树形P2P网络实现</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-02-19T04:36:20.000Z" itemprop="datePublished">2021-02-19</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-杭电OJ" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      杭电OJ
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/03/14/%E6%9D%AD%E7%94%B5OJ/" class="article-date">
+	  <time datetime="2021-03-14T09:05:52.000Z" itemprop="datePublished">2021-03-14</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/03/14/%E6%9D%AD%E7%94%B5OJ/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="刷刷oj放松一下"><a class="markdownIt-Anchor" href="#刷刷oj放松一下"></a> 刷刷OJ放松一下</h1>
+<h2 id="1001-数列和"><a class="markdownIt-Anchor" href="#1001-数列和"></a> 1001-数列和</h2>
+<p><a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/showproblem.php?pid=1001">原题链接</a></p>
+<p>这个题目就是给一个正整数n，求 sum =  1 + 2 + 3 + … + n</p>
+<p>我的第一反应就是循环相加或者递归相加复杂度太高，可能过不了。直接用求和公式即可</p>
+<p>当我写下 sum = (n+1)*n/2 以为稳过的时候，提交后 err 了。。。想了很久代码应该没问题，去网上查发现这个题递归就能AC，崩溃！最后发现是中间结果爆 int 了，改成判断奇偶做就 AC 了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  OJ-HD-1004</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by panliang on 2021/3/12.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n)!=EOF) &#123;</span><br><span class="line">        n%<span class="number">2</span>==<span class="number">0</span>?</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n\n&quot;</span>,n/<span class="number">2</span>*(n+<span class="number">1</span>))</span><br><span class="line">        :</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n\n&quot;</span>,(n+<span class="number">1</span>)/<span class="number">2</span>*n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1002-大数相加"><a class="markdownIt-Anchor" href="#1002-大数相加"></a> 1002-大数相加</h2>
+<p><a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/showproblem.php?pid=1002">原题链接</a></p>
+<p>这个题目就是不断输入两个正整数，然后求他们的和，数据很大很大，需要用高精度来做</p>
+<p>用字符串保存数据，一步步模拟加法过程即可</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  OJ-HD-1002</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by panliang on 2021/3/12.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxsize 1010</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">plus</span><span class="params">(<span class="keyword">char</span>*,<span class="keyword">char</span>*)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="comment">// two big positive integer plus</span></span><br><span class="line">    <span class="keyword">int</span> n,i=<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">    <span class="keyword">for</span>(;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="keyword">char</span> a[maxsize];</span><br><span class="line">        <span class="built_in">memset</span>(a,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">char</span>)*maxsize);</span><br><span class="line">        <span class="keyword">char</span> b[maxsize];</span><br><span class="line">        <span class="built_in">memset</span>(b,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">char</span>)*maxsize);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s%s&quot;</span>,a,b);</span><br><span class="line">        <span class="keyword">char</span>* c = plus(a,b);</span><br><span class="line">        <span class="comment">// a plus b</span></span><br><span class="line">        <span class="keyword">if</span>(i&gt;<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Case %d:\n%s + %s = %s\n&quot;</span>,i,a,b,c);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">char</span>* a)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> tmp[maxsize];</span><br><span class="line">    <span class="built_in">strcpy</span>(tmp,a);</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len = <span class="built_in">strlen</span>(a);</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (;i&lt;len;i++) &#123;</span><br><span class="line">        a[i] = tmp[len-i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">plus</span><span class="params">(<span class="keyword">char</span>* a,<span class="keyword">char</span>* b)</span></span>&#123;</span><br><span class="line">    reverse(a);</span><br><span class="line">    reverse(b);</span><br><span class="line">    <span class="keyword">char</span>* c = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>)*maxsize);</span><br><span class="line">    <span class="built_in">memset</span>(c,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">char</span>)*maxsize);</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (;i&lt;maxsize;i++) &#123; <span class="comment">// 按位相加</span></span><br><span class="line">        <span class="keyword">if</span> (a[i]+b[i]) &#123; <span class="comment">// 如果不同时为&#x27;\0&#x27;</span></span><br><span class="line">            c[i] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (a[i]&gt;=<span class="string">&#x27;0&#x27;</span>) &#123;</span><br><span class="line">                c[i] += a[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (b[i]&gt;=<span class="string">&#x27;0&#x27;</span>) &#123;</span><br><span class="line">                c[i] += b[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 处理进位，两个数相加无需回溯考虑，最多也就19 =&gt; 9</span></span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;maxsize<span class="number">-1</span>;i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(c[i]&gt;<span class="string">&#x27;9&#x27;</span>)&#123;</span><br><span class="line">            c[i] -= <span class="number">10</span>;</span><br><span class="line">            c[i+<span class="number">1</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    reverse(a); <span class="comment">// 程序健壮性</span></span><br><span class="line">    reverse(b); <span class="comment">// reverse只是方便处理相加，返回前应该复原</span></span><br><span class="line">    reverse(c);</span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="1003-最大子序列和"><a class="markdownIt-Anchor" href="#1003-最大子序列和"></a> 1003-最大子序列和</h2>
+<p><a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/showproblem.php?pid=1003">原题链接</a></p>
+<p>给一个序列，求一个子序列，要求这个子序列的和，是所有子序列的和中最大的那个。输出子序列的和、起始索引、终止索引</p>
+<p>这个题目我的第一反应是二维动态规划，使用一个数组 dp[i][j] 表示 sum = arr[i]+…+arr[j]，然后数据太大爆内存了。。后来发现这个题目好像没有必要二维动态规划，只是求最大值而已，一维即可。</p>
+<p>做法是遍历数组，需要5个变量作为中间变量</p>
+<p>sum : 记录最大子序列的和，最终输出</p>
+<p>left : 记录最大子序列的左索引，最终输出</p>
+<p>right : 记录最大子序列的右索引，最终输出</p>
+<p>tmp_sum : 保存中间序列的和，动态变化，不断和 sum 比较大小</p>
+<p>tmp_left : 保存中间序列的左索引，如果中间序列的和是负数，则开新窗口，移动 tmp_left</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  OJ-HD-1003</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by panliang on 2021/3/12.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxsize 100010</span></span><br><span class="line"><span class="keyword">int</span> arr[maxsize];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;t);</span><br><span class="line">    <span class="keyword">int</span> cases=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(;cases&lt;=t;cases++)&#123;</span><br><span class="line">        <span class="built_in">memset</span>(arr,<span class="number">0</span>,<span class="keyword">sizeof</span>(arr));</span><br><span class="line">        <span class="keyword">int</span> len,i;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;len);</span><br><span class="line">        <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;len;i++) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 求 arr 的最大子序列和</span></span><br><span class="line">        <span class="comment">// 二维动态规划必定爆内存，100010*100010*sizeof(int)</span></span><br><span class="line">        <span class="comment">// dp[i][j] = sum of arr[i] +...+ arr[j]</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> left=<span class="number">0</span>,right=<span class="number">0</span>,sum=<span class="number">-1010</span>,tmp_sum=<span class="number">0</span>,tmp_left=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;len;i++) &#123;</span><br><span class="line">            tmp_sum += arr[i];</span><br><span class="line">            <span class="keyword">if</span> (tmp_sum &gt; sum) &#123;</span><br><span class="line">                sum = tmp_sum;</span><br><span class="line">                left = tmp_left;</span><br><span class="line">                right = i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(tmp_sum &lt; <span class="number">0</span>)&#123;</span><br><span class="line">                tmp_left = i+<span class="number">1</span>;</span><br><span class="line">                tmp_sum = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(cases&gt;<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Case %d:\n%d %d %d\n&quot;</span>,cases,sum,left+<span class="number">1</span>,right+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1004-let-the-balloon-rise"><a class="markdownIt-Anchor" href="#1004-let-the-balloon-rise"></a> 1004-Let the Balloon Rise</h2>
+<p><a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/showproblem.php?pid=1004">原题链接</a></p>
+<p>输入N(0&lt;N&lt;=1000)个字符串，求出现次数最多的字符串</p>
+<p>最简单的就是使用 map&lt;string,int&gt;，但是C语言标准库没有 string，也没有 map 。。。</p>
+<p>我看N不大，没有用 hash，直接使用数组也过了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  OJ-HD-1004</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by panliang on 2021/3/14.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">&#125; colors[<span class="number">1010</span>];</span><br><span class="line"><span class="keyword">int</span> len=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertColor</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* toinsert)</span></span>&#123;</span><br><span class="line">    <span class="built_in">strcpy</span>(colors[len].str,toinsert);</span><br><span class="line">    colors[len++].num = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clearColor</span><span class="params">()</span></span>&#123;</span><br><span class="line">    len=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">handleColor</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123; <span class="comment">// 找到则+1，没找到则 insert</span></span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;len;i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(colors[i].str, str) == <span class="number">0</span>) &#123;</span><br><span class="line">            colors[i].num++;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    insertColor(str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">char</span>* <span class="title">maxColor</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,tmpMax=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">char</span>* res=<span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;len;i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (tmpMax &lt; colors[i].num) &#123;</span><br><span class="line">            tmpMax = colors[i].num;</span><br><span class="line">            res = colors[i].str;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="comment">// hashmap[] is the best way, but c has no stl</span></span><br><span class="line">    <span class="keyword">int</span> n,i;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n) &amp;&amp; n) &#123;</span><br><span class="line">        clearColor();</span><br><span class="line">        <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;n;i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> str[<span class="number">16</span>];</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,str);</span><br><span class="line">            handleColor(str);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,maxColor());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1005-number-sequence"><a class="markdownIt-Anchor" href="#1005-number-sequence"></a> 1005-Number Sequence</h2>
+<p><a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/showproblem.php?pid=1005">原题链接</a></p>
+<p>f(1) = 1, f(2) = 1, f(n) = (A * f(n - 1) + B * f(n - 2)) mod 7.</p>
+<p>给你 A B n， (1 &lt;= A, B &lt;= 1000, 1 &lt;= n &lt;= 100,000,000)，求 f(n)</p>
+<p>这个题目涉及到 mod 运算，那么贴一个 mod 运算的性质</p>
+<blockquote>
+<p>模运算满足结合律、交换律、分配率，具体如下：</p>
+<p>A. 结合律</p>
+<p>((a+b)%p+c)%p=(a+(b+c)%p)%p</p>
+<p>((ab)%p * c)%p= (a * (bc)%p)%p</p>
+<p>B. 交换律</p>
+<p>(a+b)%p=(b+a)%p</p>
+<p>(ab)%p=(ba)%p</p>
+<p>C. 分配率</p>
+<p>(a+b)%p=(a%p+b%p)%p</p>
+<p>((a+b)%pc)%p = ( (ac)%p + (b*c)%p )%p</p>
+</blockquote>
+<p>所以这个题目我可以先对输入的 A、B求mod，不会影响最终的结果，大幅缩小A、B的值会让中间的乘法运算更快，然后我交了一次，超时了。。。</p>
+<p>我开始找数组的规律，可以发现 f(i) 只和 f(i-1) f(i-2) 有关，f(1) = f(2) = 1，所以只要当后面计算出来的结果也有连续的1，这个数字序列就进入了循环了，上代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  OJ-HD-1005</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by panliang on 2021/3/14.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//A number sequence is defined as follows:</span></span><br><span class="line"><span class="comment">//f(1) = 1, f(2) = 1, f(n) = (A * f(n - 1) + B * f(n - 2)) mod 7.</span></span><br><span class="line"><span class="comment">//Given A, B, and n, you are to calculate the value of f(n).</span></span><br><span class="line"><span class="comment">// 周期性函数,什么时候 one two 都变成1 ，就是一个周期到了</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b,n,i;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;a,&amp;b,&amp;n) &amp;&amp; (a+b+n)) &#123;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">1</span> || n==<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;1\n&quot;</span>);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        a = a%<span class="number">7</span>;</span><br><span class="line">        b = b%<span class="number">7</span>;</span><br><span class="line">        <span class="keyword">int</span> tmp=<span class="number">0</span>,one=<span class="number">1</span>,two=<span class="number">1</span>;;</span><br><span class="line">        <span class="keyword">int</span> circle = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 新增一个数组，循环最多49次就会出现</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (i=<span class="number">3</span>;i&lt;=n;i++) &#123;</span><br><span class="line">            tmp = (a*two + b*one)%<span class="number">7</span>;  <span class="comment">// tmp = f(i)</span></span><br><span class="line">            one = two;                <span class="comment">// one = f(i-1)</span></span><br><span class="line">            two = tmp;                <span class="comment">// two = f(i)</span></span><br><span class="line">            <span class="keyword">if</span> (one == <span class="number">1</span> &amp;&amp; two == <span class="number">1</span>) &#123;  <span class="comment">// 周期 --&gt; f(i) = f(2)  f(i-1) = f(1)</span></span><br><span class="line">                circle = i<span class="number">-2</span>;</span><br><span class="line">                n = n%circle + circle; <span class="comment">// 加一个circle 防止落在0 , 大幅度缩小 n.... md还是超时...</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (circle) &#123;</span><br><span class="line">            <span class="keyword">if</span>(n==<span class="number">1</span> || n==<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;1\n&quot;</span>);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (i=<span class="number">3</span>;i&lt;=n;i++) &#123;</span><br><span class="line">                tmp = (a*two + b*one)%<span class="number">7</span>;  <span class="comment">// tmp = f(i)</span></span><br><span class="line">                one = two;                <span class="comment">// one = f(i-1)</span></span><br><span class="line">                two = tmp;                <span class="comment">// two = f(i)</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>提交！</p>
+<p>还是超时了😭</p>
+<p>我去看看别人的博客发现了序列的循环不一定是整个循环，可能出现序列运行一段时间然后陷入循环，这个时候循环的部分不一定是以连续两个1开始。</p>
+<p>知道了错误即可重新优化 n 的值</p>
+<p>定义一个 hasShow[one][two] ，保存连续出现的两个值 one two 的索引（保存的是 one 的索引）</p>
+<p>每次迭代计算新的 one two 时，标记 hasShow，直到命中 hasShow，即可确定循环在何处开始，训话你的大小是多少。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> hasShow[<span class="number">7</span>][<span class="number">7</span>];   <span class="comment">// hasShow[one][two] 代表 one two 排列已经出现，值为one出现的index</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b,n,i;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;a,&amp;b,&amp;n) &amp;&amp; (a+b+n)) &#123;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">1</span> || n==<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;1\n&quot;</span>);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        a = a%<span class="number">7</span>;</span><br><span class="line">        b = b%<span class="number">7</span>;</span><br><span class="line">        <span class="built_in">memset</span>(hasShow,<span class="number">0</span>,<span class="keyword">sizeof</span>(hasShow));</span><br><span class="line">        hasShow[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">1</span>; <span class="comment">// one=1 two=1 已经出现， index of one is 1</span></span><br><span class="line">        <span class="keyword">int</span> tmp=<span class="number">0</span>,one=<span class="number">1</span>,two=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> fall_in_cycle = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (i=<span class="number">3</span>;i&lt;=n;i++) &#123;</span><br><span class="line">            tmp = (a*two + b*one)%<span class="number">7</span>;  <span class="comment">// tmp = f(i)</span></span><br><span class="line">            one = two;                <span class="comment">// one = f(i-1)</span></span><br><span class="line">            two = tmp;                <span class="comment">// two = f(i)</span></span><br><span class="line">            <span class="keyword">if</span> (hasShow[one][two]) &#123;</span><br><span class="line">                <span class="comment">// cycle is (index of one - hasShow[one][two]) and now one is i-1</span></span><br><span class="line">                <span class="keyword">int</span> cycle = i<span class="number">-1</span> - hasShow[one][two];</span><br><span class="line">                <span class="comment">// 然后就可以定位 n 了，从 hasShow[one][two]开始,不断按照cycle循环</span></span><br><span class="line">                n = n - (hasShow[one][two]<span class="number">-1</span>);  <span class="comment">// 减去循环前的一段</span></span><br><span class="line">                <span class="keyword">int</span> index = n%cycle;  <span class="comment">//找到落在每个循环的 index  0 &lt;= index &lt;= cycle</span></span><br><span class="line">                n = (i<span class="number">-1</span>)<span class="number">-1</span> + index; <span class="comment">// 将 n 定位到循环中去</span></span><br><span class="line">                fall_in_cycle = cycle;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                hasShow[one][two] = i<span class="number">-1</span>; <span class="comment">// one 出现的 index</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 已经找到 n 的缩小值</span></span><br><span class="line">        one=two=<span class="number">1</span>;tmp=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (i=<span class="number">3</span>;i&lt;=n;i++) &#123;</span><br><span class="line">            tmp = (a*two + b*one)%<span class="number">7</span>;  <span class="comment">// tmp = f(i)</span></span><br><span class="line">            one = two;                <span class="comment">// one = f(i-1)</span></span><br><span class="line">            two = tmp;                <span class="comment">// two = f(i)</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2012-素数判断"><a class="markdownIt-Anchor" href="#2012-素数判断"></a> 2012-素数判断</h2>
+<p><a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/showproblem.php?pid=2012">原题链接</a></p>
+<p>对于表达式n^2+n+41，当n在（x,y）范围内取整数值时（包括x,y）(-39&lt;=x&lt;y&lt;=50)，判定该表达式的值是否都为素数。</p>
+<p>经典大素数判定问题，大一上的ACM选修课专门讲过…</p>
+<p>如果我们对每一个数进行素数判断，而素数判断的复杂度又是 O(n)，那么复杂度就是 O(n^2)，而数据很大的情况绝对是超时的。所以我们采用填坑法，所有素数的倍数都不是素数，其他的数就是素数了，填坑法的复杂度只需要 O((logn)^2)，所以没被填的坑就是素数了，最后的判断就很简单了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  OJ-HD-2012</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by panliang on 2021/3/11.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> prime[<span class="number">2610</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isPrime</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initPrime</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    initPrime();</span><br><span class="line">    <span class="comment">// number = n^2+n+41</span></span><br><span class="line">    <span class="comment">// n = x ~ y</span></span><br><span class="line">    <span class="comment">// n is between 41 ~ 2591</span></span><br><span class="line">    <span class="keyword">int</span> x,y,n,number;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;x,&amp;y) &amp;&amp;!(x==<span class="number">0</span>&amp;&amp;y==<span class="number">0</span>)) &#123;</span><br><span class="line">        <span class="keyword">int</span> isPutSorry=<span class="number">0</span>;</span><br><span class="line">        n = x;</span><br><span class="line">        <span class="keyword">while</span>(n&lt;=y) &#123;</span><br><span class="line">            number = n*n+n+<span class="number">41</span>;</span><br><span class="line">            <span class="keyword">if</span> (!isPrime(number)) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Sorry\n&quot;</span>);</span><br><span class="line">                isPutSorry=<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!isPutSorry)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;OK\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initPrime</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(prime,<span class="number">0</span>,<span class="keyword">sizeof</span>(prime));  <span class="comment">// 初始化为0 =&gt; 都是素数</span></span><br><span class="line">    <span class="comment">// 51*51 = 2601</span></span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">2</span>; <span class="comment">// 所有素数的倍数都不是素数</span></span><br><span class="line">    <span class="keyword">for</span> (;i&lt;=<span class="number">51</span>;i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> t=<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (;t&lt;=i;t++) &#123;</span><br><span class="line">            prime[i*t] = <span class="number">1</span>;     <span class="comment">// 标记为1 =&gt; 不是素数</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isPrime</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> prime[a]?<span class="number">0</span>:<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2025-查找最大元素"><a class="markdownIt-Anchor" href="#2025-查找最大元素"></a> 2025-查找最大元素</h2>
+<p><a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/showproblem.php?pid=2025">原题链接</a></p>
+<p>对于输入的每个字符串，查找其中的最大字母，在该字母后面插入字符串“(max)”。</p>
+<p>这是一个简单的 ascii 字符排序问题</p>
+<p>处理输入的时候因为可能有空格，需要自己写一个 getLine()</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  OJ-HD-2025</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by panliang on 2021/3/11.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getLine</span><span class="params">(<span class="keyword">char</span>*)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> table[<span class="number">300</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">110</span>];</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        getLine(str);</span><br><span class="line">        <span class="keyword">if</span>(str[<span class="number">0</span>] == <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="built_in">memset</span>(table,<span class="number">0</span>,<span class="keyword">sizeof</span>(table));</span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (;i&lt;<span class="number">110</span>;i++) &#123;   <span class="comment">// 扫描输入字符串,打表</span></span><br><span class="line">            <span class="keyword">if</span>(str[i] == <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            table[str[i]]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span> maxchar = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">299</span>;i&gt;<span class="number">0</span>;i--)&#123;  <span class="comment">// 反向扫描table 找到 maxchar</span></span><br><span class="line">            <span class="keyword">if</span>(table[i] != <span class="number">0</span>)&#123;</span><br><span class="line">                maxchar = i;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">110</span>;i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str[i] == <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">if</span> (str[i] == maxchar) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%c(max)&quot;</span>,str[i]);</span><br><span class="line">            &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>,str[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getLine</span><span class="params">(<span class="keyword">char</span> * str)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">char</span> c = getchar();</span><br><span class="line">        <span class="keyword">if</span>(c == <span class="string">&#x27;\n&#x27;</span> || c == EOF)&#123;</span><br><span class="line">            str[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        str[i++] = c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2058-the-sum-problem"><a class="markdownIt-Anchor" href="#2058-the-sum-problem"></a> 2058-The sum problem</h2>
+<p><a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/showproblem.php?pid=2058">原题链接</a></p>
+<p>给定一个序列 1，2，3，…N，你的工作是计算所有可能的子序列，子序列的和是M。</p>
+<p>输入：N，M（ 1 &lt;= N, M &lt;= 1000000000 ）</p>
+<p>需要输出所有可能的序列 [x,y] 使得 x+…+y = M</p>
+<p>又是子序列和的题目，我第一反应就是用等差数列求和公式+滑动窗口来做，这样时间复杂度是O(n)，因为每次循环 a 和 b 都在单向移动，但是超时了。</p>
+<p>这是滑动窗口的代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n,m;</span><br><span class="line">  <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m) &amp;&amp; n+m)&#123;</span><br><span class="line">    <span class="keyword">int</span> a=<span class="number">1</span>,b=<span class="number">1</span>,sum=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(b&lt;n)&#123;</span><br><span class="line">      sum = (a+b)*(b-a+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">      <span class="keyword">if</span>(sum&lt;m)</span><br><span class="line">        b++;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span>(sum&gt;m)</span><br><span class="line">        a++;</span><br><span class="line">      <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[%d,%d]&quot;</span>,a,b);</span><br><span class="line">        b++;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>超时了之后我考虑优化滑动窗口。我想着让窗口从右往左滑动，这样窗口大小不会变小，想着这样可能不会有回溯的过程，，写了半天最后发现其实并没有提高效率，还是超时了。但是从窗口大小的角度思考让我得到了灵感！</p>
+<p>假设有 n 个窗口能够满足序列和刚好是 M，那么这 n 个窗口的长度一定是越来越短的，因为窗口内的元素越来越大了</p>
+<p>分析一下每个窗口应该是什么情况：</p>
+<ul>
+<li>如果这个窗口宽度为1，那么显然就是 M 本身，也就是输出 [M,M]</li>
+<li>如果这个窗口宽度为2，那么显然是这样的：(M/2向下取整) + (M/2向上取整)</li>
+<li>如果这个窗口宽度为3，那么显然是这样的：(M/3-1) + (M/3) + (M/3+1)</li>
+<li>……</li>
+</ul>
+<p>显然窗口宽度和窗口内容是密切相关的</p>
+<p>这样复杂度会显著降低了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  main.c</span></span><br><span class="line"><span class="comment">//  OJ-HD-2058</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by panliang on 2021/3/11.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxsize 200</span></span><br><span class="line"><span class="keyword">int</span> length = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> <span class="built_in">stack</span>[maxsize][<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>[length][<span class="number">0</span>] = l;</span><br><span class="line">    <span class="built_in">stack</span>[length][<span class="number">1</span>] = r;</span><br><span class="line">    length++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(isEmpty()) <span class="keyword">return</span>;</span><br><span class="line">    length--;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[%d,%d]\n&quot;</span>,<span class="built_in">stack</span>[length][<span class="number">0</span>],<span class="built_in">stack</span>[length][<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,m;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m) &amp;&amp; n &amp;&amp; m)&#123;</span><br><span class="line">        <span class="keyword">int</span> num=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(num&lt;m)&#123;</span><br><span class="line">            <span class="keyword">if</span>(num%<span class="number">2</span> == <span class="number">1</span> &amp;&amp; m%num == <span class="number">0</span>)&#123;   <span class="comment">// num 为奇数 且能被m整除</span></span><br><span class="line">                <span class="keyword">int</span> center = m/num;</span><br><span class="line">                <span class="keyword">int</span> l = center-num/<span class="number">2</span>;</span><br><span class="line">                <span class="keyword">if</span>(l&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">int</span> r = center+num/<span class="number">2</span>;</span><br><span class="line">                push(l,r);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(num%<span class="number">2</span> == <span class="number">0</span>)&#123;  <span class="comment">// num 为偶数</span></span><br><span class="line">                <span class="keyword">int</span> centerSmall = m/num;</span><br><span class="line">                <span class="keyword">int</span> l = centerSmall - num/<span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span>(l&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">int</span> r = centerSmall + num/<span class="number">2</span>;</span><br><span class="line">                <span class="keyword">int</span> sum = (l+r)*num/<span class="number">2</span>;</span><br><span class="line">                <span class="keyword">if</span>(sum == m) push(l,r);</span><br><span class="line">            &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">// none</span></span><br><span class="line">            &#125;</span><br><span class="line">            num++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(!isEmpty())&#123;</span><br><span class="line">            pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了反过来输出结果，我写了一个栈。虽然对窗口大小由大到小遍历可以省略栈，但是会增加遍历的次数，窗口由小往大遍历的话我们就可以在 (这种情况) =&gt; {要从负数开始加到正数才等于M} 直接跳出循环，这时窗口更大是不可能了，窗口最左边已经到负数了，跳出循环可以显著降低循环次数。</p>
+<p>这次终于AC了！</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+    <ul class="post-copyright list-unstyled">
+        
+        <li class="post-copyright-link hidden-xs">
+            <strong>本文链接：</strong>
+            <a
+                href="https://panlianghnu.github.io/2021/03/14/%E6%9D%AD%E7%94%B5OJ/"
+                title="杭电OJ"
+                target="_blank"
+                rel="external"
+                >https://panlianghnu.github.io/2021/03/14/杭电OJ/</a
+            >
+        </li>
+        
+        <li class="post-copyright-license">
+            <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用
+            <a
+                href="http://creativecommons.org/licenses/by/4.0/deed.zh"
+                target="_blank"
+                rel="external"
+                >CC BY 4.0 CN协议</a
+            >
+            许可协议。转载请注明出处！
+        </li>
+    </ul>
+</blockquote>
+ 
+<div class="panel panel-default panel-badger">
+    <div class="panel-body">
+        <figure class="media">
+            <div class="media-left">
+                <a
+                    href="https://github.com/panlianghnu"
+                    target="_blank"
+                    class="img-burn thumb-sm visible-lg"
+                >
+                    <img
+                        src="/images/avatar.png"
+                        class="img-rounded w-full"
+                        alt=""
+                    />
+                </a>
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="https://github.com/panlianghnu" target="_blank"
+                        ><span class="text-dark">panliang</span
+                        ><small class="ml-1x"
+                            ></small
+                        ></a
+                    >
+                </h3>
+                <div>个人简介。</div>
+            </div>
+        </figure>
+    </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/03/10/ML%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2/" title="ML学习笔记-2"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <!--div class="copyright">
+        
+        <!--div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div-->
+    <!--/div-->
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
