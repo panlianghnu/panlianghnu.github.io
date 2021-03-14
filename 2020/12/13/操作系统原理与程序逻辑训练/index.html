@@ -18,12 +18,12 @@
   
   
   <title>操作系统原理与程序逻辑训练 | Panliang</title>
-  <meta name="description" content="C语言和操作系统的交互 C语言的main函数其实就是和操作系统的交互之一，执行程序前，操作系统将程序的二进制可执行代码加载到内存的代码段，同时会把函数名为main的函数作为程序的入口 Linux 的终端里： 命令1 &amp;&amp; 命令2 表示先执行命令1，成功了再执行命令2，如果命令1执行错误则不会执行命令2 小技巧：可以用 echo $? 查看上一个命令执行的返回值 而C语言的 int">
+  <meta name="description" content="C语言和操作系统的交互C语言的main函数其实就是和操作系统的交互之一，执行程序前，操作系统将程序的二进制可执行代码加载到内存的代码段，同时会把函数名为main的函数作为程序的入口 Linux 的终端里： 命令1 &amp;&amp; 命令2 表示先执行命令1，成功了再执行命令2，如果命令1执行错误则不会执行命令2 小技巧：可以用 echo $? 查看上一个命令执行的返回值 而C语言的 int m">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统原理与程序逻辑训练">
 <meta property="og:url" content="https://panlianghnu.github.io/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/index.html">
 <meta property="og:site_name" content="PanLiang&#39;s blog">
-<meta property="og:description" content="C语言和操作系统的交互 C语言的main函数其实就是和操作系统的交互之一，执行程序前，操作系统将程序的二进制可执行代码加载到内存的代码段，同时会把函数名为main的函数作为程序的入口 Linux 的终端里： 命令1 &amp;&amp; 命令2 表示先执行命令1，成功了再执行命令2，如果命令1执行错误则不会执行命令2 小技巧：可以用 echo $? 查看上一个命令执行的返回值 而C语言的 int">
+<meta property="og:description" content="C语言和操作系统的交互C语言的main函数其实就是和操作系统的交互之一，执行程序前，操作系统将程序的二进制可执行代码加载到内存的代码段，同时会把函数名为main的函数作为程序的入口 Linux 的终端里： 命令1 &amp;&amp; 命令2 表示先执行命令1，成功了再执行命令2，如果命令1执行错误则不会执行命令2 小技巧：可以用 echo $? 查看上一个命令执行的返回值 而C语言的 int m">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://panlianghnu.github.io/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094206212.png">
 <meta property="og:image" content="https://panlianghnu.github.io/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094636928.png">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://panlianghnu.github.io/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209101343486.png">
 <meta property="og:image" content="https://panlianghnu.github.io/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205748706.png">
 <meta property="article:published_time" content="2020-12-13T12:57:34.000Z">
-<meta property="article:modified_time" content="2020-12-14T10:21:16.000Z">
+<meta property="article:modified_time" content="2021-03-14T14:59:51.483Z">
 <meta property="article:author" content="Pan Liang">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="c语言">
@@ -59,7 +59,7 @@
   
   
   
-<meta name="generator" content="Hexo 5.2.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body class="main-center" itemscope itemtype="http://schema.org/WebPage">
@@ -110,7 +110,7 @@
       </button>
     </div>
     <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
-      <ul class="nav navbar-nav main-nav ">
+      <ul class="nav navbar-nav main-nav menu-highlight">
         
         
         <li class="menu-item menu-item-home">
@@ -202,9 +202,6 @@
 
     
       
-
-    
-      
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
@@ -281,10 +278,10 @@
                 
               </p>
               <p class="item-title">
-                <a href="/2021/03/02/Vue%E5%AD%A6%E4%B9%A01/" class="title">(no title)</a>
+                <a href="/2021/03/02/Vue%E5%AD%A6%E4%B9%A01/" class="title">Vue学习1</a>
               </p>
               <p class="item-date">
-                <time datetime="2021-03-02T08:07:04.821Z" itemprop="datePublished">2021-03-02</time>
+                <time datetime="2021-03-02T08:07:04.000Z" itemprop="datePublished">2021-03-02</time>
               </p>
             </div>
           </li>
@@ -315,6 +312,15 @@
 
   
   
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C%E8%AF%AD%E8%A8%80%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="toc-number">1.</span> <span class="toc-text">C语言和操作系统的交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81%E3%80%81%E9%94%99%E8%AF%AF%E6%B5%81"><span class="toc-number">2.</span> <span class="toc-text">Linux 标准输入输出流、错误流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-%E6%B5%81%E7%9A%84%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">3.</span> <span class="toc-text">Linux 流的重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-%E7%AE%A1%E9%81%93"><span class="toc-number">4.</span> <span class="toc-text">Linux 管道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Linux-%E7%AE%A1%E9%81%93%E5%AE%9E%E6%88%98"><span class="toc-number">4.0.0.1.</span> <span class="toc-text">Linux 管道实战</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Make-%E5%AD%A6%E4%B9%A0"><span class="toc-number">5.</span> <span class="toc-text">Make 学习</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8make%EF%BC%9F"><span class="toc-number">5.0.0.1.</span> <span class="toc-text">为什么使用make？</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GDB-%E8%B0%83%E8%AF%95"><span class="toc-number">6.</span> <span class="toc-text">GDB 调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="toc-number">6.1.</span> <span class="toc-text">函数指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-number">6.2.</span> <span class="toc-text">操作系统内存管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1"><span class="toc-number">7.</span> <span class="toc-text">抽象</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
 <main class="main" role="main">
   <div class="content">
   <article id="post-操作系统原理与程序逻辑训练" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
@@ -352,8 +358,7 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="c语言和操作系统的交互"><a class="markdownIt-Anchor" href="#c语言和操作系统的交互"></a> C语言和操作系统的交互</h2>
-<p>C语言的main函数其实就是和操作系统的交互之一，执行程序前，操作系统将程序的二进制可执行代码加载到内存的代码段，同时会把函数名为main的函数作为程序的入口</p>
+        <h2 id="C语言和操作系统的交互"><a href="#C语言和操作系统的交互" class="headerlink" title="C语言和操作系统的交互"></a>C语言和操作系统的交互</h2><p>C语言的main函数其实就是和操作系统的交互之一，执行程序前，操作系统将程序的二进制可执行代码加载到内存的代码段，同时会把函数名为main的函数作为程序的入口</p>
 <p>Linux 的终端里：</p>
 <p>命令1 &amp;&amp; 命令2</p>
 <p>表示先执行命令1，成功了再执行命令2，如果命令1执行错误则不会执行命令2</p>
@@ -364,72 +369,51 @@
 <p>这些是操作系统和C语言的交互</p>
 <p>经典程序</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv [])</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;argc;i++)</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;argc[%d] is %s\n&quot;</span>,i,argv[i]);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094206212.png" alt="C语言命令后参数"><br>
-这个程序可以很直观的看到Linux 在调用C语言程序时，传入的各个参数</p>
-<h2 id="linux-标准输入输出流-错误流"><a class="markdownIt-Anchor" href="#linux-标准输入输出流-错误流"></a> Linux 标准输入输出流、错误流</h2>
-<p>stdin stdout stderr</p>
+<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094206212.png" alt="C语言命令后参数"><br>这个程序可以很直观的看到Linux 在调用C语言程序时，传入的各个参数</p>
+<h2 id="Linux-标准输入输出流、错误流"><a href="#Linux-标准输入输出流、错误流" class="headerlink" title="Linux 标准输入输出流、错误流"></a>Linux 标准输入输出流、错误流</h2><p>stdin stdout stderr</p>
 <p>stdin : 默认是键盘输入，可以通过流的重定向改变输入流</p>
 <p>stdout：默认是显示器输出，也可以重定向到网卡、打印机等</p>
 <p>stderr：错误流</p>
 <p>echo $? 命令可以打印出当前程序的返回值</p>
 <p>流在Linux 系统里被抽象成一个个文件，比如我要往打印机写东西，我就会打开“打印机”这个文件，往里面写东西</p>
-<p>每启动一个包含&lt;stdio.h&gt;的程序，Linux会默认打开 stdin\ stdout\ stderr这三个文件</p>
+<p>每启动一个包含<stdio.h>的程序，Linux会默认打开 stdin\ stdout\ stderr这三个文件</stdio.h></p>
 <p>比如 :</p>
 <p>printf(“hello”) = fprintf(stdout,“hello”)</p>
-<p>scanf(&quot;%d&quot;,&amp;a) = fscanf(stdin,&quot;%d&quot;,&amp;a)</p>
+<p>scanf(“%d”,&amp;a) = fscanf(stdin,”%d”,&amp;a)</p>
 <p>fprintf(stderr, “the value must &gt; 0”)</p>
 <p>输出到 stderr 默认也是显示器，我以前在DevC++里输出到stderr， 是输出红色字体，ubuntu的终端好像没有对这个stderr进行特殊标记，只能通过重定向或者 echo $? 来知道确实是发生了错误</p>
-<h2 id="linux-流的重定向"><a class="markdownIt-Anchor" href="#linux-流的重定向"></a> Linux 流的重定向</h2>
-<p>0 是标准输入流</p>
+<h2 id="Linux-流的重定向"><a href="#Linux-流的重定向" class="headerlink" title="Linux 流的重定向"></a>Linux 流的重定向</h2><p>0 是标准输入流</p>
 <p>1 是标准输出流</p>
 <p>2 是标准错误流</p>
 <p>./a.out 1&gt;&gt; a.txt 代表对a.out 这个程序的 标准输出流 <strong>重定向</strong> 到 a.txt （1可以默认不写）</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094636928.png" alt="hello world 输出流重定向"></p>
-<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094657899.png" alt="ls -l 输出流重定向"><br>
-可以看到 ls -l 的信息被输出到了文件 b.txt</p>
+<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094657899.png" alt="ls -l 输出流重定向"><br>可以看到 ls -l 的信息被输出到了文件 b.txt</p>
 <p>其实双箭头和单箭头都可以作为流的重定向，他们有小小的区别</p>
 <p>双箭头不会覆盖文件，会在文件末尾写值</p>
 <p>单箭头则会覆盖文件 ./a.out &gt; a.txt</p>
-<p>&lt; 是标准输入流的重定向<br>
-<img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094812322.png" alt="流的重定向"><br>
-这三个重定向是可以组合使用的</p>
-<h2 id="linux-管道"><a class="markdownIt-Anchor" href="#linux-管道"></a> Linux 管道</h2>
-<p>| 表示管道</p>
+<p>&lt; 是标准输入流的重定向<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094812322.png" alt="流的重定向"><br>这三个重定向是可以组合使用的</p>
+<h2 id="Linux-管道"><a href="#Linux-管道" class="headerlink" title="Linux 管道"></a>Linux 管道</h2><p>| 表示管道</p>
 <p>比如： ls /etc/ | grep ab</p>
 <p>表示，将 ls 产生的标准输出流，通过管道，传递给 grep（文本搜索的小程序）的标准输入流</p>
-<p>看看实际操作：<br>
-<img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094843144.png" alt="管道"></p>
+<p>看看实际操作：<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094843144.png" alt="管道"></p>
 <p>这就是grep 搜索 ls 的结果，找出结果里包含ab的行，输出到标准输出流</p>
-<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094914129.png" alt="找出包含ssh的进程"><br>
-这就是grep 搜索 ps 的结果，找出结果里包含ssh的进程，输出到标准输出流</p>
-<h5 id="linux-管道实战"><a class="markdownIt-Anchor" href="#linux-管道实战"></a> Linux 管道实战</h5>
-<p>两个程序，一个输出sum和count，一个通过sum和count求平均值<br>
-<img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209100415817.png" alt="Linux管道实战"><br>
-这两个程序可以直接通过管道相连，让第一个程序的输出进入下一个程序的标准输入<br>
-<img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209100432148.png" alt="Linux 管道实战"><br>
-这次直接输出来的是平均数</p>
+<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209094914129.png" alt="找出包含ssh的进程"><br>这就是grep 搜索 ps 的结果，找出结果里包含ssh的进程，输出到标准输出流</p>
+<h5 id="Linux-管道实战"><a href="#Linux-管道实战" class="headerlink" title="Linux 管道实战"></a>Linux 管道实战</h5><p>两个程序，一个输出sum和count，一个通过sum和count求平均值<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209100415817.png" alt="Linux管道实战"><br>这两个程序可以直接通过管道相连，让第一个程序的输出进入下一个程序的标准输入<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209100432148.png" alt="Linux 管道实战"><br>这次直接输出来的是平均数</p>
 <p>很简单的将两个独立小工具变成更加复杂的工具使用</p>
-<h2 id="make-学习"><a class="markdownIt-Anchor" href="#make-学习"></a> Make 学习</h2>
-<p>在代码目录下 编写Makefile 文件</p>
+<h2 id="Make-学习"><a href="#Make-学习" class="headerlink" title="Make 学习"></a>Make 学习</h2><p>在代码目录下 编写Makefile 文件</p>
 <p># 代表注释</p>
 <p>hello.out: max.o hello.c #这行代表hello.out 需要max.o 和 hello.c 两个文件</p>
-<p>gcc max.o hello.c -o hello.out # 这行必须以table开头，表示实际的gcc命令</p>
+<p> gcc max.o hello.c -o hello.out # 这行必须以table开头，表示实际的gcc命令</p>
 <p>max.o: max.c</p>
-<p>gcc -c max.c<br>
-<img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209100743504.png" alt="Make"><br>
-可以看到我的Makefile 里定义了main.out 和 compute.o 的编译方式，为了调试方便我加了 -g</p>
+<p> gcc -c max.c<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209100743504.png" alt="Make"><br>可以看到我的Makefile 里定义了main.out 和 compute.o 的编译方式，为了调试方便我加了 -g</p>
 <p>现在make 试一下</p>
-<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209101228554.png" alt="make"><br>
-可以看到运行make 后，生成了 main.out compute.o</p>
-<p>运行也是没有问题的<br>
-<img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209101343486.png" alt="在这里插入图片描述"></p>
-<h5 id="为什么使用make"><a class="markdownIt-Anchor" href="#为什么使用make"></a> 为什么使用make？</h5>
-<p>使用make ，可以让大型程序在小部分代码改动时，不至于全部重新编写</p>
+<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209101228554.png" alt="make"><br>可以看到运行make 后，生成了 main.out compute.o</p>
+<p>运行也是没有问题的<br><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/20201209101343486.png" alt="在这里插入图片描述"></p>
+<h5 id="为什么使用make？"><a href="#为什么使用make？" class="headerlink" title="为什么使用make？"></a>为什么使用make？</h5><p>使用make ，可以让大型程序在小部分代码改动时，不至于全部重新编写</p>
 <p>make 会在Makefile文件中查询需要的文件是否已经有了，如果某部分文件已经存在则会跳过</p>
 <p>make可以大大的节省编译时间（已经编译了不需要重新编译的文件 make 会帮我们跳过），并且Makefile写好各文件的依赖规则，每次编译都能方便程序员直接调用（大型项目自己写gcc不可想象）</p>
-<h2 id="gdb-调试"><a class="markdownIt-Anchor" href="#gdb-调试"></a> GDB 调试</h2>
-<p>先编译时加 -g 参数</p>
+<h2 id="GDB-调试"><a href="#GDB-调试" class="headerlink" title="GDB 调试"></a>GDB 调试</h2><p>先编译时加 -g 参数</p>
 <p>执行 gdb ./main.out</p>
 <p>b 12 标记断点</p>
 <p>l 输出源代码</p>
@@ -438,8 +422,7 @@
 <p>p 打印参数数据、地址、函数等</p>
 <p>bt 打印堆栈</p>
 <p>f 进入栈帧</p>
-<h3 id="函数指针"><a class="markdownIt-Anchor" href="#函数指针"></a> 函数指针</h3>
-<p>指向函数的指针变量。 因此“函数指针”本身首先应是指针变量，只不过该指针变量指向函数。这正如用指针变量可指向整型变量、字符型、数组一样，这里是指向函数。C在编译时，每一个函数都有一个入口地址，该入口地址就是函数指针所指向的地址。有了指向函数的指针变量后，可用该指针变量调用函数，就如同用指针变量可引用其他类型变量一样。</p>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>指向函数的指针变量。 因此“函数指针”本身首先应是指针变量，只不过该指针变量指向函数。这正如用指针变量可指向整型变量、字符型、数组一样，这里是指向函数。C在编译时，每一个函数都有一个入口地址，该入口地址就是函数指针所指向的地址。有了指向函数的指针变量后，可用该指针变量调用函数，就如同用指针变量可引用其他类型变量一样。</p>
 <p><strong>函数指针有两个用途：调用函数和做函数的参数</strong></p>
 <p>&amp;a 是 得到a的地址</p>
 <p>p 打印一个</p>
@@ -448,8 +431,7 @@
 <p>回调函数： 在调用一个函数（A函数）时，传入一个函数指针（B函数）作为参数，在A函数运行期间，调用了B函数，那么这就是一个回调。回调函数可以帮助我们实现很多功能</p>
 <p>比如 C语言标准库就为我们实现了快速排序，但是标准库的快速排序它并不知道你要排序的数据是整数、还是字符，甚至是自己定义的结构体，如果是基本类型还好说，但如果是你要对自己定义的结构体排序的话，它并不知道你的结构体是如何进行排序的，这个时候你需要把排序的定义告诉它，即你需要实现一个比较大小的函数，将这个函数作为参数传递给这个标准库函数。这时就可以调用快速排序为你的结构体排序了。</p>
 <p>可以看到有了回调，我们就不需要关心快速排序实现的细节，只需要将我们定义的比较函数传给排序函数，就可以帮助我们实现快速排序。</p>
-<h3 id="操作系统内存管理"><a class="markdownIt-Anchor" href="#操作系统内存管理"></a> 操作系统内存管理</h3>
-<p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205748706.png" alt="操作系统内存管理"></p>
+<h3 id="操作系统内存管理"><a href="#操作系统内存管理" class="headerlink" title="操作系统内存管理"></a>操作系统内存管理</h3><p><img src="/2020/12/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E4%B8%8E%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E8%AE%AD%E7%BB%83/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDA0NjQ0Nw==,size_16,color_FFFFFF,t_70-20201213205748706.png" alt="操作系统内存管理"></p>
 <p>如图所示：操作系统内核使用的是高地址段，代码段是最低的地址段</p>
 <p>系统内核是不允许被其他进程修改的</p>
 <p>代码段用于保存运行的各个程序的二进制代码</p>
@@ -469,8 +451,7 @@
 <p>根据代码段，新开辟栈帧用于维护运行时环境，然后cpu根据PC寄存器取指令，执行指令</p>
 <p>终端执行一个 ./main.out 时，函数的调用流程：</p>
 <p>用户在终端敲击回车时，会触发CPU的中断，CPU会保存当前程序的各种寄存器的值，保存栈帧的信息等，放入进程结构体中（内存），操作系统陷入内核态，根据中断向量表和中断编号，找到对应的中断处理函数，发现现在要调用一个程序，于是操作系统将程序二进制可执行代码载入内存的代码段，常量、字符串等载入内存的数据段，为该程序申请时间片，把程序的状态修改为就绪状态，当程序执行时，新开辟（或者从进程结构体中读取之前的）栈帧，执行代码段段二进制代码</p>
-<h2 id="抽象"><a class="markdownIt-Anchor" href="#抽象"></a> 抽象</h2>
-<p>昨天写了一些简单程序设计，打印正方形、空心正方形、等腰三角形、空心菱形、“回”字等</p>
+<h2 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h2><p>昨天写了一些简单程序设计，打印正方形、空心正方形、等腰三角形、空心菱形、“回”字等</p>
 <p>很久没写过这种程序了。。。刚开始写正方形、三角形都还好，基本上写一遍就过了，不会一直调试，反复测试才能过。后面到了复杂的菱形、“回”字，就需要大量的调试，不断的设计 i、j 的值。让 i、j、num这三个变量组成一个线性函数，设计一个二维的矩形</p>
 <p>但是龙哥让我们把一些重复劳动抽象出来</p>
 <p>比如写一个 printChar(char ch, int n) ; 打印 n 个字符，这个简单的函数就大大地提升了我们的开发效率，让我们不需要将注意力集中在打印几个字符上，我们只需要关注这个图形的规律，第几行先打印几个空格，再打印几个字符即可</p>
@@ -566,6 +547,15 @@
       <a href="/2020/12/13/2020-12-4-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="2020-12-4-学习笔记"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
     
   </ul>
   
@@ -720,5 +710,20 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

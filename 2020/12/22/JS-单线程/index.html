@@ -18,16 +18,16 @@
   
   
   <title>JS 单线程 | Panliang</title>
-  <meta name="description" content="JS 单线程 JS执行是单线程  单线程是指Js引擎执行Js时只分了一个线程给他执行，也就是执行js时是单线程的。  那么问题来了，什么是线程？进程又是什么？ 在分析浏览器的渲染过程之前，我们先了解一下什么是进程和线程： （1）什么是进程？ 进程是CPU进行资源分配的基本单位 （2）什么是线程？ 线程是CPU调度的最小单位，是建立在进程的基础上运行的单位，共享进程的内存空间。 多进程 1、浏览器">
+  <meta name="description" content="JS 单线程JS执行是单线程  单线程是指Js引擎执行Js时只分了一个线程给他执行，也就是执行js时是单线程的。  那么问题来了，什么是线程？进程又是什么？ 在分析浏览器的渲染过程之前，我们先了解一下什么是进程和线程： （1）什么是进程？ 进程是CPU进行资源分配的基本单位 （2）什么是线程？ 线程是CPU调度的最小单位，是建立在进程的基础上运行的单位，共享进程的内存空间。 多进程1、浏览器是多进">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS 单线程">
 <meta property="og:url" content="https://panlianghnu.github.io/2020/12/22/JS-%E5%8D%95%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="PanLiang&#39;s blog">
-<meta property="og:description" content="JS 单线程 JS执行是单线程  单线程是指Js引擎执行Js时只分了一个线程给他执行，也就是执行js时是单线程的。  那么问题来了，什么是线程？进程又是什么？ 在分析浏览器的渲染过程之前，我们先了解一下什么是进程和线程： （1）什么是进程？ 进程是CPU进行资源分配的基本单位 （2）什么是线程？ 线程是CPU调度的最小单位，是建立在进程的基础上运行的单位，共享进程的内存空间。 多进程 1、浏览器">
+<meta property="og:description" content="JS 单线程JS执行是单线程  单线程是指Js引擎执行Js时只分了一个线程给他执行，也就是执行js时是单线程的。  那么问题来了，什么是线程？进程又是什么？ 在分析浏览器的渲染过程之前，我们先了解一下什么是进程和线程： （1）什么是进程？ 进程是CPU进行资源分配的基本单位 （2）什么是线程？ 线程是CPU调度的最小单位，是建立在进程的基础上运行的单位，共享进程的内存空间。 多进程1、浏览器是多进">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://panlianghnu.github.io/2020/12/22/JS-%E5%8D%95%E7%BA%BF%E7%A8%8B/js-block-render.gif">
 <meta property="article:published_time" content="2020-12-22T12:44:08.000Z">
-<meta property="article:modified_time" content="2020-12-22T12:45:02.000Z">
+<meta property="article:modified_time" content="2021-03-14T14:59:30.211Z">
 <meta property="article:author" content="Pan Liang">
 <meta property="article:tag" content="nodejs">
 <meta name="twitter:card" content="summary">
@@ -47,7 +47,7 @@
   
   
   
-<meta name="generator" content="Hexo 5.2.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body class="main-center" itemscope itemtype="http://schema.org/WebPage">
@@ -98,7 +98,7 @@
       </button>
     </div>
     <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
-      <ul class="nav navbar-nav main-nav ">
+      <ul class="nav navbar-nav main-nav menu-highlight">
         
         
         <li class="menu-item menu-item-home">
@@ -190,9 +190,6 @@
 
     
       
-
-    
-      
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
@@ -269,10 +266,10 @@
                 
               </p>
               <p class="item-title">
-                <a href="/2021/03/02/Vue%E5%AD%A6%E4%B9%A01/" class="title">(no title)</a>
+                <a href="/2021/03/02/Vue%E5%AD%A6%E4%B9%A01/" class="title">Vue学习1</a>
               </p>
               <p class="item-date">
-                <time datetime="2021-03-02T08:07:04.821Z" itemprop="datePublished">2021-03-02</time>
+                <time datetime="2021-03-02T08:07:04.000Z" itemprop="datePublished">2021-03-02</time>
               </p>
             </div>
           </li>
@@ -303,6 +300,15 @@
 
   
   
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JS-%E5%8D%95%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">JS 单线程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JS%E5%BC%95%E6%93%8E"><span class="toc-number">1.1.</span> <span class="toc-text">JS引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#V8%E5%BC%95%E6%93%8E%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">V8引擎的内部结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%E5%92%8C%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF-%EF%BC%88%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%AD%A5%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">任务队列和事件循环 （实现异步）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E5%B8%A7%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">渲染帧的流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%97%E6%97%B6-JS-%E4%BC%9A%E9%80%A0%E6%88%90%E4%B8%A2%E5%B8%A7"><span class="toc-number">1.5.</span> <span class="toc-text">耗时 JS 会造成丢帧</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
 <main class="main" role="main">
   <div class="content">
   <article id="post-JS-单线程" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
@@ -340,8 +346,7 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="js-单线程"><a class="markdownIt-Anchor" href="#js-单线程"></a> JS 单线程</h1>
-<p>JS执行是单线程</p>
+        <h1 id="JS-单线程"><a href="#JS-单线程" class="headerlink" title="JS 单线程"></a>JS 单线程</h1><p>JS执行是单线程</p>
 <blockquote>
 <p>单线程是指Js引擎执行Js时只分了一个线程给他执行，也就是执行js时是单线程的。</p>
 </blockquote>
@@ -351,8 +356,7 @@
 <p>进程是CPU进行资源分配的基本单位</p>
 <p>（2）什么是线程？</p>
 <p>线程是CPU调度的最小单位，是建立在进程的基础上运行的单位，共享进程的内存空间。</p>
-<p>多进程<br>
-1、浏览器是多进程</p>
+<p>多进程<br>1、浏览器是多进程</p>
 <p>2、不同类型的标签页都会开启一个新的进程</p>
 <p>3、相同类型的标签页是会合并到一个进程</p>
 <p>1、浏览器进程</p>
@@ -367,24 +371,15 @@
 <p>1、浏览器内核，主要负责HTML，CSS，JS等文件的解析和执行</p>
 <p>什么是浏览器内核？</p>
 <p>浏览器内核就是浏览器渲染进程，从接收下载文件后再到呈现整个页面的过程，由浏览器渲染进程负责，主要流程如下：</p>
-<p>1、解析HTML文件和CSS文件，加载图片等资源文件，渲染成用户看到的页面<br>
-2、执行解析js文件脚本代码</p>
+<p>1、解析HTML文件和CSS文件，加载图片等资源文件，渲染成用户看到的页面<br>2、执行解析js文件脚本代码</p>
 <p>这里主要讲浏览器页面渲染过程，在该过程中浏览器渲染进程会开启多个线程协作完成，主要的线程以及作用如下：</p>
-<p>1、GUI渲染线程<br>
-2、JS引擎线程<br>
-3、事件触发线程<br>
-4、定时器出发线程<br>
-5、异步HTTP请求线程</p>
-<h2 id="js引擎"><a class="markdownIt-Anchor" href="#js引擎"></a> JS引擎</h2>
-<p>1、JS内核，也称JS引擎（例如V8引擎），负责处理执行javascript脚本程序，<br>
-2、由于js是单线程（一个Tab页内中无论什么时候都只有一个JS线程在运行JS程序），依靠任务队列来进行js代码的执行，所以js引擎会一直等待着任务队列中任务的到来，然后加以处理。</p>
+<p>1、GUI渲染线程<br>2、JS引擎线程<br>3、事件触发线程<br>4、定时器出发线程<br>5、异步HTTP请求线程</p>
+<h2 id="JS引擎"><a href="#JS引擎" class="headerlink" title="JS引擎"></a>JS引擎</h2><p>1、JS内核，也称JS引擎（例如V8引擎），负责处理执行javascript脚本程序，<br>2、由于js是单线程（一个Tab页内中无论什么时候都只有一个JS线程在运行JS程序），依靠任务队列来进行js代码的执行，所以js引擎会一直等待着任务队列中任务的到来，然后加以处理。</p>
 <blockquote>
 <p>注意，JavaScript 只在一个线程上运行，不代表 JavaScript 引擎只有一个线程。事实上，JavaScript 引擎有多个线程，单个脚本只能在一个线程上运行（称为主线程），其他线程都是在后台配合</p>
 </blockquote>
 <p>为了利用多核 CPU 的计算能力，HTML5 提出 Web Worker 标准，允许 JavaScript 脚本创建多个线程，但是子线程完全受主线程控制，且不得操作 DOM。所以，这个新标准并没有改变 JavaScript 单线程的本质。</p>
-<h2 id="v8引擎的内部结构"><a class="markdownIt-Anchor" href="#v8引擎的内部结构"></a> V8引擎的内部结构</h2>
-<p>1、V8是一个非常复杂的项目，使用cloc统计可知，它竟然有超过100万行C++代码。<br>
-2、V8由许多子模块构成，其中这4个模块是最重要的：</p>
+<h2 id="V8引擎的内部结构"><a href="#V8引擎的内部结构" class="headerlink" title="V8引擎的内部结构"></a>V8引擎的内部结构</h2><p>1、V8是一个非常复杂的项目，使用cloc统计可知，它竟然有超过100万行C++代码。<br>2、V8由许多子模块构成，其中这4个模块是最重要的：</p>
 <ol>
 <li>Parser：负责将JavaScript源码转换为Abstract Syntax Tree (AST)</li>
 <li>Ignition：interpreter，即解释器，负责将AST转换为Bytecode，解释执行Bytecode；同时收集3. TurboFan优化编译所需的信息，比如函数参数的类型；</li>
@@ -402,24 +397,21 @@
 <p>同步任务是那些没有被引擎挂起、在主线程上排队执行的任务。只有前一个任务执行完毕，才能执行后一个任务。</p>
 <p>异步任务是那些被引擎放在一边，不进入主线程、而进入任务队列的任务。只有引擎认为某个异步任务可以执行了（比如 Ajax 操作从服务器得到了结果），该任务（采用回调函数的形式）才会进入主线程执行。排在异步任务后面的代码，不用等待异步任务结束会马上运行，也就是说，异步任务不具有“堵塞”效应。</p>
 <p>举例来说，Ajax 操作可以当作同步任务处理，也可以当作异步任务处理，由开发者决定。如果是同步任务，主线程就等着 Ajax 操作返回结果，再往下执行；如果是异步任务，主线程在发出 Ajax 请求以后，就直接往下执行，等到 Ajax 操作有了结果，主线程再执行对应的回调函数。</p>
-<h2 id="任务队列和事件循环-实现异步"><a class="markdownIt-Anchor" href="#任务队列和事件循环-实现异步"></a> 任务队列和事件循环 （实现异步）</h2>
-<p>JavaScript 运行时，除了一个正在运行的主线程，引擎还提供一个任务队列（task queue），里面是各种需要当前程序处理的异步任务。（实际上，根据异步任务的类型，存在多个任务队列。为了方便理解，这里假设只存在一个队列。）</p>
+<h2 id="任务队列和事件循环-（实现异步）"><a href="#任务队列和事件循环-（实现异步）" class="headerlink" title="任务队列和事件循环 （实现异步）"></a>任务队列和事件循环 （实现异步）</h2><p>JavaScript 运行时，除了一个正在运行的主线程，引擎还提供一个任务队列（task queue），里面是各种需要当前程序处理的异步任务。（实际上，根据异步任务的类型，存在多个任务队列。为了方便理解，这里假设只存在一个队列。）</p>
 <p>首先，主线程会去执行所有的同步任务。等到同步任务全部执行完，就会去看任务队列里面的异步任务。如果满足条件，那么异步任务就重新进入主线程开始执行，这时它就变成同步任务了。等到执行完，下一个异步任务再进入主线程开始执行。一旦任务队列清空，程序就结束执行。</p>
 <p>异步任务的写法通常是回调函数。一旦异步任务重新进入主线程，就会执行对应的回调函数。如果一个异步任务没有回调函数，就不会进入任务队列，也就是说，不会重新进入主线程，因为没有用回调函数指定下一步的操作。</p>
 <p>JavaScript 引擎怎么知道异步任务有没有结果，能不能进入主线程呢？答案就是引擎在不停地检查，一遍又一遍，只要同步任务执行完了，引擎就会去检查那些挂起来的异步任务，是不是可以进入主线程了。这种循环检查的机制，就叫做事件循环（Event Loop）。维基百科的定义是：“事件循环是一个程序结构，用于等待和发送消息和事件（a programming construct that waits for and dispatches events or messages in a program）”。</p>
 <p>代码是如何执行的？</p>
 <p>宏任务(macro-task)、微任务(micro-task)</p>
 <p>除了广义的同步任务和异步任务，JavaScript 单线程中的任务可以细分为宏任务和微任务。</p>
-<p>macro-task包括：script(整体代码), setTimeout, setInterval, setImmediate, I/O, UI rendering。<br>
-micro-task包括：process.nextTick, Promises, Object.observe, MutationObserver。</p>
+<p>macro-task包括：script(整体代码), setTimeout, setInterval, setImmediate, I/O, UI rendering。<br>micro-task包括：process.nextTick, Promises, Object.observe, MutationObserver。</p>
 <p>有了宏任务和微任务的概念后，那 JS 的执行顺序是怎样的？是宏任务先还是微任务先？</p>
 <p>第一次事件循环中，JavaScript 引擎会把整个 script 代码当成一个宏任务执行，执行完成之后，再检测本次循环中是否寻在微任务，存在的话就依次从微任务的任务队列中读取执行完所有的微任务，再读取宏任务的任务队列中的任务执行，再执行所有的微任务，如此循环。JS 的执行顺序就是每次事件循环中的宏任务-微任务。</p>
 <p>页面刷新率？</p>
 <p>每次微任务执行之后宏任务执行之前如果有UI操作页面会重新渲染，一般页面刷新率60HZ/秒，一帧是16.6毫秒，所以可以理解为事件循环每次轮询的时间大概是16.6毫秒</p>
 <p>每一帧浏览器需要做什么？</p>
 <p>我们所看到的网页，都是浏览器一帧一帧绘制出来的，通常认为FPS为60的时候是比较流畅的，而FPS为个位数的时候就属于用户可以感知到的卡顿了，那么在一帧里面浏览器都要做哪些事情呢</p>
-<h2 id="渲染帧的流程"><a class="markdownIt-Anchor" href="#渲染帧的流程"></a> 渲染帧的流程</h2>
-<p>渲染帧是指浏览器一次完整绘制过程，帧之间的时间间隔是 DOM 视图更新的最小间隔。 由于主流的屏幕刷新率都在 60Hz，那么渲染一帧的时间就必须控制在 16ms 才能保证不掉帧。 也就是说每一次渲染都要在 16ms 内页面才够流畅不会有卡顿感。 这段时间内浏览器需要完成如下事情：</p>
+<h2 id="渲染帧的流程"><a href="#渲染帧的流程" class="headerlink" title="渲染帧的流程"></a>渲染帧的流程</h2><p>渲染帧是指浏览器一次完整绘制过程，帧之间的时间间隔是 DOM 视图更新的最小间隔。 由于主流的屏幕刷新率都在 60Hz，那么渲染一帧的时间就必须控制在 16ms 才能保证不掉帧。 也就是说每一次渲染都要在 16ms 内页面才够流畅不会有卡顿感。 这段时间内浏览器需要完成如下事情：</p>
 <ul>
 <li>脚本执行（JavaScript）：脚本造成了需要重绘的改动，比如增删 DOM、请求动画等</li>
 <li>样式计算（CSS Object Model）：级联地生成每个节点的生效样式。</li>
@@ -428,8 +420,7 @@ micro-task包括：process.nextTick, Promises, Object.observe, MutationObserver�
 <li>合成（Composite）：合成各层的渲染结果</li>
 </ul>
 <p>最初 Webkit 使用定时器进行渲染间隔控制， 2014 年时开始 <a target="_blank" rel="noopener" href="https://bugs.chromium.org/p/chromium/issues/detail?id=337617">使用显示器的 vsync 信号控制渲染</a>（其实直接控制的是合成这一步）。 这意味着 16ms 内多次 commit 的 DOM 改动会合并为一次渲染。</p>
-<h2 id="耗时-js-会造成丢帧"><a class="markdownIt-Anchor" href="#耗时-js-会造成丢帧"></a> 耗时 JS 会造成丢帧</h2>
-<p>JavaScript 在并发编程上一个重要特点是“Run To Completion”。在事件循环的一次 Tick 中， 如果要执行的逻辑太多会一直阻塞下一个 Tick，所有异步过程都会被阻塞。 一个流畅的页面中，JavaScript 引擎中的执行队列可能是这样的：</p>
+<h2 id="耗时-JS-会造成丢帧"><a href="#耗时-JS-会造成丢帧" class="headerlink" title="耗时 JS 会造成丢帧"></a>耗时 JS 会造成丢帧</h2><p>JavaScript 在并发编程上一个重要特点是“Run To Completion”。在事件循环的一次 Tick 中， 如果要执行的逻辑太多会一直阻塞下一个 Tick，所有异步过程都会被阻塞。 一个流畅的页面中，JavaScript 引擎中的执行队列可能是这样的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">执行 JS -&gt; 空闲 -&gt; 绘制（16ms）-&gt; 执行 JS -&gt; 空闲 -&gt; 绘制（32ms）-&gt; ...</span><br></pre></td></tr></table></figure>
 <p>如果在某个时刻有太多 JavaScript 要执行，就会丢掉一次帧的绘制：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">执行很多 JS...（20ms）-&gt; 空闲 -&gt; 绘制（32ms）-&gt; ...</span><br></pre></td></tr></table></figure>
@@ -528,6 +519,15 @@ micro-task包括：process.nextTick, Promises, Object.observe, MutationObserver�
       <a href="/2020/12/17/python-%E6%96%87%E5%AD%97%E7%89%88RPG%E5%B0%8F%E6%B8%B8%E6%88%8F/" title="python 文字版RPG小游戏"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
     
   </ul>
   
@@ -682,5 +682,20 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

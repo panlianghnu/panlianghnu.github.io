@@ -18,15 +18,15 @@
   
   
   <title>Linux 安装时的一些坑 | Panliang</title>
-  <meta name="description" content="Linux 安装时分区的挂载问题 Linux 单独挂载 &#x2F;boot。可以单独更新内核，不怕更新内核丢失数据 Linux 单独挂载&#x2F;swap。 Swap分区会在内存不够时，作为虚拟内存使用（但速度很慢），现在内存一般都够了，这个分区是否单独挂载就无所谓了。  有的古老的应用可能对内存小的机器有优化，有的变量内存需求比较高或者不常用，因而故意取一个很大的地址（让操作系统分配不了这么大的内存地址，从而">
+  <meta name="description" content="Linux 安装时分区的挂载问题Linux 单独挂载 &#x2F;boot。可以单独更新内核，不怕更新内核丢失数据 Linux 单独挂载&#x2F;swap。 Swap分区会在内存不够时，作为虚拟内存使用（但速度很慢），现在内存一般都够了，这个分区是否单独挂载就无所谓了。  有的古老的应用可能对内存小的机器有优化，有的变量内存需求比较高或者不常用，因而故意取一个很大的地址（让操作系统分配不了这么大的内存地址，从而分配">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 安装时的一些坑">
 <meta property="og:url" content="https://panlianghnu.github.io/2020/12/13/Linux-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/index.html">
 <meta property="og:site_name" content="PanLiang&#39;s blog">
-<meta property="og:description" content="Linux 安装时分区的挂载问题 Linux 单独挂载 &#x2F;boot。可以单独更新内核，不怕更新内核丢失数据 Linux 单独挂载&#x2F;swap。 Swap分区会在内存不够时，作为虚拟内存使用（但速度很慢），现在内存一般都够了，这个分区是否单独挂载就无所谓了。  有的古老的应用可能对内存小的机器有优化，有的变量内存需求比较高或者不常用，因而故意取一个很大的地址（让操作系统分配不了这么大的内存地址，从而">
+<meta property="og:description" content="Linux 安装时分区的挂载问题Linux 单独挂载 &#x2F;boot。可以单独更新内核，不怕更新内核丢失数据 Linux 单独挂载&#x2F;swap。 Swap分区会在内存不够时，作为虚拟内存使用（但速度很慢），现在内存一般都够了，这个分区是否单独挂载就无所谓了。  有的古老的应用可能对内存小的机器有优化，有的变量内存需求比较高或者不常用，因而故意取一个很大的地址（让操作系统分配不了这么大的内存地址，从而分配">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-12-13T12:56:08.000Z">
-<meta property="article:modified_time" content="2020-12-14T06:26:26.000Z">
+<meta property="article:modified_time" content="2021-03-14T14:59:32.916Z">
 <meta property="article:author" content="Pan Liang">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="操作系统">
@@ -47,7 +47,7 @@
   
   
   
-<meta name="generator" content="Hexo 5.2.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body class="main-center" itemscope itemtype="http://schema.org/WebPage">
@@ -98,7 +98,7 @@
       </button>
     </div>
     <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
-      <ul class="nav navbar-nav main-nav ">
+      <ul class="nav navbar-nav main-nav menu-highlight">
         
         
         <li class="menu-item menu-item-home">
@@ -190,9 +190,6 @@
 
     
       
-
-    
-      
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
@@ -269,10 +266,10 @@
                 
               </p>
               <p class="item-title">
-                <a href="/2021/03/02/Vue%E5%AD%A6%E4%B9%A01/" class="title">(no title)</a>
+                <a href="/2021/03/02/Vue%E5%AD%A6%E4%B9%A01/" class="title">Vue学习1</a>
               </p>
               <p class="item-date">
-                <time datetime="2021-03-02T08:07:04.821Z" itemprop="datePublished">2021-03-02</time>
+                <time datetime="2021-03-02T08:07:04.000Z" itemprop="datePublished">2021-03-02</time>
               </p>
             </div>
           </li>
@@ -303,6 +300,15 @@
 
   
   
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E5%AE%89%E8%A3%85%E6%97%B6%E5%88%86%E5%8C%BA%E7%9A%84%E6%8C%82%E8%BD%BD%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">Linux 安装时分区的挂载问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BIOS%E3%80%81EFI%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.</span> <span class="toc-text">BIOS、EFI的区别</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
 <main class="main" role="main">
   <div class="content">
   <article id="post-Linux-安装时的一些坑" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
@@ -340,8 +346,7 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="linux-安装时分区的挂载问题"><a class="markdownIt-Anchor" href="#linux-安装时分区的挂载问题"></a> Linux 安装时分区的挂载问题</h1>
-<p>Linux 单独挂载 /boot。可以单独更新内核，不怕更新内核丢失数据</p>
+        <h1 id="Linux-安装时分区的挂载问题"><a href="#Linux-安装时分区的挂载问题" class="headerlink" title="Linux 安装时分区的挂载问题"></a>Linux 安装时分区的挂载问题</h1><p>Linux 单独挂载 /boot。可以单独更新内核，不怕更新内核丢失数据</p>
 <p>Linux 单独挂载/swap。 Swap分区会在内存不够时，作为虚拟内存使用（但速度很慢），现在内存一般都够了，这个分区是否单独挂载就无所谓了。</p>
 <ul>
 <li>有的古老的应用可能对内存小的机器有优化，有的变量内存需求比较高或者不常用，因而故意取一个很大的地址（让操作系统分配不了这么大的内存地址，从而分配一个虚拟内存），这样的软件如果没有挂载swap分区是有可能跑不起来的</li>
@@ -350,8 +355,7 @@
 <p>Linux单独挂载/opt 。 可以建议自己写的程序放在/opt，非必须</p>
 <p>Linux单独挂载/usr 。 方便备份软件</p>
 <p>Linux单独挂载/user 。 方便备份用户数据</p>
-<h1 id="bios-efi的区别"><a class="markdownIt-Anchor" href="#bios-efi的区别"></a> BIOS、EFI的区别</h1>
-<p>主板使用BIOS还是EFI，对Linux 启动盘的制作有很大影响！</p>
+<h1 id="BIOS、EFI的区别"><a href="#BIOS、EFI的区别" class="headerlink" title="BIOS、EFI的区别"></a>BIOS、EFI的区别</h1><p>主板使用BIOS还是EFI，对Linux 启动盘的制作有很大影响！</p>
 <p><strong>BIOS 是简单输入输出系统</strong></p>
 <p>是固化到计算机主板上一个ROM上的程序</p>
 <p>当计算机启动时，CPU会加载ROM上的程序</p>
@@ -455,6 +459,15 @@
       <a href="/2020/12/13/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Linux常用命令"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
     
   </ul>
   
@@ -609,5 +622,20 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
