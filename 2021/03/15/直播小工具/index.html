@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>直播小工具 | Panliang</title>
+  <meta name="description" content="直播小工具前言最近有充分的时间摸鱼…我捣鼓了一个看直播的小工具 - inspired by Zlive  自从我手机端下载了Z直播，我就卸载了其他直播软件（斗鱼、虎牙），一个软件看各大平台直播实在是太好了。而且它还轻便，不用注册，没广告，没礼物，没全站喇叭…… 可惜，Z直播并没有PC客户端，我就想着自己捣鼓一个程序看全网直播，不拘束于各大平台。 特点优雅地看直播  跨直播平台  无广告  高清流畅">
+<meta property="og:type" content="article">
+<meta property="og:title" content="直播小工具">
+<meta property="og:url" content="https://panlianghnu.github.io/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/index.html">
+<meta property="og:site_name" content="PanLiang&#39;s blog">
+<meta property="og:description" content="直播小工具前言最近有充分的时间摸鱼…我捣鼓了一个看直播的小工具 - inspired by Zlive  自从我手机端下载了Z直播，我就卸载了其他直播软件（斗鱼、虎牙），一个软件看各大平台直播实在是太好了。而且它还轻便，不用注册，没广告，没礼物，没全站喇叭…… 可惜，Z直播并没有PC客户端，我就想着自己捣鼓一个程序看全网直播，不拘束于各大平台。 特点优雅地看直播  跨直播平台  无广告  高清流畅">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/优雅地看直播.gif">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/image-20210315144140484.png">
+<meta property="article:published_time" content="2021-03-15T05:33:01.000Z">
+<meta property="article:modified_time" content="2021-03-15T07:13:48.289Z">
+<meta property="article:author" content="Pan Liang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://panlianghnu.github.io/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/优雅地看直播.gif">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://panlianghnu.github.io/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="PanLiang&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/panlianghnu" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">panliang</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Changsha, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Anaconda/" style="font-size: 13px;">Anaconda</a> <a href="/tags/Language/" style="font-size: 13px;">Language</a> <a href="/tags/MacOS/" style="font-size: 13px;">MacOS</a> <a href="/tags/P2P/" style="font-size: 13px;">P2P</a> <a href="/tags/bios/" style="font-size: 13px;">bios</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.33px;">c语言</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.67px;">linux</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/ubuntu/" style="font-size: 13.33px;">ubuntu</a> <a href="/tags/websocket/" style="font-size: 13px;">websocket</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 13px;">分布式</a> <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13px;">区块链</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/%E8%81%8A%E5%A4%A9%E5%AE%A4/" style="font-size: 13px;">聊天室</a> <a href="/tags/%E8%BD%AC%E8%BD%BD/" style="font-size: 13.33px;">转载</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">16</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/" class="title">直播小工具</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-15T05:33:01.000Z" itemprop="datePublished">2021-03-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/14/%E6%9D%AD%E7%94%B5OJ/" class="title">杭电OJ</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-14T09:05:52.000Z" itemprop="datePublished">2021-03-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/10/ML%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2/" class="title">ML学习笔记-2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-10T07:10:34.000Z" itemprop="datePublished">2021-03-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/03/AOPEDF%E5%AD%A6%E4%B9%A0/" class="title">AOPEDF学习</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-03T11:26:04.000Z" itemprop="datePublished">2021-03-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/02/Vue%E5%AD%A6%E4%B9%A01/" class="title">Vue学习1</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-02T08:07:04.000Z" itemprop="datePublished">2021-03-02</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7"><span class="toc-number">1.</span> <span class="toc-text">直播小工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%95%E7%A4%BA"><span class="toc-number">1.3.</span> <span class="toc-text">展示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">如何使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-number">1.4.1.</span> <span class="toc-text">1、安装依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E4%BF%AE%E6%94%B9%E8%AE%A2%E9%98%85"><span class="toc-number">1.4.2.</span> <span class="toc-text">2、修改订阅</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E4%BF%AE%E6%94%B9%E6%92%AD%E6%94%BE%E5%99%A8"><span class="toc-number">1.4.3.</span> <span class="toc-text">3、修改播放器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E8%BF%90%E8%A1%8C"><span class="toc-number">1.4.4.</span> <span class="toc-text">4、运行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">实现原理</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-直播小工具" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      直播小工具
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/" class="article-date">
+	  <time datetime="2021-03-15T05:33:01.000Z" itemprop="datePublished">2021-03-15</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="直播小工具"><a href="#直播小工具" class="headerlink" title="直播小工具"></a>直播小工具</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近有充分的时间摸鱼…我捣鼓了一个看直播的小工具</p>
+<p align="right">- inspired by Zlive</p>
+
+<p>自从我手机端下载了<a target="_blank" rel="noopener" href="https://app.zhibo.at">Z直播</a>，我就卸载了其他直播软件（斗鱼、虎牙），一个软件看各大平台直播实在是太好了。而且它还轻便，不用注册，没广告，没礼物，没全站喇叭……</p>
+<p>可惜，<a target="_blank" rel="noopener" href="https://app.zhibo.at">Z直播</a>并没有PC客户端，我就想着自己捣鼓一个程序看全网直播，不拘束于各大平台。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>优雅地看直播</p>
+<ul>
+<li><p>跨直播平台</p>
+</li>
+<li><p>无广告</p>
+</li>
+<li>高清流畅</li>
+<li>没有礼物特效</li>
+<li>无需注册账号</li>
+</ul>
+<h2 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h2><p>下面是GIF：</p>
+<p><img src="/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/优雅地看直播.gif" alt="优雅地看直播"></p>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/panlianghnu/WatchLive_cross-platform.git</span><br><span class="line">cd WatchLive_cross-platform/</span><br></pre></td></tr></table></figure>
+<h3 id="1、安装依赖"><a href="#1、安装依赖" class="headerlink" title="1、安装依赖"></a>1、安装依赖</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install</span><br></pre></td></tr></table></figure>
+<h3 id="2、修改订阅"><a href="#2、修改订阅" class="headerlink" title="2、修改订阅"></a>2、修改订阅</h3><p>按照 “平台” “房间号” “标注” 的格式，每一行代表一个直播间，行内元素用空格分开</p>
+<p>如图:</p>
+<p><img src="/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/image-20210315144140484.png" alt="image-20210315144140484"></p>
+<h3 id="3、修改播放器"><a href="#3、修改播放器" class="headerlink" title="3、修改播放器"></a>3、修改播放器</h3><p>第 59 行，修改 open_app 的值，改成自己的支持流媒体输出的视频播放器的路径，比如你是 IINA 播放器，就写 open_app = “open -a /Applications/IINA.app”</p>
+<p>如果不是 MacOS ，可能命令不是 open -a，需要自己修改</p>
+<h3 id="4、运行"><a href="#4、运行" class="headerlink" title="4、运行"></a>4、运行</h3><p>在当前目录直接运行 python main.py 即可啦</p>
+<p>可以像我一样在桌面放置一个 shell 文件，修改路径为自己的 shell 和 main.py</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">! /bin/zsh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># author:panliang</span></span></span><br><span class="line">python ~/real-url/main.py</span><br></pre></td></tr></table></figure>
+<p>本工具仅在 python3 的环境测试</p>
+<p>获取斗鱼的直播源，需 JavaScript 环境，可使用 node.js</p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>流媒体地址获取参考 <a target="_blank" rel="noopener" href="https://github.com/wbt5/real-url">real-url</a> </p>
+<p>通过 <a target="_blank" rel="noopener" href="https://github.com/wbt5/real-url">real-url</a> 获取直播间的真实播放源，然后通过一些可以播放流媒体的播放器打开播放源，达到不用注册、不用看广告、直接高清观看直播的目的</p>
+<p>可以打开直播源的播放器很多：INNA、PotPlayer、VLC、DPlayer……</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/panlianghnu/WatchLive_cross-platform">源代码</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+    <ul class="post-copyright list-unstyled">
+        
+        <li class="post-copyright-link hidden-xs">
+            <strong>本文链接：</strong>
+            <a
+                href="https://panlianghnu.github.io/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/"
+                title="直播小工具"
+                target="_blank"
+                rel="external"
+                >https://panlianghnu.github.io/2021/03/15/直播小工具/</a
+            >
+        </li>
+        
+        <li class="post-copyright-license">
+            <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用
+            <a
+                href="http://creativecommons.org/licenses/by/4.0/deed.zh"
+                target="_blank"
+                rel="external"
+                >CC BY 4.0 CN协议</a
+            >
+            许可协议。转载请注明出处！
+        </li>
+    </ul>
+</blockquote>
+ 
+<div class="panel panel-default panel-badger">
+    <div class="panel-body">
+        <figure class="media">
+            <div class="media-left">
+                <a
+                    href="https://github.com/panlianghnu"
+                    target="_blank"
+                    class="img-burn thumb-sm visible-lg"
+                >
+                    <img
+                        src="/images/avatar.png"
+                        class="img-rounded w-full"
+                        alt=""
+                    />
+                </a>
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="https://github.com/panlianghnu" target="_blank"
+                        ><span class="text-dark">panliang</span
+                        ><small class="ml-1x"
+                            ></small
+                        ></a
+                    >
+                </h3>
+                <div>个人简介。</div>
+            </div>
+        </figure>
+    </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/03/14/%E6%9D%AD%E7%94%B5OJ/" title="杭电OJ"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <!--div class="copyright">
+        
+        <!--div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div-->
+    <!--/div-->
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

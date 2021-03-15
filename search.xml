@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>直播小工具</title>
+      <link href="2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/"/>
+      <url>2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/</url>
+      
+        <content type="html"><![CDATA[<h1 id="直播小工具"><a href="#直播小工具" class="headerlink" title="直播小工具"></a>直播小工具</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近有充分的时间摸鱼…我捣鼓了一个看直播的小工具</p><p align="right">- inspired by Zlive</p><p>自从我手机端下载了<a href="https://app.zhibo.at">Z直播</a>，我就卸载了其他直播软件（斗鱼、虎牙），一个软件看各大平台直播实在是太好了。而且它还轻便，不用注册，没广告，没礼物，没全站喇叭……</p><p>可惜，<a href="https://app.zhibo.at">Z直播</a>并没有PC客户端，我就想着自己捣鼓一个程序看全网直播，不拘束于各大平台。</p><h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>优雅地看直播</p><ul><li><p>跨直播平台</p></li><li><p>无广告</p></li><li>高清流畅</li><li>没有礼物特效</li><li>无需注册账号</li></ul><h2 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h2><p>下面是GIF：</p><p><img src="/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/优雅地看直播.gif" alt="优雅地看直播"></p><h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/panlianghnu/WatchLive_cross-platform.git</span><br><span class="line">cd WatchLive_cross-platform/</span><br></pre></td></tr></table></figure><h3 id="1、安装依赖"><a href="#1、安装依赖" class="headerlink" title="1、安装依赖"></a>1、安装依赖</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install</span><br></pre></td></tr></table></figure><h3 id="2、修改订阅"><a href="#2、修改订阅" class="headerlink" title="2、修改订阅"></a>2、修改订阅</h3><p>按照 “平台” “房间号” “标注” 的格式，每一行代表一个直播间，行内元素用空格分开</p><p>如图:</p><p><img src="/2021/03/15/%E7%9B%B4%E6%92%AD%E5%B0%8F%E5%B7%A5%E5%85%B7/image-20210315144140484.png" alt="image-20210315144140484"></p><h3 id="3、修改播放器"><a href="#3、修改播放器" class="headerlink" title="3、修改播放器"></a>3、修改播放器</h3><p>第 59 行，修改 open_app 的值，改成自己的支持流媒体输出的视频播放器的路径，比如你是 IINA 播放器，就写 open_app = “open -a /Applications/IINA.app”</p><p>如果不是 MacOS ，可能命令不是 open -a，需要自己修改</p><h3 id="4、运行"><a href="#4、运行" class="headerlink" title="4、运行"></a>4、运行</h3><p>在当前目录直接运行 python main.py 即可啦</p><p>可以像我一样在桌面放置一个 shell 文件，修改路径为自己的 shell 和 main.py</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">! /bin/zsh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># author:panliang</span></span></span><br><span class="line">python ~/real-url/main.py</span><br></pre></td></tr></table></figure><p>本工具仅在 python3 的环境测试</p><p>获取斗鱼的直播源，需 JavaScript 环境，可使用 node.js</p><h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>流媒体地址获取参考 <a href="https://github.com/wbt5/real-url">real-url</a> </p><p>通过 <a href="https://github.com/wbt5/real-url">real-url</a> 获取直播间的真实播放源，然后通过一些可以播放流媒体的播放器打开播放源，达到不用注册、不用看广告、直接高清观看直播的目的</p><p>可以打开直播源的播放器很多：INNA、PotPlayer、VLC、DPlayer……</p><p><a href="https://github.com/panlianghnu/WatchLive_cross-platform">源代码</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>杭电OJ</title>
       <link href="2021/03/14/%E6%9D%AD%E7%94%B5OJ/"/>
       <url>2021/03/14/%E6%9D%AD%E7%94%B5OJ/</url>
