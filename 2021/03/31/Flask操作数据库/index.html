@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Flask操作数据库 | Panliang</title>
+  <meta name="description" content="安装1pip install flask-sqlalchemy 配置    配置选项 说明     SQLALCHEMY_DATABASE_URI 连接数据库。示例：mysql:&#x2F;&#x2F;username:password@host&#x2F;post&#x2F;db?charset&#x3D;utf-8   SQLALCHEMY_BINDS 一个将会绑定多种数据库的字典。 更多详细信息请看官文 绑定多种数据库.   SQLALCH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask操作数据库">
+<meta property="og:url" content="https://panlianghnu.github.io/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="PanLiang&#39;s blog">
+<meta property="og:description" content="安装1pip install flask-sqlalchemy 配置    配置选项 说明     SQLALCHEMY_DATABASE_URI 连接数据库。示例：mysql:&#x2F;&#x2F;username:password@host&#x2F;post&#x2F;db?charset&#x3D;utf-8   SQLALCHEMY_BINDS 一个将会绑定多种数据库的字典。 更多详细信息请看官文 绑定多种数据库.   SQLALCH">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/image-20210331161346831.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/image-20210331161413793.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/image-20210331162012647.png">
+<meta property="article:published_time" content="2021-03-31T07:49:40.000Z">
+<meta property="article:modified_time" content="2021-03-31T08:20:24.625Z">
+<meta property="article:author" content="Pan Liang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://panlianghnu.github.io/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/image-20210331161346831.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://panlianghnu.github.io/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="PanLiang&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/panlianghnu" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">panliang</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Changsha, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Anaconda/" style="font-size: 13px;">Anaconda</a> <a href="/tags/Flask/" style="font-size: 13px;">Flask</a> <a href="/tags/JWT/" style="font-size: 13px;">JWT</a> <a href="/tags/Language/" style="font-size: 13px;">Language</a> <a href="/tags/MacOS/" style="font-size: 13px;">MacOS</a> <a href="/tags/P2P/" style="font-size: 13px;">P2P</a> <a href="/tags/Vue/" style="font-size: 13.33px;">Vue</a> <a href="/tags/bios/" style="font-size: 13px;">bios</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.33px;">c语言</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.67px;">linux</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/ubuntu/" style="font-size: 13.33px;">ubuntu</a> <a href="/tags/websocket/" style="font-size: 13px;">websocket</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 13px;">分布式</a> <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13px;">区块链</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/%E8%81%8A%E5%A4%A9%E5%AE%A4/" style="font-size: 13px;">聊天室</a> <a href="/tags/%E8%BD%AC%E8%BD%BD/" style="font-size: 13.33px;">转载</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">16</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/01/python%E5%AE%9E%E7%8E%B0%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81/" class="title">python实现发送短信验证码</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-01T07:50:25.000Z" itemprop="datePublished">2021-04-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/" class="title">Flask操作数据库</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-31T07:49:40.000Z" itemprop="datePublished">2021-03-31</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/31/MacOS%E5%AE%89%E8%A3%85MySQL/" class="title">MacOS安装MySQL</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-31T02:28:20.000Z" itemprop="datePublished">2021-03-31</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/28/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E8%A7%A3%E9%94%81%E7%81%B0%E6%AD%8C-MacOS/" class="title">网易云音乐解锁灰歌-MacOS</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-27T16:23:21.000Z" itemprop="datePublished">2021-03-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/25/Flask-Vue-%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BBJWT%E7%94%A8%E6%88%B7%E9%AA%8C%E8%AF%81/" class="title">Flask+Vue 前后端分离JWT用户验证</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-25T08:35:28.000Z" itemprop="datePublished">2021-03-25</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Flask操作数据库" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Flask操作数据库
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/" class="article-date">
+	  <time datetime="2021-03-31T07:49:40.000Z" itemprop="datePublished">2021-03-31</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install flask-sqlalchemy</span><br></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>配置选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SQLALCHEMY_DATABASE_URI</code></td>
+<td>连接数据库。示例：<code>mysql://username:password@host/post/db?charset=utf-8</code></td>
+</tr>
+<tr>
+<td><code>SQLALCHEMY_BINDS</code></td>
+<td>一个将会绑定多种数据库的字典。 更多详细信息请看官文 <a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=http%3A%2F%2Fflask-sqlalchemy.pocoo.org%2F2.3%2Fbinds%2F%23binds">绑定多种数据库</a>.</td>
+</tr>
+<tr>
+<td><code>SQLALCHEMY_ECHO</code></td>
+<td>调试设置为true</td>
+</tr>
+<tr>
+<td><code>SQLALCHEMY_POOL_SIZE</code></td>
+<td>数据库池的大小，默认值为5。</td>
+</tr>
+<tr>
+<td><code>SQLALCHEMY_POOL_TIMEOUT</code></td>
+<td>连接超时时间</td>
+</tr>
+<tr>
+<td><code>SQLALCHEMY_POOL_RECYCLE</code></td>
+<td>自动回收连接的秒数。</td>
+</tr>
+<tr>
+<td><code>SQLALCHEMY_MAX_OVERFLOW</code></td>
+<td>控制在连接池达到最大值后可以创建的连接数。当这些额外的 连接回收到连接池后将会被断开和抛弃。</td>
+</tr>
+<tr>
+<td><code>SQLALCHEMY_TRACK_MODIFICATIONS</code></td>
+<td>如果设置成 True (默认情况)，Flask-SQLAlchemy 将会追踪对象的修改并且发送信号。这需要额外的内存， 如果不必要的可以禁用它。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>操作数据库需要先创建一个db对象，通常写在<code>exts.py</code>文件里。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask_sqlalchemy <span class="keyword">import</span> SQLAlchemy</span><br><span class="line">db = SQLAlchemy()</span><br></pre></td></tr></table></figure>
+<p>flask项目一般将数据库配置写入<code>configs.py</code>文件里面，配置在创建引擎前需写好，不要在程序运行时修改配置，如下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">DIALECT = <span class="string">&#x27;mysql&#x27;</span></span><br><span class="line">DRIVER = <span class="string">&#x27;pymysql&#x27;</span></span><br><span class="line">USERNAME = <span class="string">&#x27;root&#x27;</span></span><br><span class="line">PASSWORD = <span class="string">&#x27;********&#x27;</span></span><br><span class="line">HOST = <span class="string">&#x27;127.0.0.1&#x27;</span></span><br><span class="line">PORT = <span class="string">&#x27;3306&#x27;</span></span><br><span class="line">DATABASE = <span class="string">&#x27;AIdrug&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># mysql 不会认识utf-8,而需要直接写成utf8</span></span><br><span class="line">SQLALCHEMY_DATABASE_URI = <span class="string">&quot;&#123;&#125;+&#123;&#125;://&#123;&#125;:&#123;&#125;@&#123;&#125;:&#123;&#125;/&#123;&#125;?charset=utf8&quot;</span>.<span class="built_in">format</span>(</span><br><span class="line"> DIALECT, DRIVER, USERNAME, PASSWORD, HOST, PORT, DATABASE)</span><br><span class="line"></span><br><span class="line">SQLALCHEMY_TRACK_MODIFICATIONS = <span class="literal">False</span></span><br><span class="line">SQLALCHEMY_ECHO = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<p>写完数据库配置后需要和app绑定，<code>main.py</code>文件里写flask应用的创建和蓝图的注册等等，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">import</span> configs</span><br><span class="line"><span class="keyword">from</span> exts <span class="keyword">import</span> db</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment"># 加载配置文件</span></span><br><span class="line">app.config.from_object(configs)</span><br><span class="line"><span class="comment"># db绑定app</span></span><br><span class="line">db.init_app(app)</span><br></pre></td></tr></table></figure>
+<h4 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Integer</td>
+<td>整型</td>
+</tr>
+<tr>
+<td>String</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>Text</td>
+<td>文本</td>
+</tr>
+<tr>
+<td>DateTime</td>
+<td>日期</td>
+</tr>
+<tr>
+<td>Float</td>
+<td>浮点型</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>布尔值</td>
+</tr>
+<tr>
+<td>PickleType</td>
+<td>存储一个序列化（ Pickle ）后的Python对象</td>
+</tr>
+<tr>
+<td>LargeBinary</td>
+<td>巨长度二进制数据</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li><p>表的创建</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建表写在models.py文件里面</span></span><br><span class="line"><span class="keyword">from</span> .exts <span class="keyword">import</span> db</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">建表</span></span><br><span class="line"><span class="string">以下表关系：</span></span><br><span class="line"><span class="string">一个用户对应多篇文章（一对多）</span></span><br><span class="line"><span class="string">一篇文章对应多个标签，一个标签对应多个文章（多对多）</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">一对一关系中，需要设置relationship中的uselist=Flase，其他数据库操作一样。</span></span><br><span class="line"><span class="string">一对多关系中，外键设置在多的一方中，关系（relationship）可设置在任意一方。</span></span><br><span class="line"><span class="string">多对多关系中，需建立关系表，设置 secondary=关系表</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户表</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>(<span class="params">db.Model</span>):</span></span><br><span class="line">    __tablename__ = <span class="string">&#x27;user&#x27;</span></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>, autoincrement=<span class="literal">True</span>)</span><br><span class="line">    email = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line">    username = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Log表</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Log</span>(<span class="params">db.Model</span>):</span></span><br><span class="line">    __tablename__ = <span class="string">&#x27;log&#x27;</span></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>, autoincrement=<span class="literal">True</span>)</span><br><span class="line">    userId = db.Column(db.Integer, db.ForeignKey(<span class="string">&#x27;user.id&#x27;</span>))  <span class="comment"># 外键</span></span><br><span class="line">    log = db.Column(db.String(<span class="number">50</span>))</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>表的映射</p>
+<p>创建好表后需要映射到数据库中，这里用<code>flask-migrate</code>库，编写启动文件<code>manage.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask_script <span class="keyword">import</span> Manager, Server</span><br><span class="line"><span class="keyword">from</span> main <span class="keyword">import</span> app</span><br><span class="line"><span class="keyword">from</span> flask_migrate <span class="keyword">import</span> Migrate, MigrateCommand</span><br><span class="line"><span class="keyword">from</span> dao.exts <span class="keyword">import</span> db</span><br><span class="line"><span class="keyword">from</span> dao <span class="keyword">import</span> models  <span class="comment"># 模型文件必须导入进来，否则运行报错</span></span><br><span class="line"></span><br><span class="line">manager = Manager(app)</span><br><span class="line">Migrate(app=app, db=db)</span><br><span class="line">manager.add_command(<span class="string">&#x27;db&#x27;</span>, MigrateCommand) <span class="comment"># 创建数据库映射命令</span></span><br><span class="line">manager.add_command(<span class="string">&#x27;start&#x27;</span>, Server(port=<span class="number">8000</span>, use_debugger=<span class="literal">True</span>)) <span class="comment"># 创建启动命令</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    manager.run()</span><br></pre></td></tr></table></figure>
+<p>编写好启动文件后，进入项目根目录，输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python manage.py db init</span><br><span class="line">python manage.py db migrate</span><br><span class="line">python manage.py db upgrade</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>表的增删改查</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 原生sql语句操作</span></span><br><span class="line">sql = <span class="string">&#x27;select * from user&#x27;</span></span><br><span class="line">result = db.session.execute(sql)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询全部</span></span><br><span class="line">User.query.<span class="built_in">all</span>()</span><br><span class="line"><span class="comment"># 主键查询</span></span><br><span class="line">User.query.get(<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 条件查询</span></span><br><span class="line">User.query.filter_by(User.username=<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line"><span class="comment"># 多条件查询</span></span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> and_</span><br><span class="line">User.query.filter_by(and_(User.username ==<span class="string">&#x27;name&#x27;</span>,User.password==<span class="string">&#x27;passwd&#x27;</span>))</span><br><span class="line"><span class="comment"># 比较查询</span></span><br><span class="line">User.query.<span class="built_in">filter</span>(User.<span class="built_in">id</span>.__lt__(<span class="number">5</span>)) <span class="comment"># 小于5</span></span><br><span class="line">User.query.<span class="built_in">filter</span>(User.<span class="built_in">id</span>.__le__(<span class="number">5</span>)) <span class="comment"># 小于等于5</span></span><br><span class="line">User.query.<span class="built_in">filter</span>(User.<span class="built_in">id</span>.__gt__(<span class="number">5</span>)) <span class="comment"># 大于5</span></span><br><span class="line">User.query.<span class="built_in">filter</span>(User.<span class="built_in">id</span>.__ge__(<span class="number">5</span>)) <span class="comment"># 大于等于5</span></span><br><span class="line"><span class="comment"># in查询</span></span><br><span class="line">User.query.<span class="built_in">filter</span>(User.username.in_(<span class="string">&#x27;A&#x27;</span>,<span class="string">&#x27;B&#x27;</span>,<span class="string">&#x27;C&#x27;</span>,<span class="string">&#x27;D&#x27;</span>))</span><br><span class="line"><span class="comment"># 排序</span></span><br><span class="line">User.query.order_by(<span class="string">&#x27;age&#x27;</span>) <span class="comment"># 按年龄排序，默认升序，在前面加-号为降序&#x27;-age&#x27;</span></span><br><span class="line"><span class="comment"># 限制查询</span></span><br><span class="line">User.query.<span class="built_in">filter</span>(age=<span class="number">18</span>).offset(<span class="number">2</span>).limit(<span class="number">3</span>)  <span class="comment"># 跳过二条开始查询，限制输出3条</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 增加</span></span><br><span class="line">use = User(<span class="built_in">id</span>,username,password)</span><br><span class="line">db.session.add(use)</span><br><span class="line">db.session.commit() </span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除</span></span><br><span class="line">User.query.filter_by(User.username=<span class="string">&#x27;name&#x27;</span>).delete()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改</span></span><br><span class="line">User.query.filter_by(User.username=<span class="string">&#x27;name&#x27;</span>).update(&#123;<span class="string">&#x27;password&#x27;</span>:<span class="string">&#x27;newdata&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p>成功！</p>
+<p><img src="/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/image-20210331161346831.png" alt="image-20210331161346831"></p>
+<p><img src="/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/image-20210331161413793.png" alt="image-20210331161413793"></p>
+<p><img src="/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/image-20210331162012647.png" alt="image-20210331162012647"></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+    <ul class="post-copyright list-unstyled">
+        
+        <li class="post-copyright-link hidden-xs">
+            <strong>本文链接：</strong>
+            <a
+                href="https://panlianghnu.github.io/2021/03/31/Flask%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/"
+                title="Flask操作数据库"
+                target="_blank"
+                rel="external"
+                >https://panlianghnu.github.io/2021/03/31/Flask操作数据库/</a
+            >
+        </li>
+        
+        <li class="post-copyright-license">
+            <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用
+            <a
+                href="http://creativecommons.org/licenses/by/4.0/deed.zh"
+                target="_blank"
+                rel="external"
+                >CC BY 4.0 CN协议</a
+            >
+            许可协议。转载请注明出处！
+        </li>
+    </ul>
+</blockquote>
+ 
+<div class="panel panel-default panel-badger">
+    <div class="panel-body">
+        <figure class="media">
+            <div class="media-left">
+                <a
+                    href="https://github.com/panlianghnu"
+                    target="_blank"
+                    class="img-burn thumb-sm visible-lg"
+                >
+                    <img
+                        src="/images/avatar.png"
+                        class="img-rounded w-full"
+                        alt=""
+                    />
+                </a>
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="https://github.com/panlianghnu" target="_blank"
+                        ><span class="text-dark">panliang</span
+                        ><small class="ml-1x"
+                            ></small
+                        ></a
+                    >
+                </h3>
+                <div>个人简介。</div>
+            </div>
+        </figure>
+    </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/04/01/python%E5%AE%9E%E7%8E%B0%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81/" title="python实现发送短信验证码"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/03/31/MacOS%E5%AE%89%E8%A3%85MySQL/" title="MacOS安装MySQL"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <!--div class="copyright">
+        
+        <!--div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div-->
+    <!--/div-->
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
