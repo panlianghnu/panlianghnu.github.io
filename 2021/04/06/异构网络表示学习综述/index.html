@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>异构网络表示学习综述 | Panliang</title>
+  <meta name="description" content="异构网络表示学习前言表征学习为何重要：210用6除是非常直截了当的，但是如果用罗马字符 CCX，会一下想到用 VI 除吗，可以看到阿拉伯数字相比于罗马数字更加的让人容易处理除法。 机器学习算法的成功与否不仅仅取决于算法本身，也取决于数据的表示。数据的不同表示可能会导致有效信息的隐藏或是曝露，这也决定了算法是不是能直截了当地解决问题。表征学习的目的是对复杂的原始数据化繁为简，把原始数据的无效信息剔除">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异构网络表示学习综述">
+<meta property="og:url" content="https://panlianghnu.github.io/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/index.html">
+<meta property="og:site_name" content="PanLiang&#39;s blog">
+<meta property="og:description" content="异构网络表示学习前言表征学习为何重要：210用6除是非常直截了当的，但是如果用罗马字符 CCX，会一下想到用 VI 除吗，可以看到阿拉伯数字相比于罗马数字更加的让人容易处理除法。 机器学习算法的成功与否不仅仅取决于算法本身，也取决于数据的表示。数据的不同表示可能会导致有效信息的隐藏或是曝露，这也决定了算法是不是能直截了当地解决问题。表征学习的目的是对复杂的原始数据化繁为简，把原始数据的无效信息剔除">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/image-20210408153000630.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/v2-d3234b9cb508901a365d1c35c7ea64ea_720w.jpg">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/v2-adc59d82ab5231a8702c0d6e0eb7e4cd_720w-20210408153111068.jpg">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/image-20210406154241665.png">
+<meta property="article:published_time" content="2021-04-06T02:40:23.000Z">
+<meta property="article:modified_time" content="2021-04-13T05:48:08.056Z">
+<meta property="article:author" content="Pan Liang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://panlianghnu.github.io/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/image-20210408153000630.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://panlianghnu.github.io/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="PanLiang&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/panlianghnu" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">panliang</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Changsha, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Anaconda/" style="font-size: 13px;">Anaconda</a> <a href="/tags/Flask/" style="font-size: 13px;">Flask</a> <a href="/tags/JWT/" style="font-size: 13px;">JWT</a> <a href="/tags/Language/" style="font-size: 13px;">Language</a> <a href="/tags/MacOS/" style="font-size: 13px;">MacOS</a> <a href="/tags/P2P/" style="font-size: 13px;">P2P</a> <a href="/tags/Vue/" style="font-size: 13.33px;">Vue</a> <a href="/tags/bios/" style="font-size: 13px;">bios</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.33px;">c语言</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.67px;">linux</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/ubuntu/" style="font-size: 13.33px;">ubuntu</a> <a href="/tags/websocket/" style="font-size: 13px;">websocket</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 13px;">分布式</a> <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13px;">区块链</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/%E8%81%8A%E5%A4%A9%E5%AE%A4/" style="font-size: 13px;">聊天室</a> <a href="/tags/%E8%BD%AC%E8%BD%BD/" style="font-size: 13.33px;">转载</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">16</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/06/29/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6%E9%80%89%E6%8B%A9/" class="title">小程序框架选择</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-06-29T08:51:33.000Z" itemprop="datePublished">2021-06-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/19/CNN/" class="title">CNN</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-19T07:55:50.000Z" itemprop="datePublished">2021-04-19</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/11/Deep-Forest/" class="title">Deep-Forest</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-11T05:36:50.000Z" itemprop="datePublished">2021-04-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/10/%E8%8D%AF%E7%89%A9-%E9%9D%B6%E7%82%B9%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8%E7%BD%91%E7%BB%9C%E9%87%8D%E5%BB%BA%E7%9A%84%E7%BB%86%E8%8A%82/" class="title">药物-靶点相互作用网络重建的细节</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-10T03:32:35.000Z" itemprop="datePublished">2021-04-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/" class="title">异构网络表示学习综述</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-06T02:40:23.000Z" itemprop="datePublished">2021-04-06</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-异构网络表示学习综述" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      异构网络表示学习综述
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/" class="article-date">
+	  <time datetime="2021-04-06T02:40:23.000Z" itemprop="datePublished">2021-04-06</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="异构网络表示学习"><a href="#异构网络表示学习" class="headerlink" title="异构网络表示学习"></a>异构网络表示学习</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="表征学习为何重要："><a href="#表征学习为何重要：" class="headerlink" title="表征学习为何重要："></a>表征学习为何重要：</h3><p>210用6除是非常直截了当的，但是如果用罗马字符 CCX，会一下想到用 VI 除吗，可以看到阿拉伯数字相比于罗马数字更加的让人容易处理除法。</p>
+<p>机器学习算法的成功与否不仅仅取决于算法本身，也取决于数据的表示。数据的不同表示可能会导致有效信息的隐藏或是曝露，这也决定了算法是不是能直截了当地解决问题。表征学习的目的是对复杂的原始数据化繁为简，把原始数据的无效信息剔除，把有效信息更有效地进行提炼，形成特征，这也应和了机器学习的一大任务——可解释性。 也正是因为特征的有效提取，使得今后的机器学习任务简单并且精确许多。在我们接触机器学习、深度学习之初，我们就知道有一类任务也是提炼数据的，那就是特征工程。与表征学习不同的是，特征工程是人为地处理数据，也是我们常听的“洗数据”。 而表示学习是借助算法让机器自动地学习有用的数据和其特征。 不过这两个思路都在尝试解决机器学习的一个主要问题——如何更合理高效地将特征表示出来。</p>
+<h3 id="什么因素决定了一种表示比另一种表示好呢："><a href="#什么因素决定了一种表示比另一种表示好呢：" class="headerlink" title="什么因素决定了一种表示比另一种表示好呢："></a>什么因素决定了一种表示比另一种表示好呢：</h3><ol>
+<li><p>提供Disentangling of Causal Factors的线索</p>
+<blockquote>
+<p>One hypothesis is that an ideal representation is one in which the features within the representation correspond to the under- lying causes of the observed data, with separate features or directions in feature space corresponding to different causes, so that the representation disentangles the causes from one another. This hypothesis motivates approaches in which we first seek a good representation for p(x). Such a representation may also be a good representation for computing p(y | x) if y is among the most salient causes of x. </p>
+</blockquote>
+<p>一个假设：理想表示法是这样一种表示法，即表示法中的特征对应于观测数据的潜在原因，而特征空间中的独立特征或方向对应于不同的原因，这样表示法就可以将原因相互分离开来。</p>
+<p>这一假设激发了我们首先寻找p（x）的良好表示的方法。如果y是x的最显著原因之一，那么这种表示也可以是计算p（y | x）的良好表示。</p>
+<p><img src="/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/image-20210408153000630.png" alt="image-20210408153000630"></p>
+<p>这是一个混合高斯分布，学习到好的p(x)，对y的预估会变得更容易，但如果p(x)是一个均匀分布，则对y的预估就一点用的没有。</p>
+</li>
+<li><p>distribution representation的优势，分布表征</p>
+<p><img src="/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/v2-d3234b9cb508901a365d1c35c7ea64ea_720w.jpg" alt="img"></p>
+<p><img src="/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/v2-adc59d82ab5231a8702c0d6e0eb7e4cd_720w-20210408153111068.jpg" alt="img"></p>
+<p>对于上面两个图，分别表示distribution representation和one hot representation对空间的分割，明显可以看到，distribution的版本，可以用更少的线分割出更多的区域，即在统计上更有效（statistics effective）</p>
+</li>
+<li><p>Deep带来的Exponential级别的增益</p>
+<p>我们有了解过神经网络的universal approximators理论，Deep的模型比shallow的模型能用更少的weight，描述更复杂的function，在representation里面，也适用。</p>
+<blockquote>
+<p>事实证明，在许多不同的情况下，通过许多非线性的组合和重用特征的层次结构来组织计算，可以在使用分布式表示的指数提升的基础上，给统计效率带来指数提升。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="why-and-when-pretrain-work"><a href="#why-and-when-pretrain-work" class="headerlink" title="why and when pretrain work:"></a>why and when pretrain work:</h3><blockquote>
+<p>无监督的预训练结合了两种不同的想法。首先，它利用了这样一种思想，即深度神经网络初始参数的选择可以对模型产生显著的正则化效果（并且在较小程度上可以改善优化）。其次，它利用了一个更一般的思想，即了解输入分布有助于了解从输入到输出的映射。</p>
+</blockquote>
+<p>目前更多的信息表明，deep模型，local mini不是严重的问题，而pretrain可能能帮助我们找到更好的路径绕开变态Hessian matrix的区域。</p>
+<blockquote>
+<p>其基本思想是，一些对无监督学习任务有用的特征也可能对有监督学习任务有用。例如，如果我们训练汽车和摩托车图像的生成模型，它需要知道车轮，以及图像中应该有多少个车轮。所以当unsupervised学习到的表达对supervised的帮助不大时，即共同性没有那么强时，效果就不理想了。</p>
+</blockquote>
+<p>另外由于pretrain把模型训练分为了两个stage，不是end2end，无论是调参反馈还是参数量上，都更慢或更多，随着supervised能用的样本越来越多，pretrain开始退出历史舞台。</p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>异构网络表示学习的目标，就是将输入异构<code>网络中的顶点嵌入到一个潜在的嵌入空间</code>中，使得网络的结构和关系属性都能被编码和保持。嵌入生成的向量就可以作为机器学习的 features</p>
+<p>表达性嵌入学习，目前主要分为两类：</p>
+<ul>
+<li>浅层嵌入学习</li>
+<li>图神经网络</li>
+</ul>
+<p>文章确定了几个最尚未解决的挑战，建立了异构网络图的 benchmark</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>​    现实世界的复杂系统通常是多个对象多个关系构成的。比如 science enterprise，它利用五种对象（论文、作者、研究所、地点、领域），其他在社会学、生物学、经济学等各个领域都能看到。通常，这些复杂系统能够被有效地抽象为<strong>异构网络</strong>（不同类型的顶点在唯一关系下连接【Sun and Han,2012】）</p>
+<p>​    异构网络的定义：有向图 G = (V,E)，每个顶点 v 属于 V，每个边 e 属于 E，顶点和边通过 type mapping function 联系起来</p>
+<script type="math/tex; mode=display">
+τ(v): V \rightarrow T_V \space\space and \space\space φ(e):E \rightarrow T_E</script><p>Tv 和 Te 分别代表顶点和边的各个类型</p>
+<script type="math/tex; mode=display">
+| \space T_V \space | + | \space T_E \space | > 2</script><p> 如果两个边有相同的关系，有相同的顶点类型 (source v -&gt; target v) ，如果 |TV |=1 and |TE|=1,这是一个具有相同类型顶点和边的异构网络，其实就是普通的有向图</p>
+<p>对异构网络分析的过程，一般由提取类型化结构化的 features 开始，它们被进一步输入到下游图形任务的机器学习模型中，通常这会涉及到以下几个概念：</p>
+<blockquote>
+<p>Meta Relation（元关系）：异构网络中的每个边和它的元关系相关联</p>
+<script type="math/tex; mode=display">
+For \space an \space edge \space e = (s,t) \space ,its \space meta \space relation \space is \space denoted \space as \space ⟨τ (s), φ(e), τ (t)⟩.</script><p>Network Schema（网络架构）：给定一个异构网络G，它的网络架构定义为</p>
+<script type="math/tex; mode=display">
+T_G = (T_V,T_E)</script><p>网络架构包含G中所有的元关系，G的顶点类型 Tv，G的边类型Te</p>
+<p>Meta Path（元路径）：一个G中元关系组成的序列，比如一个OAG中一个说明性的元路径是这样的：”author-paper-venue-paper-author”表示在同一地点发布的两个作者的语义</p>
+</blockquote>
+<p>比如，Figure 1 说明了OAG的网络架构和元路径：</p>
+<p><img src="/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/image-20210406154241665.png" alt="image-20210406154241665"></p>
+<p>基于这些概念和工具，各种异构网络挖掘方法被提出并应用于各种与图形相关的应用，如顶点分类、在线推荐、链接预测、社区检测、异常检测等。</p>
+<p>近年来，异构网络挖掘的研究范式逐渐转向基于表征学习的技术。</p>
+<p>网络表征学习的目标是<code>自动化的学习潜在的低纬度网络对象的嵌入表示</code></p>
+<p>应用前提是输入网络固有的结构和语义特性可以被编码到潜在的嵌入向量中，从而有利于异构网络上的应用和任务。比如，user 和 items 的网络嵌入向量可以作为在线推荐系统的特征输入。</p>
+<h2 id="异构网络挖掘"><a href="#异构网络挖掘" class="headerlink" title="异构网络挖掘"></a>异构网络挖掘</h2><h3 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h3><p>异构网络的形式化可以追溯到对异构信息网络的研究，其中作者提出利用不同类型顶点之间的链接来生成簇。更重要的是，作者认为“多类型对象之间的相互作用在揭示网络所承载的丰富语义方面起着关键作用”。</p>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>除聚类外，图的非均匀性在其他图挖掘任务中的重要性也得到了证明，包括顶点分类、排序、相似搜索、链路预测、异常检测等。</p>
+<h3 id="传统的挖掘模式"><a href="#传统的挖掘模式" class="headerlink" title="传统的挖掘模式"></a>传统的挖掘模式</h3><p>挖掘异构网络的传统工作流程是首先在网络模式上定义元路径或其变体，如元图或元结构，然后将其作为特征来开发机器学习模型</p>
+<p>以学术网络中的链接预测任务为例，我们可以定义“作者-论文-作者”元]路径来提取异构结构特征，并利用这些特征来推断每对作者之间是否存在协作关系</p>
+<h3 id="挑战"><a href="#挑战" class="headerlink" title="挑战"></a>挑战</h3><p>异构网络挖掘的主要挑战在于元路径的设计。通常，为了解决输入网络的特定图形问题，我们必须人工定制特定于任务和数据的元路径，这需要相关的领域知识和经验。</p>
+<p>此外，元路径的传统用法仅限于离散空间。如果图中的两个顶点没有结构上的连接，基于元路径的技术就无法捕捉它们之间的关系。例如，假设一位学者发表的论文都是 NeurIPS，而另一位学者的所有论文都发在 ICML，根据”author-paper-venue-paper-author”元路径，这两个学者之间的相关性是0，然而 NeurIPS 和 ICML 有很强的相关性。</p>
+<p>这种由离散结构引起的挑战可以通过在连续空间中使用潜在的表示来自然地解决。</p>
+<h2 id="异构网络表征"><a href="#异构网络表征" class="headerlink" title="异构网络表征"></a>异构网络表征</h2><p>近年来，利用<strong>神经网络</strong>学习物体潜在嵌入的神经表征学习在计算机视觉、自然语言处理和语音识别等领域取得了革命性的成果。受此启发，有人尝试将表征学习应用到网络中。网络表示学习的前提是不需要手工构造结构特征，而是能够将网络结构自动嵌入到潜在空间中，然后用于现有的网络挖掘任务。</p>
+<p>神经网络表示学习的主要障碍是非欧几里德图结构到欧几里德嵌入空间的转换，因为图数据和神经网络之间存在差距。最近，弥补这一差距的主要进展是借鉴图论的思想。例如，一个方向的尝试是利用<code>random walks</code>将图结构转换为序列，这可以被基于序列的嵌入学习算法（比如DeepWalk 和 node2vec模型）来调用。</p>
+<p>异质网络的表征学习技术大多是在同质网络表征学习的基础上发展起来的。核心问题是如何将不同类型的顶点和边之间的结构转换为潜在空间，从而编码和保持异构网络的结构和语义特性。</p>
+<h3 id="异构网络嵌入"><a href="#异构网络嵌入" class="headerlink" title="异构网络嵌入"></a>异构网络嵌入</h3><p>我们回顾了基于浅层学习的异构网络嵌入方法。</p>
+<p>“浅层”方法的特点是嵌入查找表，即它们直接将每个顶点编码为一个向量，而这个嵌入表是要优化的参数。沿着这条线，方法可以根据它们所建立的假设进行分类。</p>
+<ol>
+<li><p>基于分布假设的方法</p>
+<p>Skip-gram 是一种浅层嵌入学习算法，最初是为了捕捉自然语言中单词的语义相似性而提出的。它基于分布假设，该假设指出<code>出现在同一上下文中的词往往具有相似的含义</code></p>
+<p>随后，该假设被扩展到网络：<code>共享相同结构上下文的顶点在嵌入空间中趋于接近</code>为了解决这一问题，人们提出了几种基于skip-gram的同质网络嵌入方法，如DeepWalk和node2vec以及NetMF</p>
+<p>PTE：为了对异质网络中的分布假设进行建模，PTE模型首先将输入的异质网络投影到几个同质/二部网络中，假定：<code>具有相似邻域的顶点彼此相似，因此应该在低维空间中紧密地表示</code>在这种假设下，PTE在每个网络上应用skip-gram框架，并联合优化所有嵌入表</p>
+<p>metapath2vec：为了更好地捕捉图的异质性，提出了 metapath2vec 模型：它的主要思想是扩大随机游走策略，这些策略最初用于收集节点上下文，以模拟同质网络中的分布假设。具体地说，它引入了基于元路径的随机游走策略，其中游走者被限制在特定类型的顶点之间的转换。与PTE相比，该策略能更好地统一描述不同类型顶点之间的结构依赖关系。对于嵌入学习，metapath2vec直接利用带负采样的skip-gram学习异构网络中所有类型顶点的嵌入。此外，它的增强版进一步提出了基于类型的skip-gram负采样，有效地建模了异构网络中的结构依赖和语义依赖</p>
+<p>后来，各种解决方案利用元路径来构建异构上下文，以便为不同的下游任务学习表示。例如，与word2vec的phrase2vec扩展类似，HIN2vec<code>直接将元路径作为对象/上下文</code>来学习顶点和元路径的嵌入。GATNE将该框架扩展到多个异构网络，TapEm进一步将顶点对嵌入和元路径嵌入结合起来。HeteSpaceyWalk通过在元路径、图和模式的指导下提出异构个性化spacey随机行走算法，进一步推进了基于元路径的随机行走。更重要的是，这种随机游走策略与顶点之间的收敛平稳分布有关</p>
+</li>
+<li><p>其他方法</p>
+<p>除了基于skip-gram的方法外，其他异构网络嵌入技术还包括基于标签传播、因子分解和生成对抗网络的方法。此外，大多数这些技术都是特定于任务的，需要监督信息。</p>
+<p>LSHM：2014年，最初尝试异构网络表征学习的方法是基于标签传播的LSHM模型，LSHM借用了同构网络中标签传播的平滑性假设——<code>两个连接的节点往往具有相同的标签</code>，用于异构网络。它的思想是通过使用顶点类型特定的分类来强制（不同类型的）顶点具有相似的表示。该方法是在标签传播框架下进行顶点分类的。在此基础上，针对异构链路预测问题，提出了一种类似的任务和结构损失联合优化方法。它的 structure loss 是基于在异构网络中<code>为特定任务手工设计的元路径</code>来构造的。总之，这些方法是（半）监督的，作者认为不同类型之间的结构依赖和标签依赖可以建模。</p>
+<p>HERec：与PTE类似，HERec模型还根据定制的元路径将输入异构网络投影到多个维度。然后在每个投影中使用metapath2vec框架学习顶点嵌入，所有顶点嵌入都通过基于因子分解的融合模型与来自推荐任务的监督信息进行融合。不同的是，HueRec方法认为不同元路径之间存在相互关系，因此它将它们统一为异构网络中推荐任务的端到端框架。</p>
+<p>大多数基于skip-gram的嵌入方法都与负采样相结合，以实现可伸缩的快速学习。更广泛地说，该技术属于噪声对比估计（NCE）领域，APE模型在此基础上有效地学习了不同顶点类型与“上下文相关”噪声分布之间的交互概率，而无需考虑大数据空间。此外，最近的一项研究提出了基于生成性对抗网络（GAN）的框架HeGAN来实现这一点。HeGAN的目标不是直接采样，而是生成潜在的顶点分布，从而生成具有异质结构的更好的负样本。</p>
+</li>
+<li><p>总结</p>
+<p>在浅嵌入的背景下，对于异构网络有无监督和有监督两种学习框架。大多数无监督方法都是建立在分布假设应用于异构网络的基础上，如基于 skip-gram 的模型。对于（半）监督框架，学习目标通常是异构结构建模和特定任务优化的组合。</p>
+<p>然而，在这两种学习环境下，大多数方法都依赖于人工探索异构结构，即选择元路径或变体来获取结构和语义依赖。</p>
+</li>
+</ol>
+<h3 id="异构图神经网络"><a href="#异构图神经网络" class="headerlink" title="异构图神经网络"></a>异构图神经网络</h3><p>最近几年，图神经网络（GNN）在构造和关系数据建模方面显示出了有希望的结果。和基于浅层学习的异构网络嵌入方法不一样，GNN通常由更复杂的编码器授权，通常是一个深层的神经网络，支持结构和顶点属性的自然建模。这一部分，会总结最近的GNNs对网络表征学习的进展。</p>
+<p>我们首先介绍了关系数据的通用GNN框架。一种方法是将其视为神经信息传递框架，其中输入图的结构用作传播（顶点或边）信息的主干，以形成表达性表示。或者，我们可以将其视为特征聚合过程，其中对于每个顶点，其邻域被视为接收场，从中递归地聚合信息。</p>
+<p>在形式上，这个聚合过程可以抽象成公式：</p>
+<script type="math/tex; mode=display">
+H^{(l+1)} = \sigma (\widehat{A}    H^{(l)} W^{(l)})</script><ul>
+<li><p>H(l) W(l) 是第l层的（隐藏）节点表示和参数矩阵</p>
+</li>
+<li><p>A^ 表示从某种形式的图结构导出的滤波器，比如，在GCN中，它是对称的归一化邻接矩阵</p>
+</li>
+<li><p>σ 通常是一个非线形的 function</p>
+</li>
+</ul>
+<p>在这个框架下，有人提出了一系列的研究来更好地学习网络表示。接下来，我们总结异构图神经网络的最新发展</p>
+<ol>
+<li><p>Relational GCN. 关系图卷积网络</p>
+<p>使用GNN对多关系图建模的最早尝试之一是关系图卷积网络（RGCN）</p>
+<p>它为每种边类型保留不同的线性投影权重，为了处理具有大量关系的图，RGCN还将特定关系的参数分解为若干基矩阵的线性组合。</p>
+<p>另一个值得注意的工作是 Decagon model，它在以蛋白质、药物、多药副作用为顶点的多模态图中，对每种类型的关系应用特定的图卷积滤波器。请注意，Decagon model 中特定于关系的参数对于不同的顶点是共享的。</p>
+</li>
+<li><p>Heterogeneous GNNs.异构神经网络</p>
+<p>为了处理异构图结构和节点属性，异构图神经网络（HetGNN）使用类型特定的RNN对每种类型的相邻顶点的特征进行编码，然后使用另一个RNN来聚合不同类型的编码的相邻表示。</p>
+</li>
+<li><p>Heterogeneous Graph Attention.异构图注意</p>
+<p>为了将 Attention 融入到异构GNN设计中，GEM方法对每个关系使用不同的聚合器，并学习用于建模不同类型顶点重要性的注意系数。</p>
+<p>后来，异质图注意网络（HAN）[Wang et al.，2019a]使用元路径作为边来评价图，并为每个元路径定义的边保持不同的权重矩阵。它还利用高级语义注意来区分和聚合来自不同元路径的信息。</p>
+</li>
+<li><p>Heterogeneous Graph Transformer.异构图转换器</p>
+<p>所有以前的工作都是单独使用节点顶点或边类型来确定GNN权重矩阵，然而，对于那些不明显的关系，很难学习精确的关系特定权重。Heterogeneous Graph Transformer 使用每条边的Meta Relation（元关系）来参数化这个 Transformer-like self-attention 架构，以便通过使用更少的参数来捕获不同关系的共同模式和特定模式。</p>
+<p>此外，与大多数现有的需要手工设计元路径的工作不同，HGT可以通过多层GNN的特性<code>自动学习隐式元路径的重要性</code>，以融入高阶异构邻居信息。</p>
+<p>它还学习了边类型和复合关系的软选择，以生成有用的多跳元路径来扩充输入图形。然后，对增广图采用 vanilla GCN层，得到上下文化的顶点嵌入。</p>
+</li>
+<li><p>Summary.</p>
+<p>图神经网络的性质保证了上述所有方法都能得到任何不可见顶点或图的归纳嵌入，而不是像浅嵌入方法那样为图中的每个顶点保持一个大的查找表。此外，它们还可以通过神经网络编码器自然地利用丰富的顶点属性。</p>
+<p>为了适应异构环境，所有现有模型对每种关系类型采用不同的权重矩阵。他们中的大多数利用人类设计的元路径来扩充图，而最近的一些工作利用自我注意机制来自动学习“软”元路径。</p>
+</li>
+</ol>
+<h3 id="知识图-amp-属性网络"><a href="#知识图-amp-属性网络" class="headerlink" title="知识图 &amp; 属性网络"></a>知识图 &amp; 属性网络</h3><p>异构网络与 知识图&amp;属性网络 非常接近，在这个简短的 survey 里，我们没有深入挖掘他们之间的差异和联系</p>
+<p>一般来说，知识图嵌入是一种完成知识图三元组的技术。其主要解决方案可分为两类：</p>
+<ul>
+<li>神经嵌入</li>
+<li>tensor factorization</li>
+</ul>
+<p>属性网络嵌入与图神经网络具有相似的输入</p>
+<p>值得注意的是，提出了ANE和DANE模型来模拟网络结构和属性之间的内在关联，并将其扩展到动态环境。最近，Cen等人将属性化的多重异构网络的表示学习问题形式化。为了解决属性化、多重性和异质性的挑战，他们提出了GATNE框架，并从理论上证明了它的表达优势</p>
+<h3 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h3><p>由于异构网络能够对现实世界中的复杂系统进行抽象和建模，因此异构网络的表示学习在相似性搜索、知识图推理、问答和推荐等方面有着广泛的应用。例如，metapath2vec方法已经部署在 Microsoft Academic 中用于相似性搜索。另一个得益于异构网络嵌入的行业系统是电子商务中的在线推荐模块</p>
+<h2 id="挑战、方向、Open-Data"><a href="#挑战、方向、Open-Data" class="headerlink" title="挑战、方向、Open Data"></a>挑战、方向、Open Data</h2><p>在其发展过程中，表征学习为挖掘（异构）网络提供了一种范式转换。特别明显的是，图神经网络能够显著地重构异构网络表示学习，从而有利于异构网络数据的所有可能应用。因此，我们将重点讨论基于GNN的技术，讨论仍然存在的挑战和未来的发展方向。</p>
+<h3 id="Future-Directions"><a href="#Future-Directions" class="headerlink" title="Future Directions"></a>Future Directions</h3><ol>
+<li><p>避免元路径设计</p>
+<p>表征学习的大前提是，避免涉及手动工作和领域专业知识的特征工程。</p>
+<p>如上所述，大多数异构表示学习方法都需要手动定制元路径或其变体（例如，元图），以便模型捕获给定异构结构下的语义。</p>
+<p>例如，metapath2ve、HetGNN和HAN必须将预定义的元路径作为输入来处理指定的任务。基本上，它们的表示能力仅限于特定数据上的特定任务。</p>
+<p>避免元路径设计的一个很有希望的尝试是最近的HGT模型[Hu et al.，2020b]，在该模型中，通过GNNs跨多个层的特征传播自然解决了该问题。因此，为了充分发挥表示学习的威力，有必要在不进行元路径预设计的情况下自动学习异构网络表示，即避免对网络结构和语义进行预探索</p>
+</li>
+<li><p>多感官表征</p>
+<p>迄今为止，大多数嵌入都是从复杂的、多类型的异构网络中学习的。以分布假设为例，结构语境之间没有区别。具体来说，如果我们以学者“贾维汉”为例，我们可以为他说出几个不同的意义。在科学协作意识下，与他最为相似的学者是他的博士生“简培”和“阎锡峰”。或者，在场地出版物的意义上，“菲利普·S·余”和“克里斯托斯·法鲁索斯”与他最为相似。或者，在数据挖掘的科学影响下，他更像数据库中的“Rakesh Agrawal”和IR中的“Bruce Croft”。从这个例子中，我们可以清楚地看到异质网络中存在着多意义表示。如何定义、学习和使用它们在很大程度上仍然是开放和未探索的。</p>
+</li>
+<li><p>（异构）GNNs的预训练</p>
+<p>如前一节所述，现有的（异构的）GNN是在（半）监督的环境中进行端到端训练的。换句话说，我们需要每个数据集上每个任务的专用标签数据。这在现实世界中通常是很昂贵的，特别是对于Web规模的异构图。为了解决标签稀缺的问题，已经采用了预先训练的神经模型，并显著促进了各种人工智能的发展，例如自然语言处理领域的BERT[Devlin et al.，2019]。</p>
+<p>预训练模型的好处包括</p>
+<ul>
+<li>大多数情况下，它是以无监督（或自我监督）的方式训练的，不需要特定于任务和数据的标签信息；</li>
+<li>它可以用于对不同的下游任务进行微调，甚至可以推广到各种数据。</li>
+</ul>
+<p>在这里，我们设想了两种类型的（异质）GNN预训练方向，以供将来的研究</p>
+<p>首先，0</p>
+<p>然后，我们在一组网络（不同类型）上预先训练GNN模型，目的是捕捉这些网络的内在结构特性，从而促进不同（看不见的）网络上的下游任务。</p>
+<p>当然，异构GNNs的预训练也面临着图形异构性的挑战，使得它不同于现有的同质文本/图像/语音数据预训练技术，并且比现有的预训练技术更具挑战性。</p>
+</li>
+<li><p>多任务学习</p>
+<p>近年来，多任务学习使得深度学习方法在自然语言处理（NLP）和自然语言处理（CV）中的学习表征方面优于传统的单任务学习方法。它的思想是并行处理多个任务，以识别和利用这些任务之间的相似性/差异。研究表明，与特定任务模型相比，这样做可以提高整体绩效[Ruder，2017；Wu等人，2020]。请注意，给定一个由多种类型的顶点和边组成的异构网络，它通常与各种挖掘任务相关联。例如，在一个异构的学术网络上有许多实际应用，如名称消歧、论文主题或作者研究兴趣的推断、文献和引文推荐、相似性搜索等。所有这些异质网络任务都可以从多任务学习中受益。</p>
+<p>在多任务学习中，任务间的共享表示被学习，任务特定的参数可以对其他任务做出贡献。异构网络的独特特性是包含多种类型的顶点和边，这可能是多任务学习的自然应用。</p>
+</li>
+<li><p>动态性和可拓展性</p>
+<p>在现实世界中，大多数网络都是随着时间的推移而演化的，其建模一直是一个研究难题。当网络中存在不同类型的顶点和边时，网络动态问题就变得特别具有挑战性。现有的方法大多是基于时间戳将输入动态网络分解为多层网络来处理。因此，跨不同层的结构和时间依赖通常被忽略。为此，如何有效地对动态异构网络进行建模仍是一个有待解决的问题，更不用说表示学习了。</p>
+<p>另一个常见的挑战在于真实世界图形的大规模。OAG由数十亿个顶点和边组成，跨越1800到2020年。其他网络规模的图表可以更大。对于大多数现有的异构网络表示学习技术来说，在Web规模的图上学习是非常昂贵的。因此，可扩展和计算的可行模型是未来工作的关键方向。</p>
+</li>
+<li><p>其他</p>
+<p>通用GNN模型也面临着一些挑战，例如许多GNN层堆叠时的 over-smoothing 和 over-fitting 问题</p>
+</li>
+</ol>
+<h3 id="Open-Data-and-Benchmark"><a href="#Open-Data-and-Benchmark" class="headerlink" title="Open Data and Benchmark"></a>Open Data and Benchmark</h3><h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>在这项工作中，我们介绍了异构网络表示学习的问题，并讨论了其潜在的挑战。我们回顾了最近在应对这些挑战方面取得的进展。更重要的是，我们深入探讨问题，揭示未来应该解决的关键问题和痛点。为了促进这一快速发展的课题的开放性和可复制性研究，我们首先为研究社区发布 异构图的 Benchmark。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+    <ul class="post-copyright list-unstyled">
+        
+        <li class="post-copyright-link hidden-xs">
+            <strong>本文链接：</strong>
+            <a
+                href="https://panlianghnu.github.io/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/"
+                title="异构网络表示学习综述"
+                target="_blank"
+                rel="external"
+                >https://panlianghnu.github.io/2021/04/06/异构网络表示学习综述/</a
+            >
+        </li>
+        
+        <li class="post-copyright-license">
+            <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用
+            <a
+                href="http://creativecommons.org/licenses/by/4.0/deed.zh"
+                target="_blank"
+                rel="external"
+                >CC BY 4.0 CN协议</a
+            >
+            许可协议。转载请注明出处！
+        </li>
+    </ul>
+</blockquote>
+ 
+<div class="panel panel-default panel-badger">
+    <div class="panel-body">
+        <figure class="media">
+            <div class="media-left">
+                <a
+                    href="https://github.com/panlianghnu"
+                    target="_blank"
+                    class="img-burn thumb-sm visible-lg"
+                >
+                    <img
+                        src="/images/avatar.png"
+                        class="img-rounded w-full"
+                        alt=""
+                    />
+                </a>
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="https://github.com/panlianghnu" target="_blank"
+                        ><span class="text-dark">panliang</span
+                        ><small class="ml-1x"
+                            ></small
+                        ></a
+                    >
+                </h3>
+                <div>个人简介。</div>
+            </div>
+        </figure>
+    </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/04/10/%E8%8D%AF%E7%89%A9-%E9%9D%B6%E7%82%B9%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8%E7%BD%91%E7%BB%9C%E9%87%8D%E5%BB%BA%E7%9A%84%E7%BB%86%E8%8A%82/" title="药物-靶点相互作用网络重建的细节"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/04/01/python%E5%AE%9E%E7%8E%B0%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81/" title="python实现发送短信验证码"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <!--div class="copyright">
+        
+        <!--div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div-->
+    <!--/div-->
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

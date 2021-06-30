@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Deep-Forest | Panliang</title>
+  <meta name="description" content="Deep ForestAbstract现如今大部分的深度学习模型都是基于神经网络（即：多层参数化、可微分、非线形模型，通过反向传播训练） 在本文中，探索了一种基于不可微分的深度学习模型的可能性。 我们推测，深层神经网络成功背后的奥秘主要归功于三个特征：  一层一层地处理 模型内的特征变换 足够的模型复杂性  本文提出了 gcForest 方法，生成 deep forest 来保持这三个特征。 这是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep-Forest">
+<meta property="og:url" content="https://panlianghnu.github.io/2021/04/11/Deep-Forest/index.html">
+<meta property="og:site_name" content="PanLiang&#39;s blog">
+<meta property="og:description" content="Deep ForestAbstract现如今大部分的深度学习模型都是基于神经网络（即：多层参数化、可微分、非线形模型，通过反向传播训练） 在本文中，探索了一种基于不可微分的深度学习模型的可能性。 我们推测，深层神经网络成功背后的奥秘主要归功于三个特征：  一层一层地处理 模型内的特征变换 足够的模型复杂性  本文提出了 gcForest 方法，生成 deep forest 来保持这三个特征。 这是">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/04/11/Deep-Forest/image-20210411155508192.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/04/11/Deep-Forest/image-20210411171510374.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/04/11/Deep-Forest/image-20210425113457144.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/04/11/Deep-Forest/image-20210425161546986.png">
+<meta property="og:image" content="https://panlianghnu.github.io/2021/04/11/Deep-Forest/image-20210425170826060.png">
+<meta property="article:published_time" content="2021-04-11T05:36:50.000Z">
+<meta property="article:modified_time" content="2021-04-26T02:51:39.280Z">
+<meta property="article:author" content="Pan Liang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://panlianghnu.github.io/2021/04/11/Deep-Forest/image-20210411155508192.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://panlianghnu.github.io/2021/04/11/Deep-Forest/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="PanLiang&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/panlianghnu" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">panliang</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Changsha, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Anaconda/" style="font-size: 13px;">Anaconda</a> <a href="/tags/Flask/" style="font-size: 13px;">Flask</a> <a href="/tags/JWT/" style="font-size: 13px;">JWT</a> <a href="/tags/Language/" style="font-size: 13px;">Language</a> <a href="/tags/MacOS/" style="font-size: 13px;">MacOS</a> <a href="/tags/P2P/" style="font-size: 13px;">P2P</a> <a href="/tags/Vue/" style="font-size: 13.33px;">Vue</a> <a href="/tags/bios/" style="font-size: 13px;">bios</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.33px;">c语言</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.67px;">linux</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/ubuntu/" style="font-size: 13.33px;">ubuntu</a> <a href="/tags/websocket/" style="font-size: 13px;">websocket</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 13px;">分布式</a> <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13px;">区块链</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 13px;">操作系统</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/%E8%81%8A%E5%A4%A9%E5%AE%A4/" style="font-size: 13px;">聊天室</a> <a href="/tags/%E8%BD%AC%E8%BD%BD/" style="font-size: 13.33px;">转载</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">16</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/06/29/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6%E9%80%89%E6%8B%A9/" class="title">小程序框架选择</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-06-29T08:51:33.000Z" itemprop="datePublished">2021-06-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/19/CNN/" class="title">CNN</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-19T07:55:50.000Z" itemprop="datePublished">2021-04-19</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/11/Deep-Forest/" class="title">Deep-Forest</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-11T05:36:50.000Z" itemprop="datePublished">2021-04-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/10/%E8%8D%AF%E7%89%A9-%E9%9D%B6%E7%82%B9%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8%E7%BD%91%E7%BB%9C%E9%87%8D%E5%BB%BA%E7%9A%84%E7%BB%86%E8%8A%82/" class="title">药物-靶点相互作用网络重建的细节</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-10T03:32:35.000Z" itemprop="datePublished">2021-04-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/04/06/%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/" class="title">异构网络表示学习综述</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-04-06T02:40:23.000Z" itemprop="datePublished">2021-04-06</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Deep-Forest" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Deep-Forest
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/04/11/Deep-Forest/" class="article-date">
+	  <time datetime="2021-04-11T05:36:50.000Z" itemprop="datePublished">2021-04-11</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/11/Deep-Forest/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="Deep-Forest"><a href="#Deep-Forest" class="headerlink" title="Deep Forest"></a>Deep Forest</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>现如今大部分的深度学习模型都是基于神经网络（即：多层参数化、可微分、非线形模型，通过反向传播训练）</p>
+<p>在本文中，探索了一种基于不可微分的深度学习模型的可能性。</p>
+<p>我们推测，深层神经网络成功背后的奥秘主要归功于三个特征：</p>
+<ol>
+<li>一层一层地处理</li>
+<li>模型内的特征变换</li>
+<li>足够的模型复杂性</li>
+</ol>
+<p>本文提出了 gcForest 方法，生成 deep forest 来保持这三个特征。</p>
+<p>这是一种决策树集成方法，比起深度神经网络需要更少的<code>超参数</code>，它的模型复杂度可以由<code>数据依赖</code>自动决定。</p>
+<p>实验结果表明它的性能对于超参数的设置有很强的鲁棒性，在大多数情况下，甚至跨不同领域的不同数据，它都能够通过使用相同的默认配置得到很好的性能。这个研究打开了基于不可微分模型的深度学习领域的大门，并展示了不使用反向传播构建深层模型的可能性。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>深度学习在很多领域都很火热。那么，什么是深度学习？大家都回答大概就像这样“深度学习是机器学习的子领域，使用深度神经网络”。实际上，深度神经网络（DNNs）在视觉和语音识别的成功，导致了深度学习的兴起。几乎所有当前的深度学习应用都是基于深度神经网络模型，或者更加专业一点地说，多层<code>参数化、可微分、非线形</code>模型，通过反向传播进行训练。</p>
+<p>尽管深度神经网络很强大，仍然有很多不足之处。</p>
+<blockquote>
+<p>的确，尽管有些作者都使用卷积神经网络，实际上由于许多原因（比如卷积层结构）他们在使用的是不同的学习模型。</p>
+</blockquote>
+<p>First，DNNs有太多的超参数，学习性能严重依赖于仔细的参数调整。这一事实不仅使得训练非常地棘手，让深度学习更像一种 art 而非 science/engineering，还让DNNs的理论分析变得非常困难，因为干扰因素太多，几乎是无限的构型组合，有点不讲道理的意思。</p>
+<p>Second，我们都知道DNNs的训练需要大量的训练数据，因此，当只有少部分训练数据时，DNNs就几乎不能被应用了，当数据规模不大不小时，有时甚至训练失败。注意到，在大数据领域，许多真实的训练任务缺乏足够多的<code>labeled data</code>，导致DNNs在这些任务中的性能较差。</p>
+<p>Moreover，我们都知道神经网络是一个<code>black-box</code>，它的 decision process 通常难以理解，学习行为也很难以进行理论分析。</p>
+<p>Furthermore，神经网络架构需要在训练之前确定好。因此，模型复杂度也是提前确定好的。我们推测深度模型通常比实际需要的要复杂得多，通过观察，最近有很多关于DNNs通过<code>add shortcut connection</code>来提高性能的报道得到了证实。因为这些操作简化了原始网络，实际上降低了模型的复杂性。所以如果能够让模型的复杂度由数据依赖自动地决定，应该可以大大改善性能。</p>
+<p>同样值得注意的是，尽管DNNs已经得到了很好的发展，但仍有许多任务DNNs并不优越，有时甚至不足，比如，Random Forest、XGBoost 仍然在许多 Kaggle competition task 里获胜。</p>
+<p>我们相信，为了处理复杂的学习任务，学习模型可能必须 go deep。然而当前的深度模型，总是基于神经网络。综上所述，有充分的理由来探索一个 non-NN(不基于神经网络) 的深度模型，in other words，考虑是否可以与其他模块一起实现深度学习，因为它们有自己的优势，如果能够深入，可能会显示出巨大的潜力。</p>
+<p>特别是，不是所有的世界上的 properties 都是可微分的（或者建模为可微分的），这篇文章将解决这个基本问题：</p>
+<p>“Can deep learning be realized with non-differentiable modules?”</p>
+<p>这个问题的答案可以帮助我们理解很多重要问题，比如</p>
+<ol>
+<li>deep models ?=DNNs（或者，深层模型只能用可微模来构造？）</li>
+<li>不使用反向传播可以训练深度模型吗？</li>
+<li>可以让深度模型战胜其他模型吗比如 Random Forest、XGBoost</li>
+</ol>
+<p>实际上，机器学习社区以及开发了许多的机器学习模型，其中许多是不可微分的。理解<code>是否可以基于不可微分模型构建一个深度学习模型</code>将阐明这个问题（这些模块是否可以在深度学习中加以利用）</p>
+<p>在这篇论文里，我们提出了一种 non-NN style deep model。</p>
+<ul>
+<li>这是一种新的决策树集成，具有级联结构，能够通过森林进行表示学习。</li>
+<li>它的表征学习能力可以通过多粒度扫描进一步增强，从而使gcForest具有上下文或结构感知能力。</li>
+<li>级联level 可以自动确定，这样模型的复杂性就可以通过依赖于数据的方式来确定，而不是在训练前手动设计；这使得gcForest即使在小规模数据上也能很好地工作，并且使用户能够根据可用的计算资源来控制训练成本。</li>
+<li>比起DNNs有更少的超参数</li>
+<li>它的性能对超参数设置有很强的鲁棒性，使用 default setting 可以在大部分情况得到很好的性能，尽管跨不同领域不同数据</li>
+</ul>
+<p>剩下的部分是这样：Section2 分析为什么深度学习很牛，解释设计灵感；Section3 提出方法；Section4 展示实验报告；Section5 提出一些相关工作；Section6 提出一些问题和未来方向；Section7 结束语。</p>
+<h2 id="Inspiration"><a href="#Inspiration" class="headerlink" title="Inspiration"></a>Inspiration</h2><h3 id="灵感-from-DNNs"><a href="#灵感-from-DNNs" class="headerlink" title="灵感 from DNNs"></a>灵感 from DNNs</h3><p>众所周知，<code>表征学习</code>能力是深度学习成功的关键。那么什么是表征学习的关键呢？我们认为是 layer-by-layer processing. Fig1. 当抽象层从底层向上时，更高层次的特征就会显现出来。</p>
+<p><img src="/2021/04/11/Deep-Forest/image-20210411155508192.png" alt="image-20210411155508192"></p>
+<p>考虑到如果其他问题得到解决，更大的模型复杂性（或者更准确地说，模型容量）通常会导致更强大的学习能力，将DNNs的成功归因于巨大的模型复杂性听起来是合理的。</p>
+<p>然而，无法解释为什么浅层网络不如深层网络成功，因为人们可以通过增加几乎无限多个隐藏单元来增加浅层网络的复杂性。</p>
+<p>因此，我们认为仅仅只有模型复杂性无法解释 DNNs 的成功。相反，我们猜想层层处理才是DNNs背后最重要的因素。因为扁平的网络（比如，单一隐藏层的网络）不管多么复杂，也无法保留层层处理的特征（the characteristics of layer-by-layer processing）。尽管我们没有严格的理由，但是这一猜想对森林的设计具有重要的启示。</p>
+<p>有人可能会质疑，有些学习模型，例如决策树和Boosting机器，也进行逐层处理，为什么它们没有DNNs那么成功？</p>
+<p>我们认为最重要的区别是：与如图1所示生成新特征的DNNs不同，决策树和Boosting机器总是在原始特征表示上工作，而不在学习过程中创建新特征，或者换句话说，没有模型内特征转换（in-model feature transformation），而且，与具有任意高的模型复杂度的DNNs不同，决策树和Boosting机只能具有有限的模型复杂度。虽然模型的复杂性本身并不一定能解释DNNs的成功，但它仍然很重要，因为开发大的训练数据需要大的模型容量。</p>
+<p>总的来说，我们推测DNNs的奥秘背后有三个关键特征，即逐层处理、模型特征转换和足够的模型复杂性。我们将尝试将这些特性赋予我们的非NN风格的深度模型。</p>
+<h3 id="灵感-from-集成学习"><a href="#灵感-from-集成学习" class="headerlink" title="灵感 from 集成学习"></a>灵感 from 集成学习</h3><p>集成学习(ensemble learning)可以说是现在非常火爆的机器学习方法了。它本身不是一个单独的机器学习算法，而是通过构建并结合多个机器学习器来完成学习任务。也就是我们常说的“博采众长”。集成学习一般可以获得比单一学习者更好的泛化性能。</p>
+<p>为了组合一个好的集成，各个 learners 应该准确、多样。仅仅结合准确的 learners 往往不如结合一些准确的学习者和一些相对较弱的 learners，因为互补性比纯粹的准确更重要。</p>
+<h4 id="误差-分歧分解-Error-ambiguity-decomposition"><a href="#误差-分歧分解-Error-ambiguity-decomposition" class="headerlink" title="误差-分歧分解 Error-ambiguity decomposition"></a>误差-分歧分解 Error-ambiguity decomposition</h4><p><strong>误差-分歧分解</strong>指将集成后的泛化误差分解开的过程，可以用下式表示：</p>
+<script type="math/tex; mode=display">
+{E= \overline {E}- \overline {A}}</script><p>该式中左边 E 表示集成后的泛化误差，右侧 E 是 个体学习器的平均泛化误差， A 表示个体学习器的集成分歧，从该式可以得出结论：个体学习器的准确性越高、多样性越大，集成效果越好。然而，这个公式并不能作为一个优化目标函数，因为分歧项是在推导中用数学方法定义的，不能直接操作。后来，集合社区设计了许多多样性度量，但没有一个被公认为是多样性的正确定义。</p>
+<p>在实践中，多样性增强的基本策略是在训练过程中引入基于启发式的随机性。粗略地说，有四种机制：</p>
+<ol>
+<li>用不同的数据样本来训练各个 learners，比如Bagging[2]利用了bootstrap抽样[12]，而AdaBoost采用了序贯重要性抽样</li>
+<li>第二种是输入特征操作，通过生成不同的特征子空间来训练各个 learners，比如随机子空间方法[24]为每个学习者随机挑选特征子集</li>
+<li>使用不同参数设置的基础学习算法生成不同的 learners，比如不同的初始权重可用于单个神经网络[28]，而不同的分割选择可用于单个决策树[37]</li>
+<li>使用不同的输出表征产生不同的 learners，比如ECOC方法[10]采用纠错输出码，而翻转输出方法[4]随机改变一些训练实例的标签</li>
+</ol>
+<p>不同的方法可以组合起来使用，但是这些方法也总是有效，比如数据样本操作对稳定的学习者不起作用，而稳定的学习者的表现不会因训练数据的轻微修改而发生显著变化。</p>
+<p>gcForest，它可以被视为一种决策树集成方法，利用几乎所有种类的机制来增强多样性。</p>
+<h2 id="The-gcForest-Approach"><a href="#The-gcForest-Approach" class="headerlink" title="The gcForest Approach"></a>The gcForest Approach</h2><p>这一段会先介绍<code>级联森林结构</code>，然后介绍多粒度扫描，然后对总体架构和超参数进行说明。</p>
+<h3 id="Cascade-Forest-Structure"><a href="#Cascade-Forest-Structure" class="headerlink" title="Cascade Forest Structure"></a>Cascade Forest Structure</h3><p>深层神经网络中的表征学习主要依赖于原始特征的逐层处理。受这个影响，gcForest利用级联结构，如图2，每一个 level of cascade 接受上一层的处理过的 feature information，然后输出处理结果到下一层。</p>
+<p><img src="/2021/04/11/Deep-Forest/image-20210411171510374.png" alt="image-20210411171510374"></p>
+<p>Fig 2. 层叠森林结构示意图。假设级联的每一级由两个随机森林（黑色）和两个完全随机的树林（蓝色）组成。假设预测结果是三种 classes，因此，每个森林将输出一个三维分类向量，然后连接起来重新表示原始输入。</p>
+<p>每个 level 都是决策树森林的集合。然而，我们包括不同类型的森林以鼓励多样性，因为多样性对于整体建设至关重要[63]。为简单起见，假设我们使用两个<strong>完全随机</strong>的森林和两个<strong>随机</strong>森林[5]。</p>
+<p>每个完全随机树林包含500个完全随机树[37]，<code>通过在树的每个节点上随机选择一个特征进行拆分</code>，并将树生长到纯叶，即每个叶节点仅包含相同的 class。</p>
+<p>同样的，每个随机森林包括500个树，通过随机选取 根号d 个特征作为候选特征（d是输入特征的个数），选择基尼值最佳的特征进行分割。每个森林中的树木个数是一个超参数，将在第3.3节中讨论。</p>
+<p>给一个实例，每个森林都产生一个类分布的估计值，by 计算相关实例所在叶节点上不同类的训练实例的百分比，然后对同一林中的所有树进行平均。图三中，红色高亮显示实例遍历到叶节点的路径。</p>
+<p><img src="/2021/04/11/Deep-Forest/image-20210425113457144.png" alt="image-20210425113457144"></p>
+<p>图3，分类向量生成，叶节上不同的标记意味着不同的类。</p>
+<p>使用 K-fold 交叉验证来减少 overfitting risk</p>
+<p>每个实例都将作为训练数据使用 k-1 次，产生 k-1 个分类向量，然后对其进行平均以产生最终分类向量，作为下一级的增强特征。扩展一个新的层次后，可以在验证集上估计整个级联的性能，如果没有显著的性能增益，训练过程将终止；因此，级联的层次数目是自动确定的。注意，当训练成本较高或可用计算资源有限时，也可以使用训练误差而不是交叉验证误差来控制级联增长。与大多数模型复杂度固定的深层神经网络不同，gcForest通过在适当的时候终止训练来自适应地确定其模型复杂度。这使得它能够适用于不同规模的训练数据，而不限于大规模的训练数据。</p>
+<h3 id="多粒度扫描"><a href="#多粒度扫描" class="headerlink" title="多粒度扫描"></a>多粒度扫描</h3><p>深层神经网络在处理特征关系方面很强大，卷积神经网络对原始像素之间的空间关系非常重要的图像数据非常有效；递归神经网络对顺序关系很重要的序列化数据很有效。受这些影响，我们提出多粒度扫描来增强级联森林。</p>
+<p><img src="/2021/04/11/Deep-Forest/image-20210425161546986.png" alt="image-20210425161546986"></p>
+<p>图4，feature re-representation。假设有三个分类，原始 feature 是一个400维的序列，采用100维的滑动窗口对输入特征进行处理。</p>
+<p>对于序列数据，每滑动一个特征的窗口，将生成一个100维的特征向量，总共产生301个 feature vector。如果原始 feature 有特殊关系，比如它是一个 20*20 的pixel，那么会生成 10*10的 window，产生11*11=121个 feature vector</p>
+<p>所有的从正/负训练样本中提取的 feature vector 被视为正/负 instances，将用来生成分类向量：instances 将用来 train 完全随机森林 和 随机森林，然后生成 class vector 然后连接为变换特征</p>
+<p>在图4中， 假定有3个class、100维的 window，然后，每个森林会生成 301 个三维 class vector，得到一个1806维的变换特征向量，对应于原始的400维原始特征向量。</p>
+<p>对于每个滑动窗口生成的 instance，我们简单的用原始训练数据的标记来标记它。在这里，一些标签分配本身就是不正确的。比如，假设原始的 training example 是一个 positive image about “car”，显然从 car 提取的 instance 没有包含一个 car，因此，它们被标记为 positive 是不正确的。这实际上与 Flipping Output method[4]有关，集合分集增强的一种典型输出表示方法?</p>
+<p>图4只显示了一种尺寸的滑动窗口。通过使用多种大小的滑动窗口，将生成不同粒度的特征向量，如图5所示。</p>
+<p><img src="/2021/04/11/Deep-Forest/image-20210425170826060.png" alt="image-20210425170826060"></p>
+<p>Fig.5 gcForest的整个过程。假设有三个类要预测，原始特征是400维，使用三种尺寸的滑动窗口。</p>
+<p>第一步：使用多粒度扫描对输入特征进行预处理。以使用三个尺寸的滑动窗为例，分别为100-dim，200-dim和300-dim。输入数据为400-dim的序列特征，使用100-dim滑动窗会得到301个100-dim向量，然后输入到一个completely-random tree forest和一个random forest中，两个森林会分别得到的301个3-dim向量（3分类），将两个森林得到的特征向量进行拼接，会得到1806-dim的特征向量。同理，使用200-dim和300-dim滑动窗会分别得到1206-dim和606-dim特征向量。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+    <ul class="post-copyright list-unstyled">
+        
+        <li class="post-copyright-link hidden-xs">
+            <strong>本文链接：</strong>
+            <a
+                href="https://panlianghnu.github.io/2021/04/11/Deep-Forest/"
+                title="Deep-Forest"
+                target="_blank"
+                rel="external"
+                >https://panlianghnu.github.io/2021/04/11/Deep-Forest/</a
+            >
+        </li>
+        
+        <li class="post-copyright-license">
+            <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用
+            <a
+                href="http://creativecommons.org/licenses/by/4.0/deed.zh"
+                target="_blank"
+                rel="external"
+                >CC BY 4.0 CN协议</a
+            >
+            许可协议。转载请注明出处！
+        </li>
+    </ul>
+</blockquote>
+ 
+<div class="panel panel-default panel-badger">
+    <div class="panel-body">
+        <figure class="media">
+            <div class="media-left">
+                <a
+                    href="https://github.com/panlianghnu"
+                    target="_blank"
+                    class="img-burn thumb-sm visible-lg"
+                >
+                    <img
+                        src="/images/avatar.png"
+                        class="img-rounded w-full"
+                        alt=""
+                    />
+                </a>
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="https://github.com/panlianghnu" target="_blank"
+                        ><span class="text-dark">panliang</span
+                        ><small class="ml-1x"
+                            ></small
+                        ></a
+                    >
+                </h3>
+                <div>个人简介。</div>
+            </div>
+        </figure>
+    </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/04/19/CNN/" title="CNN"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/04/10/%E8%8D%AF%E7%89%A9-%E9%9D%B6%E7%82%B9%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8%E7%BD%91%E7%BB%9C%E9%87%8D%E5%BB%BA%E7%9A%84%E7%BB%86%E8%8A%82/" title="药物-靶点相互作用网络重建的细节"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+    
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/panlianghnu" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <!--div class="copyright">
+        
+        <!--div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div-->
+    <!--/div-->
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
